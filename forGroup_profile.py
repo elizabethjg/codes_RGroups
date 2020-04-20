@@ -90,9 +90,9 @@ def partial_profile(backcat_ids,RA0,DEC0,Z,
         DSIGMAwsum_X = []
         WEIGHTsum    = []
         Mwsum        = []
-        BOOTwsum_T   = np.zeros((100,10))
-        BOOTwsum_X   = np.zeros((100,10))
-        BOOTwsum     = np.zeros((100,10))
+        BOOTwsum_T   = np.zeros((nboot,ndots))
+        BOOTwsum_X   = np.zeros((nboot,ndots))
+        BOOTwsum     = np.zeros((nboot,ndots))
         
         for nbin in range(ndots):
                 mbin = dig == nbin+1              
@@ -126,8 +126,8 @@ def partial_profile_unpack(minput):
 
 def main(sample='pru',N_min=10,N_max=1000.,
                 z_min = 0.0, z_max = 0.5,
-                odds_min=0.5, RIN = 250., ROUT =5000.,
-                ndots= 10,ncores=10):
+                odds_min=0.5, RIN = 100., ROUT =5000.,
+                ndots= 15,ncores=10):
 
         '''
         
@@ -186,13 +186,13 @@ def main(sample='pru',N_min=10,N_max=1000.,
         
         # WHERE THE SUMS ARE GOING TO BE SAVED
         
-        DSIGMAwsum_T = np.zeros(10) 
-        DSIGMAwsum_X = np.zeros(10)
-        WEIGHTsum    = np.zeros(10)
-        Mwsum        = np.zeros(10)
-        BOOTwsum_T   = np.zeros((100,10))
-        BOOTwsum_X   = np.zeros((100,10))
-        BOOTwsum     = np.zeros((100,10))
+        DSIGMAwsum_T = np.zeros(ndots) 
+        DSIGMAwsum_X = np.zeros(ndots)
+        WEIGHTsum    = np.zeros(ndots)
+        Mwsum        = np.zeros(ndots)
+        BOOTwsum_T   = np.zeros((100,ndots))
+        BOOTwsum_X   = np.zeros((100,ndots))
+        BOOTwsum     = np.zeros((100,ndots))
         Ntot         = []
         
         for l in range(len(Lsplit)):
