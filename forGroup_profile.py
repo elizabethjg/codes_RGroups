@@ -201,13 +201,13 @@ def main(sample='pru',N_min=10,N_max=1000.,
                 print 'RUN ',l+1,' OF ',len(Lsplit)
                 
                 t1 = time.time()
-
+                
                 num = len(Lsplit[l])
                 
                 rin  = RIN*np.ones(num)
                 rout = ROUT*np.ones(num)
                 nd   = ndots*np.ones(num)
-
+                
                 if num == 1:
                         entrada = [Lsplit[l].CATID.iloc[0],Lsplit[l].RA_BG.iloc[0],
                                         Lsplit[l].DEC_BG.iloc[0],Lsplit[l].Z.iloc[0],
@@ -238,7 +238,7 @@ def main(sample='pru',N_min=10,N_max=1000.,
                 print 'TIME SLICE'
                 print  ts
                 print 'Estimated ramaining time'
-                print ((np.mean(tslice)*(len(Lsplit)-(j+1)))/60.
+                print (np.mean(tslice)*(len(Lsplit)-(j+1)))/60.
         
         # COMPUTING PROFILE        
                 
