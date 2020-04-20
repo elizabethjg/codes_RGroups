@@ -194,6 +194,7 @@ def main(sample='pru',N_min=10,N_max=1000.,
         BOOTwsum_X   = np.zeros((100,ndots))
         BOOTwsum     = np.zeros((100,ndots))
         Ntot         = []
+        tslice       = np.array([])
         
         for l in range(len(Lsplit)):
                 
@@ -232,8 +233,12 @@ def main(sample='pru',N_min=10,N_max=1000.,
                         Ntot         = np.append(Ntot,profilesums['Ntot'])
                 
                 t2 = time.time()
+                ts = (t2-t1)/60.
+                tslice = np.append(tslice,ts)
                 print 'TIME SLICE'
-                print (t2-t1)/60.
+                print  ts
+                print 'Estimated ramaining time'
+                print ((np.mean(tslice)*(len(Lsplit)-(j+1)))/60.
         
         # COMPUTING PROFILE        
                 
