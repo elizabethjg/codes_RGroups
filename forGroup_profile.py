@@ -238,7 +238,7 @@ def main(sample='pru',N_min=10,N_max=1000.,
                 print 'TIME SLICE'
                 print  ts
                 print 'Estimated ramaining time'
-                print (np.mean(tslice)*(len(Lsplit)-(l+1)))/60.
+                print (np.mean(tslice)*(len(Lsplit)-(l+1)))
         
         # COMPUTING PROFILE        
                 
