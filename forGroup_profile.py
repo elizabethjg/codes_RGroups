@@ -159,7 +159,7 @@ def main(sample='pru',N_min=10,N_max=1000.,
         print 'from ',RIN,'kpc to ',ROUT,'kpc'
               
         # Defining radial bins
-        bines = np.logspace(np.log10(RIN),np.log10(ROUT),num=10+1)
+        bines = np.logspace(np.log10(RIN),np.log10(ROUT),num=ndots+1)
         R = (bines[:-1] + np.diff(bines)*0.5)*1.e-3
         
         #reading cats
@@ -263,7 +263,11 @@ def main(sample='pru',N_min=10,N_max=1000.,
         roc      = (3.0*(H**2.0))/(8.0*np.pi*G) #critical density at z_pair (kg.m-3)
         roc_mpc  = roc*((pc*1.0e6)**3.0)
         
-        nfw        = NFW_stack_fit(R,DSigma_T,eDSigma_T,zmean,roc)
+        try:
+                nfw        = NFW_stack_fit(R,DSigma_T,eDSigma_T,zmean,roc)
+        except:
+                nfw          = [0.01,0.,100.,[0.,0.],[0.,0.],-999.,0.]
+
         M200_NFW   = (800.0*np.pi*roc_mpc*(nfw[0]**3))/(3.0*Msun)
         e_M200_NFW =((800.0*np.pi*roc_mpc*(nfw[0]**2))/(Msun))*nfw[1]
         le_M200    = (np.log(10.)/M200_NFW)*e_M200_NFW
