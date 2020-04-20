@@ -24,7 +24,7 @@ pc   = 3.085678e16; # 1 pc (m)
 Msun = 1.989e30 # Solar mass (kg)
 
 folder = '/mnt/clemente/lensing/RodriguezGroups/N_all/'
-S=LensCat.Catalog.read_catalog(folder+'gx_CS82_S_RM_FINAL.fits')
+S=LensCat.Catalog.read_catalog(folder+'gx_S_RM_FINAL.fits')
 S.data.set_index('CATID', inplace=True)
 
 
@@ -164,7 +164,7 @@ def main(sample='pru',N_min=10,N_max=1000.,
         
         #reading cats
         
-        L=LensCat.Catalog.read_catalog(folder+'gx_CS82_L_RM_FINAL.fits')        
+        L=LensCat.Catalog.read_catalog(folder+'gx_L_RM_FINAL.fits')        
         mlenses = (L.data.N_GAL >= N_min)*(L.data.N_GAL < N_max)*(L.data.Z >= z_min)*(L.data.Z < z_max)
         Nlenses = mlenses.sum()
 
@@ -208,14 +208,14 @@ def main(sample='pru',N_min=10,N_max=1000.,
                 nd   = ndots*np.ones(num)
 
                 if num == 1:
-                        entrada = [Lsplit[l].CATID.iloc[0],Lsplit[l].RA.iloc[0],
-                                        Lsplit[l].DEC.iloc[0],Lsplit[l].Z.iloc[0],
+                        entrada = [Lsplit[l].CATID.iloc[0],Lsplit[l].RA_BG.iloc[0],
+                                        Lsplit[l].DEC_BG.iloc[0],Lsplit[l].Z.iloc[0],
                                         RIN,ROUT,ndots]
                         
                         salida = [partial_profile_unpack(entrada)]
                 else:          
-                        entrada = np.array([Lsplit[l].CATID.iloc[:],Lsplit[l].RA,
-                                        Lsplit[l].DEC,Lsplit[l].Z,rin,rout,nd]).T
+                        entrada = np.array([Lsplit[l].CATID.iloc[:],Lsplit[l].RA_BG,
+                                        Lsplit[l].DEC_BG,Lsplit[l].Z,rin,rout,nd]).T
                         
                         pool = Pool(processes=(num))
                         salida = np.array(pool.map(partial_profile_unpack, entrada))
