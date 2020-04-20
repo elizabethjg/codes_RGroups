@@ -302,9 +302,9 @@ if __name__ == '__main__':
         parser.add_argument('-z_min', action='store', dest='z_min', default=0.0)
         parser.add_argument('-z_max', action='store', dest='z_max', default=0.5)
         parser.add_argument('-ODDS_min', action='store', dest='ODDS_min', default=0.5)
-        parser.add_argument('-RIN', action='store', dest='RIN', default=250.)
+        parser.add_argument('-RIN', action='store', dest='RIN', default=100.)
         parser.add_argument('-ROUT', action='store', dest='ROUT', default=5000.)
-        parser.add_argument('-nbins', action='store', dest='nbins', default=10)
+        parser.add_argument('-nbins', action='store', dest='nbins', default=15)
         parser.add_argument('-ncores', action='store', dest='ncores', default=10)
         args = parser.parse_args()
         
