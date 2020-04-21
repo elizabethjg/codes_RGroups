@@ -285,14 +285,20 @@ def main(sample='pru',N_min=10,N_max=1000.,
         h = tbhdu.header
         h.append(('N_LENSES',np.int(Nlenses)))
         h.append(('lM200_NFW',np.round(np.log10(M200_NFW),4)))
-        h.append(('elM200_NFW',np.round(np.log10(le_M200),4)))
+        h.append(('elM200_NFW',np.round(le_M200,4)))
         h.append(('CHI2_NFW',np.round(nfw[2],4)))
         h.append(('N_GAL_mean',np.round(Ngal_mean,4)))
         h.append(('lMASS_HALO_mean',np.round(np.log10(MH_mean),4)))
-        h.append(('lMASS_DYN_mean',np.round(np.log10(MD_mean),4)))
         h.append(('VDISP_HALO_mean',np.round(sigmaH_mean,2)))
         h.append(('VDISP_DYN_mean',np.round(sigmaD_mean,2)))
         h.append(('z_mean',np.round(zmean,4)))
+
+
+        try:
+                h.append(('lMASS_DYN_mean',np.round(np.log10(MD_mean),4)))
+        except:
+                print 'NO DYN MASS'
+                
         
         tbhdu.writeto(folder+'profile_'+sample+'.fits',overwrite=True)
                 
