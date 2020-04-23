@@ -49,7 +49,7 @@ def log_likelihood(data_model, r, Gamma, e_Gamma):
     
 
 def log_probability(data_model, r, Gamma, e_Gamma):
-    log_M200, pcc = data_model
+    log_M200, pcc, tau = data_model
     if 11. < log_M200 < 15.5 and 0.3 < pcc < 1.0 and 0.1 < tau < 0.6:
         return log_likelihood(data_model, r, Gamma, e_Gamma)
     return -np.inf
