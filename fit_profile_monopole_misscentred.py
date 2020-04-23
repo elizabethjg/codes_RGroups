@@ -74,7 +74,7 @@ maskr = (p.Rp < ROUT)
 
 t1 = time.time()
 sampler = emcee.EnsembleSampler(nwalkers, ndim, log_probability, 
-                                args=(p.Rp[maskr],p.DSigma_T[maskr],error_DSigma_T[maskr]))
+                                args=(p.Rp[maskr],p.DSigma_T[maskr],p.error_DSigma_T[maskr]))
 sampler.run_mcmc(pos, 500, progress=True)
 print '//////////////////////'
 print '         TIME         '
