@@ -16,6 +16,7 @@ def make_plot_centred_monopole(file_name,folder):
 
      M200    = 10**h['lM200_NFW']
      Mhalo   = 10**h['lMASS_HALO_mean']
+     Nmean   = h['N_GAL_mean']
      
      if h['elM200_NFW'] < 0.:
           eM200 = 10**h['elM200_NFW']
@@ -76,7 +77,7 @@ def make_plot_centred_monopole(file_name,folder):
      matplotlib.rcParams.update({'font.size': 12})
      plt.savefig(folder+'plots_monopole_centred/'+file_name[:-5]+'.png')
      
-     return Mhalo/1.e12, M200/1.e12, e_M200/1.e12
+     return Mhalo/1.e14, M200/1.e14, e_M200/1.e14, Nmean
 
 folder = '/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles/'
      
@@ -86,11 +87,13 @@ lines = f.readlines()
 MH    = np.array([])
 MNFW  = np.array([])
 eMNFW = np.array([])
+N_mean = np.array([])
 
 for line in lines:
      
-     Mhalo, M200, eM200 = make_plot_centred_monopole(line[:-1],folder)
+     Mhalo, M200, eM200, Nmean = make_plot_centred_monopole(line[:-1],folder)
      
      MH    = np.append(MH,Mhalo)
-     MNFW  = np.append(MNFW,M200)
-     eMNFW = np.append(eMNFW,eM200)
+     MNFW  = np.append(MNFW,M200*0.7)
+     eMNFW = np.append(eMNFW,eM200*0.7)
+     N_mean = np.append(N_mean,Nmean)

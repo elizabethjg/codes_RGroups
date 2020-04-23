@@ -256,6 +256,7 @@ def main(sample='pru',N_min=10,N_max=1000.,
         MD_mean      = np.average(L.data.MASS_DYN,weights=Ntot)
         sigmaH_mean  = np.average(L.data.VDISP_HALO,weights=Ntot)
         sigmaD_mean  = np.average(L.data.VDISP_DYN,weights=Ntot)
+        RH_mean      = np.average(L.data.RADIUS_HALO,weights=Ntot)
         
         # FITING AN NFW MODEL
         
@@ -291,6 +292,7 @@ def main(sample='pru',N_min=10,N_max=1000.,
         h.append(('lMASS_HALO_mean',np.round(np.log10(MH_mean),4)))
         h.append(('VDISP_HALO_mean',np.round(sigmaH_mean,2)))
         h.append(('VDISP_DYN_mean',np.round(sigmaD_mean,2)))
+        h.append(('RADIUS_HALO_mean',np.round(RH_mean,2)))
         h.append(('z_mean',np.round(zmean,4)))
 
 
