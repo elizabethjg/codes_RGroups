@@ -285,6 +285,10 @@ def main(sample='pru',N_min=10,N_max=1000.,
         
         h = tbhdu.header
         h.append(('N_LENSES',np.int(Nlenses)))
+        h.append(('N_min',np.int(N_min)))
+        h.append(('N_max',np.int(N_max)))
+        h.append(('z_min',np.round(z_min,4)))
+        h.append(('z_max',np.round(z_max,4)))
         h.append(('lM200_NFW',np.round(np.log10(M200_NFW),4)))
         h.append(('elM200_NFW',np.round(le_M200,4)))
         h.append(('CHI2_NFW',np.round(nfw[2],4)))
