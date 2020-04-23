@@ -21,19 +21,11 @@ wcs.wcs.crpix = [0., 0.]
 wcs.wcs.cdelt = [1./3600., 1./3600.]
 wcs.wcs.ctype = ["RA---TAN", "DEC--TAN"]    
 
-folder = '/mnt/clemente/lensing/RodriguezGroups/N_all/'
-IDgroups = fits.open(folder+'gx_L_RM_FINAL.fits')[1].data.ID
 
-groups  = fits.open('/mnt/clemente/lensing/RodriguezGroups/FINAL_Group.fits')[1].data
+groups  = fits.open('/mnt/clemente/lensing/RodriguezGroups/N_all/gx_L_RM_FINAL.fits')[1].data
 members = fits.open('/mnt/clemente/lensing/RodriguezGroups/FINAL_gals.fits')[1].data
-mgroups = np.in1d(groups.ID,IDgroups)
-mmember = np.in1d(members.group_id,IDgroups)
 
-groups  = groups[mgroups]
-members = members[mmember]
-
-ides = members[1].data['ID']
-ID,c = np.unique(ides,return_counts=True)
+ides = members.group_id
 
 RA0  = groups.RA_BG 
 RA0[RA0 > 275] = RA0[RA0>275] - 360.
@@ -43,13 +35,13 @@ RA    = members.RA
 RA[RA > 275] = RA[RA>275] - 360.
 DEC   = members.DEC
 
-
-ID_c  = groups.ID
 N_GAL = groups.N_GAL
+mgal  = N_GAL > 2
+
+ID_c  = groups.ID[mgal]
 
 e = np.array([])
 theta = np.array([])
-
 
 X = np.array([])
 Y = np.array([])

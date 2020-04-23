@@ -18,7 +18,7 @@ def make_plot_centred_monopole(file_name,folder):
      Mhalo   = 10**h['lMASS_HALO_mean']
      Nmean   = h['N_GAL_mean']
      Nlens   = h['N_LENSES']
-     
+    
      if h['elM200_NFW'] < 0.:
           eM200 = 10**h['elM200_NFW']
      else:
@@ -31,6 +31,13 @@ def make_plot_centred_monopole(file_name,folder):
      print '####################'
      print file_name
      print 'lM200 ',h['lM200_NFW']
+     
+     try:
+          print h['N_min'],h['N_max']-1
+     except:
+          print h['N_GAL_mean']
+
+     
      print '####################'
 
      

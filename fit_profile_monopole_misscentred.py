@@ -31,11 +31,16 @@ profile = fits.open(folder+file_name)
 h       = profile[1].header
 p       = profile[1].data
 zmean   = h['Z_MEAN']    
+Mhalo   = 10**h['lMASS_HALO_mean']
+Rmean   = h['RADIUS_HALO_mean']
+ROUT = (2.5*(2.*(Mhalo/2.21e14)**0.75)**(1./3.))/0.7
 
 def log_likelihood(data_model, r, Gamma, e_Gamma):
-    log_M200,pcc = data_model
+    log_M200,pcc,tau = data_model
     M200 = 10**log_M200
-    multipoles = multipole_shear_parallel(r,M200=M200,misscentred = True,
+    s_off = tau*Rmean
+    multipoles = multipole_shear_parallel(r,M200=M200,
+                                misscentred = True,s_off = s_off,
                                 ellip=0,z=zmean,components = ['t'],
                                 verbose=False,ncores=ncores)
     model = model_Gamma(multipoles,'t', misscentred = True, pcc = pcc)
@@ -45,14 +50,15 @@ def log_likelihood(data_model, r, Gamma, e_Gamma):
 
 def log_probability(data_model, r, Gamma, e_Gamma):
     log_M200, pcc = data_model
-    if 12.5 < log_M200 < 15.5 and 0.3 < pcc < 1.0:
+    if 11. < log_M200 < 15.5 and 0.3 < pcc < 1.0 and 0.1 < tau < 0.6:
         return log_likelihood(data_model, r, Gamma, e_Gamma)
     return -np.inf
 
 # initializing
 
-pos = np.array([np.random.uniform(12.5,15.5,10),
-                np.random.normal(0.8,0.3,10)]).T
+pos = np.array([np.random.uniform(11.5,15.0,10),
+                np.random.normal(0.8,0.3,10),
+                np.random.normal(0.1,0.6,10)]).T
 
 pccdist = pos[:,1]                
 pos[pccdist > 1.,1] = 1.
@@ -64,11 +70,12 @@ nwalkers, ndim = pos.shape
 
 #pool = Pool(processes=(ncores))
 
+maskr = (p.Rp < ROUT)
 
 t1 = time.time()
 sampler = emcee.EnsembleSampler(nwalkers, ndim, log_probability, 
-                                args=(p.Rp,p.DSigma_T,error_DSigma_T))
-sampler.run_mcmc(pos, 200, progress=True)
+                                args=(p.Rp[maskr],p.DSigma_T[maskr],error_DSigma_T[maskr]))
+sampler.run_mcmc(pos, 500, progress=True)
 print '//////////////////////'
 print '         TIME         '
 print '----------------------'
@@ -87,8 +94,8 @@ print (time.time()-t1)/60.
 mcmc_out = sampler.get_chain(flat=True)
 
 f1=open(folder+'monopole_misscentred_'+file_name,'w')
-f1.write('# log(M200)  pcc \n')
-np.savetxt(f1,mcmc_out,fmt = ['%12.6f']*2)
+f1.write('# log(M200)  pcc  tau\n')
+np.savetxt(f1,mcmc_out,fmt = ['%12.6f']*3)
 f1.close()
 
 
