@@ -57,11 +57,9 @@ def log_probability(data_model, r, Gamma, e_Gamma):
 # initializing
 
 pos = np.array([np.random.uniform(11.5,15.0,10),
-                np.random.normal(0.8,0.3,10),
-                np.random.normal(0.1,0.6,10)]).T
+                np.random.uniform(0.3,0.8,10),
+                np.random.uniform(0.1,0.6,10)]).T
 
-pccdist = pos[:,1]                
-pos[pccdist > 1.,1] = 1.
 
 nwalkers, ndim = pos.shape
 
@@ -97,12 +95,3 @@ f1=open(folder+'monopole_misscentred_'+file_name,'w')
 f1.write('# log(M200)  pcc  tau\n')
 np.savetxt(f1,mcmc_out,fmt = ['%12.6f']*3)
 f1.close()
-
-
-mcmc1 = (mcmc_out.T)[:,500:]
-M200,pcc = np.median(mcmc1,axis=1)
-
-f=open(folder+file_name,'a')
-f.write('#'+str('%.2f' % (10**(M200)/1.e14))+'   \n')
-f.write('#'+str('%.2f' % (pcc))+'   \n')
-f.close()

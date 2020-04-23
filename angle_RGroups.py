@@ -38,60 +38,55 @@ DEC   = members.DEC
 N_GAL = groups.N_GAL
 mgal  = N_GAL > 2
 
-ID_c  = groups.ID[mgal]
+ID    = groups.ID
+RA0   = RA0
+DEC0  = DEC0
 
-e = np.array([])
-theta = np.array([])
+ID_c = np.arange(len(ID))[mgal]
 
-X = np.array([])
-Y = np.array([])
+e     = np.zeros(len(ID))
+theta = np.zeros(len(ID))
 
-for j in range(len(ID_c)):
-     print j
-     mid  = ides == ID_c[j]
-     N = np.append(N,mid.sum())
+X = np.zeros(len(RA))
+Y = np.zeros(len(RA))
+
+for j in ID_c:
+     print j, N_GAL[j]
+     mid  = ides == ID[j]
+
      ra   = RA[mid]
      dec  = DEC[mid]
-     mcen = R_cen[mid] == 0
      
-     ra0  = ra[mcen]
-     dec0 = dec[mcen]
+     ra0  = RA0[j]
+     dec0 = DEC0[j]
      
-     wcs.wcs.crval = [ra0[0],dec0[0]]
+     wcs.wcs.crval = [ra0,dec0]
      dx, dy = wcs.wcs_world2pix(ra, dec, 0)
 
-     X = np.append(X,dx)
-     Y = np.append(Y,dy)
-
-
-     dx = dx[~mcen]
-     dy = dy[~mcen]
+     X[mid] = dx
+     Y[mid] = dy
      
      # all members
-     ellip, ang = momentos(dx,dy,np.ones(len(dx)))
-     e = np.append(e,ellip)
-     theta = np.append(theta,ang)
+     e[j], theta[j] = momentos(dx,dy,np.ones(len(dx)))
      
 
-X = np.array(X)
-Y = np.array(Y)
 
 theta2           = theta
 theta2[theta<0.] = np.pi + theta[theta<0.]
 
 # '''
 tbhdu = fits.BinTableHDU.from_columns(
-        [fits.Column(name='N', format='D', array=N),
+        [fits.Column(name='ID', format='D', array=ID),
         fits.Column(name='e', format='D', array=e),
-        fits.Column(name='theta', format='D', array=theta)])
+        fits.Column(name='theta', format='D', array=theta2)])
         
-tbhdu.writeto(folder+'angle_Rgroups_FINAL.fits',overwrite=True)        
+tbhdu.writeto('/mnt/clemente/lensing/RodriguezGroups/angle_Rgroups_FINAL.fits',overwrite=True)        
 
 
 tbhdu = fits.BinTableHDU.from_columns(
         [fits.Column(name='X', format='D', array=X),
         fits.Column(name='Y', format='D', array=Y)])
         
-tbhdu.writeto(folder+'RGroup_projected_member_position.fits',overwrite=True)        
+tbhdu.writeto('/mnt/clemente/lensing/RodriguezGroups/RGroup_projected_member_position.fits',overwrite=True)        
 
 # '''
