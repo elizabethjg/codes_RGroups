@@ -50,7 +50,7 @@ def log_likelihood(data_model, r, Gamma, e_Gamma):
 
 def log_probability(data_model, r, Gamma, e_Gamma):
     log_M200, pcc, tau = data_model
-    if 11. < log_M200 < 15.5 and 0.3 < pcc < 1.0 and 0.4 < tau < 2.0:
+    if 11. < log_M200 < 15.5 and 0.3 < pcc < 1.0 and 0.1 < tau < 2.0:
         return log_likelihood(data_model, r, Gamma, e_Gamma)
     return -np.inf
 
@@ -59,6 +59,7 @@ def log_probability(data_model, r, Gamma, e_Gamma):
 pos = np.array([np.random.uniform(11.5,15.0,15),
                 np.random.uniform(0.3,0.8,15),
                 np.random.uniform(0.4,1.5,15)]).T
+                # np.random.uniform(0.2,0.5,15)]).T
 
 
 nwalkers, ndim = pos.shape
@@ -91,7 +92,7 @@ print (time.time()-t1)/60.
 
 mcmc_out = sampler.get_chain(flat=True)
 
-f1=open(folder+'monopole_misscentred_'+file_name[:-4]+'out','w')
+f1=open(folder+'monopole_2misscentred_'+file_name[:-4]+'out','w')
 f1.write('# log(M200)  pcc  tau\n')
 np.savetxt(f1,mcmc_out,fmt = ['%12.6f']*3)
 f1.close()
