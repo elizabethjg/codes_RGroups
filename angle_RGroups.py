@@ -71,7 +71,7 @@ for j in ID_c:
      e[j], theta[j] = momentos(dx,dy,np.ones(len(dx)))
      
      l = 0.5*(max(dx)-min(dx))
-     limit = max([dx,dy])
+     limit = max(np.append(dx,dy))
      
      plt.figure()
      plt.plot(dx,dy,'k.')
