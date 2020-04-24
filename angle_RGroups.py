@@ -71,10 +71,13 @@ for j in ID_c:
      e[j], theta[j] = momentos(dx,dy,np.ones(len(dx)))
      
      l = 0.5*(max(dx)-min(dx))
+     limit = max([dx,dy])
+     
      plt.figure()
      plt.plot(dx,dy,'k.')
      plt.plot(0,0,'ro')
      plt.plot([0.,l*np.cos(theta[j])],[0,l*np.sin(theta[j])],label = np.str(np.rad2deg(theta[j])))
+     plt.axis([-1*limit,limit,-1*limit,limit])
      plt.legend()
      plt.savefig('/mnt/clemente/lensing/RodriguezGroups/'+str(j)+'.png',format='png',bbox_inches='tight')
 
