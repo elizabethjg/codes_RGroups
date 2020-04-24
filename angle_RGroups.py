@@ -2,6 +2,7 @@ import numpy as np
 from astropy.io import fits
 from astropy.cosmology import LambdaCDM
 from astropy.wcs import WCS
+import matplotlib.pyplot as plt
 cosmo = LambdaCDM(H0=70., Om0=0.3, Ode0=0.7)
 
 def momentos(dx,dy,w):
