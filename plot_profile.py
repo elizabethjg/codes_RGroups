@@ -6,6 +6,7 @@ import numpy as np
 from matplotlib import *
 from multipoles_shear import *
 from astropy.io import fits
+import corner
 
 def make_plot_centred_monopole(file_name,folder):
           
@@ -96,11 +97,43 @@ def make_plot_misscentred_monopole(file_name,folder):
      h       = profile[1].header
      p       = profile[1].data
 
-     M200    = 10**h['lM200_NFW']
+     file_mcmc = 'monopole_misscentred_'+file_name[:-4]+'out'
+
      Mhalo   = 10**h['lMASS_HALO_mean']
      Nmean   = h['N_GAL_mean']
      Nlens   = h['N_LENSES']
-    
+
+     mcmc = (np.loadtxt(file_mcmc)).T
+     labels = ['M200','pcc','tau']
+
+     mout    = np.percentile(mcmc[0][1000:], [16, 50, 84])
+     pcc_out = np.percentile(mcmc[1][1000:], [16, 50, 84])
+     tau_out = np.percentile(mcmc[2][1000:], [16, 50, 84])
+
+     fig = corner.corner(mcmc.T, labels=labels)
+     plt.savefig(folder+'plots_monopole_misscentred/corner'+file_mcmc[:-3]+'png')
+     
+     f, ax = plt.subplots(3, 1, figsize=(6,5))
+     ax[0].plot(mcmc[0],'k.',alpha=0.3)
+     ax[0].axvline(1000)
+     ax[0].axhline(mout[1])
+     ax[0].axhline(mout[1] - (mout[1]-mout[0]),ls='--')
+     ax[0].axhline(mout[1] + (mout[2]-mout[1]),ls='--')
+     ax[1].plot(mcmc[1],'k.',alpha=0.3)
+     ax[1].axvline(1000)
+     ax[1].axhline(pcc_out[1])
+     ax[1].axhline(pcc_out[1] - (pcc_out[1]-pcc_out[0]),ls='--')
+     ax[1].axhline(pcc_out[1] + (pcc_out[2]-pcc_out[1]),ls='--')
+     ax[2].plot(mcmc[2],'k.',alpha=0.3)
+     ax[2].axhline(tau_out[1])
+     ax[2].axhline(tau_out[1] - (tau_out[1]-tau_out[0]),ls='--')
+     ax[2].axhline(tau_out[1] + (tau_out[2]-tau_out[1]),ls='--')
+     ax[2].axvline(1000)
+     f.subplots_adjust(hspace=0,wspace=0)
+     plt.savefig(folder+'plots_monopole_misscentred/iter'+file_mcmc[:-3]+'png')
+
+     
+     
      if h['elM200_NFW'] < 0.:
           eM200 = 10**h['elM200_NFW']
      else:

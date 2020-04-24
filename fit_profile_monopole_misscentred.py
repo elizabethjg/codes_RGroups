@@ -50,7 +50,7 @@ def log_likelihood(data_model, r, Gamma, e_Gamma):
 
 def log_probability(data_model, r, Gamma, e_Gamma):
     log_M200, pcc, tau = data_model
-    if 11. < log_M200 < 15.5 and 0.3 < pcc < 1.0 and 0.1 < tau < 0.6:
+    if 11. < log_M200 < 15.5 and 0.3 < pcc < 1.0 and 0.4 < tau < 2.0:
         return log_likelihood(data_model, r, Gamma, e_Gamma)
     return -np.inf
 
@@ -58,7 +58,7 @@ def log_probability(data_model, r, Gamma, e_Gamma):
 
 pos = np.array([np.random.uniform(11.5,15.0,15),
                 np.random.uniform(0.3,0.8,15),
-                np.random.uniform(0.2,0.5,15)]).T
+                np.random.uniform(0.4,1.5,15)]).T
 
 
 nwalkers, ndim = pos.shape
