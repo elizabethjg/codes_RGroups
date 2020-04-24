@@ -11,6 +11,15 @@ import time
 from multiprocessing import Pool
 import argparse
 from astropy.io import fits
+from astropy.cosmology import LambdaCDM
+from profiles_fit import *
+#parameters
+
+cvel = 299792458;   # Speed of light (m.s-1)
+G    = 6.670e-11;   # Gravitational constant (m3.kg-1.s-2)
+pc   = 3.085678e16; # 1 pc (m)
+Msun = 1.989e30 # Solar mass (kg)
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-folder', action='store', dest='folder',default='./')
@@ -35,10 +44,18 @@ Mhalo   = 10**h['lMASS_HALO_mean']
 Rmean   = h['RADIUS_HALO_mean']
 ROUT = (2.5*(2.*(Mhalo/2.21e14)**0.75)**(1./3.))/0.7
 
+# Compute cosmological parameters
+cosmo = LambdaCDM(H0=0.7*100, Om0=0.3, Ode0=0.7)
+H        = cosmo.H(zmean).value/(1.0e3*pc) #H at z_pair s-1 
+roc      = (3.0*(H**2.0))/(8.0*np.pi*G) #critical density at z_pair (kg.m-3)
+roc_mpc  = roc*((pc*1.0e6)**3.0)
+
+
 def log_likelihood(data_model, r, Gamma, e_Gamma):
     log_M200,pcc,tau = data_model
     M200 = 10**log_M200
-    s_off = tau*Rmean
+    R200 = r200_nfw(M200,roc_mpc)
+    s_off = tau*R200
     multipoles = multipole_shear_parallel(r,M200=M200,
                                 misscentred = True,s_off = s_off,
                                 ellip=0,z=zmean,components = ['t'],
@@ -92,7 +109,7 @@ print (time.time()-t1)/60.
 
 mcmc_out = sampler.get_chain(flat=True)
 
-f1=open(folder+'monopole_2misscentred_'+file_name[:-4]+'out','w')
+f1=open(folder+'monopole_3misscentred_'+file_name[:-4]+'out','w')
 f1.write('# log(M200)  pcc  tau\n')
 np.savetxt(f1,mcmc_out,fmt = ['%12.6f']*3)
 f1.close()
