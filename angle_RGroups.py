@@ -69,6 +69,12 @@ for j in ID_c:
      # all members
      e[j], theta[j] = momentos(dx,dy,np.ones(len(dx)))
      
+     l = 0.5*(max(dx)-min(dx))
+     plt.plot(dx,dy,'k.')
+     plt.plot(0,0,'ro')
+     plt.plot([0.,l*np.cos(theta[j])],[0,l*np.sin(theta[j])],label = np.str(np.rad2deg(theta[j])))
+     plt.legend()
+     plt.savefig('/mnt/clemente/lensing/RodriguezGroups/'+str(j)+'.png',format='png',bbox_inches='tight')
 
 
 theta2           = theta

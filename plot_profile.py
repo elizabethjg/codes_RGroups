@@ -102,6 +102,8 @@ def make_plot_misscentred_monopole(file_name,folder):
      Mhalo   = 10**h['lMASS_HALO_mean']
      Nmean   = h['N_GAL_mean']
      Nlens   = h['N_LENSES']
+     Rmean   = h['RADIUS_HALO_mean']
+     ROUT = (2.5*(2.*(Mhalo/2.21e14)**0.75)**(1./3.))/0.7
 
      mcmc = (np.loadtxt(file_mcmc)).T
      labels = ['M200','pcc','tau']
@@ -139,7 +141,7 @@ def make_plot_misscentred_monopole(file_name,folder):
      else:
           eM200 = h['elM200_NFW']
           
-     e_M200 = (M200*eM200)/np.log(10.)
+     # e_M200 = (M200*eM200)/np.log(10.)
           
      zmean   = h['Z_MEAN']
      
@@ -151,20 +153,28 @@ def make_plot_misscentred_monopole(file_name,folder):
           print h['N_min'],h['N_max']-1
      except:
           print h['N_GAL_mean']
-
+     
      
      print '####################'
-
+     
+     M200   = 10**(mout[1])
+     e_M200 = (10**(mout[1])*np.log(10.)*np.diff(mout))
+     
+     
      
      r  = np.logspace(np.log10(0.05),np.log10(5.5),20)
      
      
      
-     out = multipole_shear_parallel(r,M200=M200,z=zmean,
-                                   ellip=0.,misscentred=False,
-                                   ncores=2)
+     multipoles = multipole_shear_parallel(r,M200=10**mout[1],
+                              misscentred = True,s_off = Rmean*tau_out[1],
+                              ellip=0,z=zmean,components = ['t'],
+                              verbose=False,ncores=2)
      
-     Gt    = model_Gamma(out,'t',misscentred=False)     
+     Gt    = model_Gamma(multipoles,'t',misscentred=True,pcc=pcc_out[1])     
+     
+     Gtcen = pcc_out[1]*multipoles['Gt0'] 
+     Gtmiss = (1-pcc_out[1])*multipoles['Gt_off']
      
      f, ax = plt.subplots(2, 1, figsize=(5,8), sharex=True)
      f.subplots_adjust(hspace=0,wspace=0)
@@ -174,6 +184,8 @@ def make_plot_misscentred_monopole(file_name,folder):
      SN = np.mean(p.DSigma_T/p.error_DSigma_T)
 
      ax[0].plot(r,Gt,'C1--')
+     ax[0].plot(r,Gtcen,'C3')
+     ax[0].plot(r,Gtmiss,'C3--')
      ax[0].scatter(p.Rp,p.DSigma_T,facecolor='none',edgecolors='0.4')
      ax[0].errorbar(p.Rp,p.DSigma_T,yerr=p.error_DSigma_T,fmt = 'none',ecolor='0.4')
      ax[0].set_xscale('log')
@@ -181,6 +193,7 @@ def make_plot_misscentred_monopole(file_name,folder):
      ax[0].set_xlabel('R [Mpc]')
      ax[0].set_ylim(1,200)
      ax[0].set_xlim(0.1,5)
+     ax[0].axvline(ROUT,ls='--',c='C7')
      ax[0].xaxis.set_ticks([0.1,1,5])
      ax[0].set_xticklabels([0.1,1,5])
      ax[0].yaxis.set_ticks([0.1,10,100])
@@ -200,15 +213,16 @@ def make_plot_misscentred_monopole(file_name,folder):
      ax[1].set_yticklabels([-25,0,25])
      ax[1].set_ylabel(r'$\Delta \Sigma_\times [h_{70}M_\odot\,\rm{pc}^{-2}]$')
      matplotlib.rcParams.update({'font.size': 12})
-     plt.savefig(folder+'plots_monopole_centred/'+file_name[:-5]+'.png')
+     plt.savefig(folder+'plots_monopole_misscentred/'+file_name[:-5]+'.png')
      
-     return Mhalo/1.e14, M200/1.e14, e_M200/1.e14, Nmean, Nlens, SN
+     return Mhalo/1.e14, M200/1.e14, e_M200[0]/1.e14, Nmean, Nlens, SN
 
 
 
 folder = '/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles/'
      
 f = open(folder+'list_names','r')
+# f = open(folder+'list_m1','r')
 lines = f.readlines()
 
 MH    = np.array([])
@@ -220,7 +234,7 @@ SN = np.array([])
 
 for line in lines:
      
-     Mhalo, M200, eM200, Nmean, Nlens, sn = make_plot_centred_monopole(line[:-1],folder)
+     Mhalo, M200, eM200, Nmean, Nlens, sn = make_plot_misscentred_monopole(line[:-1],folder)
      
      MH    = np.append(MH,Mhalo)
      MNFW  = np.append(MNFW,M200*0.7)
