@@ -107,7 +107,7 @@ print (time.time()-t1)/60.
 
 mcmc_out = sampler.get_chain(flat=True)
 
-f1=open(folder+'monopole_3misscentred_'+file_name[:-4]+'out','w')
+f1=open(folder+'monopole_4misscentred_'+file_name[:-4]+'out','w')
 f1.write('# log(M200)  pcc  tau\n')
 np.savetxt(f1,mcmc_out,fmt = ['%12.6f']*3)
 f1.close()
