@@ -37,7 +37,7 @@ RA[RA > 275] = RA[RA>275] - 360.
 DEC   = members.DEC
 
 N_GAL = groups.N_GAL
-mgal  = N_GAL > 2
+mgal  = N_GAL > 1
 
 ID    = groups.ID
 RA0   = RA0
@@ -52,7 +52,7 @@ X = np.zeros(len(RA))
 Y = np.zeros(len(RA))
 
 for j in ID_c:
-     print j, N_GAL[j]
+     print(j, N_GAL[j])
      mid  = ides == ID[j]
 
      ra   = RA[mid]
@@ -72,7 +72,8 @@ for j in ID_c:
      
      l = 0.5*(max(dx)-min(dx))
      limit = max(np.append(dx,dy))
-     
+
+     # '''
      plt.figure()
      plt.plot(dx,dy,'k.')
      plt.plot(0,0,'ro')
@@ -80,7 +81,7 @@ for j in ID_c:
      plt.axis([-1*limit,limit,-1*limit,limit])
      plt.legend()
      plt.savefig('/mnt/clemente/lensing/RodriguezGroups/'+str(j)+'.png',format='png',bbox_inches='tight')
-
+     # '''
 
 theta2           = theta
 theta2[theta<0.] = np.pi + theta[theta<0.]
@@ -95,7 +96,8 @@ tbhdu.writeto('/mnt/clemente/lensing/RodriguezGroups/angle_Rgroups_FINAL.fits',o
 
 
 tbhdu = fits.BinTableHDU.from_columns(
-        [fits.Column(name='X', format='D', array=X),
+        [fits.Column(name='ID', format='D', array=members.group_id),
+        fits.Column(name='X', format='D', array=X),
         fits.Column(name='Y', format='D', array=Y)])
         
 tbhdu.writeto('/mnt/clemente/lensing/RodriguezGroups/RGroup_projected_member_position.fits',overwrite=True)        

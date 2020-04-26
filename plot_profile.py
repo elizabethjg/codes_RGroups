@@ -97,7 +97,7 @@ def make_plot_misscentred_monopole(file_name,folder):
      h       = profile[1].header
      p       = profile[1].data
 
-     file_mcmc = 'monopole_misscentred_'+file_name[:-4]+'out'
+     file_mcmc = 'monopole_3misscentred_'+file_name[:-4]+'out'
 
      Mhalo   = 10**h['lMASS_HALO_mean']
      Nmean   = h['N_GAL_mean']
@@ -113,7 +113,7 @@ def make_plot_misscentred_monopole(file_name,folder):
      tau_out = np.percentile(mcmc[2][1000:], [16, 50, 84])
 
      fig = corner.corner(mcmc.T, labels=labels)
-     plt.savefig(folder+'plots_monopole_misscentred/corner'+file_mcmc[:-3]+'png')
+     plt.savefig(folder+'plots_monopole_misscentred3/corner'+file_mcmc[:-3]+'png')
      
      f, ax = plt.subplots(3, 1, figsize=(6,5))
      ax[0].plot(mcmc[0],'k.',alpha=0.3)
@@ -132,7 +132,7 @@ def make_plot_misscentred_monopole(file_name,folder):
      ax[2].axhline(tau_out[1] + (tau_out[2]-tau_out[1]),ls='--')
      ax[2].axvline(1000)
      f.subplots_adjust(hspace=0,wspace=0)
-     plt.savefig(folder+'plots_monopole_misscentred/iter'+file_mcmc[:-3]+'png')
+     plt.savefig(folder+'plots_monopole_misscentred3/iter'+file_mcmc[:-3]+'png')
 
      
      
@@ -213,7 +213,7 @@ def make_plot_misscentred_monopole(file_name,folder):
      ax[1].set_yticklabels([-25,0,25])
      ax[1].set_ylabel(r'$\Delta \Sigma_\times [h_{70}M_\odot\,\rm{pc}^{-2}]$')
      matplotlib.rcParams.update({'font.size': 12})
-     plt.savefig(folder+'plots_monopole_misscentred/'+file_name[:-5]+'.png')
+     plt.savefig(folder+'plots_monopole_misscentred3/'+file_name[:-5]+'.png')
      
      return Mhalo/1.e14, M200/1.e14, e_M200[0]/1.e14, Nmean, Nlens, SN
 
@@ -231,6 +231,8 @@ eMNFW = np.array([])
 N_mean = np.array([])
 Nlenses = np.array([])
 SN = np.array([])
+
+# lines = lines[:3]+lines[4:]
 
 for line in lines:
      
