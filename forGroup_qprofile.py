@@ -42,7 +42,8 @@ def partial_profile(backcat_ids,RA0,DEC0,Z,
         catdata = backcat[mask]
 
 
-        dl, ds, dls = gentools.compute_lensing_distances(np.array([Z]), catdata.Z_B, precomputed=True)
+        # dl, ds, dls = gentools.compute_lensing_distances(np.array([Z]), catdata.Z_B, precomputed=True)
+        dl, ds, dls = gentools.compute_lensing_distances(Z, catdata.Z_B, precomputed=True)
         
         KPCSCALE   = dl*(((1.0/3600.0)*np.pi)/180.0)*1000.0
         BETA_array = dls/ds
@@ -52,10 +53,10 @@ def partial_profile(backcat_ids,RA0,DEC0,Z,
 
 
 
-        rads, theta, test1,test2 = eq2p2(np.deg2rad(RA0),
-                                        np.deg2rad(DEC0),
-                                        np.deg2rad(catdata.RAJ2000),
-                                        np.deg2rad(catdata.DECJ2000))
+        rads, theta, test1,test2 = eq2p2(np.deg2rad(catdata.RAJ2000),
+                                        np.deg2rad(catdata.DECJ2000),
+                                        np.deg2rad(RA0),
+                                        np.deg2rad(DEC0))
                
         #Correct polar angle for e1, e2
         theta = theta+np.pi/2.
@@ -385,3 +386,30 @@ if __name__ == '__main__':
 	main(sample,N_min,N_max,z_min,z_max,ODDS_min,RIN,
              ROUT,nbins,ncores)
 
+'''
+data = S.data.loc[L.data['CATID'].iloc[0]]
+Zrep   = np.repeat(L.data.Z.iloc[0],len(data))
+RArep  = np.repeat(L.data.RA_BG.iloc[0],len(data))
+DECrep = np.repeat(L.data.DEC_BG.iloc[0],len(data))
+angrep = np.repeat(theta[0],len(data))
+data['Z']        = Zrep
+data['RA_BG']  = RArep
+data['DEC_BG'] = DECrep
+data['ang']    = angrep
+
+for i in range(len(L.data)-1):
+        s_id = L.data['CATID'].iloc[i+1]
+        Zrep   = np.repeat(L.data.Z.iloc[i+1],len(s_id))
+        RArep  = np.repeat(L.data.RA_BG.iloc[i+1],len(s_id))
+        DECrep = np.repeat(L.data.DEC_BG.iloc[i+1],len(s_id))
+        angrep = np.repeat(theta[i+1],len(s_id))
+
+        datag  = S.data.loc[s_id]
+        datag['Z']   = Zrep
+        datag['RA_BG']  = RArep
+        datag['DEC_BG'] = DECrep
+        datag['ang']    = angrep
+
+       
+        data = pd.concat((data,datag))
+'''

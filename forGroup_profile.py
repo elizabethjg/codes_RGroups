@@ -52,10 +52,10 @@ def partial_profile(backcat_ids,RA0,DEC0,Z,
 
 
 
-        rads, theta, test1,test2 = eq2p2(np.deg2rad(RA0),
-                                        np.deg2rad(DEC0),
-                                        np.deg2rad(catdata.RAJ2000),
-                                        np.deg2rad(catdata.DECJ2000))
+        rads, theta, test1,test2 = eq2p2(np.deg2rad(catdata.RAJ2000),
+                                        np.deg2rad(catdata.DECJ2000),
+                                        np.deg2rad(RA0),
+                                        np.deg2rad(DEC0))
                
         #Correct polar angle for e1, e2
         theta = theta+np.pi/2.
