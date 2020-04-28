@@ -16,5 +16,5 @@ export MKL_NUM_THREADS=56
 
 source activate py2env
 
-srun python -u forGroup_profile.py -sample 'N1' -N_min 1 -N_max 2 -ncores 56
+srun python -u forGroup_qprofile.py -sample 'N2M_q' -N_min 2 -N_max 11 -ncores 56
  

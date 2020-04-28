@@ -28,7 +28,7 @@ S=LensCat.Catalog.read_catalog(folder+'gx_S_RM_FINAL.fits')
 S.data.set_index('CATID', inplace=True)
 
 
-def partial_profile(backcat_ids,RA0,DEC0,Z,
+def partial_profile(backcat_ids,RA0,DEC0,Z,pangle,
                     RIN,ROUT,ndots,nboot=100):
 
         
@@ -42,8 +42,8 @@ def partial_profile(backcat_ids,RA0,DEC0,Z,
         catdata = backcat[mask]
 
 
-        # dl, ds, dls = gentools.compute_lensing_distances(np.array([Z]), catdata.Z_B, precomputed=True)
-        dl, ds, dls = gentools.compute_lensing_distances(Z, catdata.Z_B, precomputed=True)
+        dl, ds, dls = gentools.compute_lensing_distances(np.array([Z]), catdata.Z_B, precomputed=True)
+        # dl, ds, dls = gentools.compute_lensing_distances(Z, catdata.Z_B, precomputed=True)
         
         KPCSCALE   = dl*(((1.0/3600.0)*np.pi)/180.0)*1000.0
         BETA_array = dls/ds
@@ -57,14 +57,17 @@ def partial_profile(backcat_ids,RA0,DEC0,Z,
                                         np.deg2rad(catdata.DECJ2000),
                                         np.deg2rad(RA0),
                                         np.deg2rad(DEC0))
+
+
+        theta2 = (2.*np.pi - theta) +np.pi/2.
+        theta_ra = theta2
+        theta_ra[theta2 > 2.*np.pi] = theta2[theta2 > 2.*np.pi] - 2.*np.pi
                
         #Correct polar angle for e1, e2
         theta = theta+np.pi/2.
         
         e1     = catdata.e1
         e2     = catdata.e2
-        
-        
         
         #get tangential ellipticities 
         et = (-e1*np.cos(2*theta)-e2*np.sin(2*theta))*sigma_c
@@ -87,13 +90,36 @@ def partial_profile(backcat_ids,RA0,DEC0,Z,
         bines = np.logspace(np.log10(RIN),np.log10(ROUT),num=ndots+1)
         dig = np.digitize(r,bines)
         
+        at     = theta_ra - pangle
+        
         DSIGMAwsum_T = []
         DSIGMAwsum_X = []
         WEIGHTsum    = []
         Mwsum        = []
+        
         BOOTwsum_T   = np.zeros((nboot,ndots))
         BOOTwsum_X   = np.zeros((nboot,ndots))
         BOOTwsum     = np.zeros((nboot,ndots))
+        
+        GAMMATcos_wsum = []
+        GAMMAXsin_wsum = []
+        WEIGHTcos_sum  = []
+        WEIGHTsin_sum  = []
+        
+        BOOTwsum_Tcos  = np.zeros((nboot,ndots))
+        BOOTwsum_Xsin  = np.zeros((nboot,ndots))
+        BOOTwsum_cos   = np.zeros((nboot,ndots))
+        BOOTwsum_sin   = np.zeros((nboot,ndots))
+        
+        GAMMATcos_wsum_c = []
+        GAMMAXsin_wsum_c = []
+        WEIGHTcos_sum_c  = []
+        WEIGHTsin_sum_c  = []
+        
+        BOOTwsum_Tcos_c  = np.zeros((nboot,ndots))
+        BOOTwsum_Xsin_c  = np.zeros((nboot,ndots))
+        BOOTwsum_cos_c   = np.zeros((nboot,ndots))
+        BOOTwsum_sin_c   = np.zeros((nboot,ndots))        
         
         for nbin in range(ndots):
                 mbin = dig == nbin+1              
@@ -102,6 +128,16 @@ def partial_profile(backcat_ids,RA0,DEC0,Z,
                 DSIGMAwsum_X = np.append(DSIGMAwsum_X,(ex[mbin]*peso[mbin]).sum())
                 WEIGHTsum    = np.append(WEIGHTsum,(peso[mbin]).sum())
                 Mwsum        = np.append(Mwsum,(m[mbin]*peso[mbin]).sum())
+
+                GAMMATcos_wsum = np.append(GAMMATcos_wsum,(et[mbin]*np.cos(2.*at[mbin])*peso[mbin]).sum())
+                GAMMAXsin_wsum = np.append(GAMMAXsin_wsum,(ex[mbin]*np.sin(2.*at[mbin])*peso[mbin]).sum())
+                WEIGHTcos_sum  = np.append(WEIGHTcos_sum,((np.cos(2.*at[mbin])**2)*peso[mbin]).sum())
+                WEIGHTsin_sum  = np.append(WEIGHTsin_sum,((np.sin(2.*at[mbin])**2)*peso[mbin]).sum())
+                               
+                GAMMATcos_wsum_c = np.append(GAMMATcos_wsum_c,(et[mbin]*np.cos(2.*theta_ra[mbin])*peso[mbin]).sum())
+                GAMMAXsin_wsum_c = np.append(GAMMAXsin_wsum_c,(ex[mbin]*np.sin(2.*theta_ra[mbin])*peso[mbin]).sum())
+                WEIGHTcos_sum_c  = np.append(WEIGHTcos_sum_c,((np.cos(2.*theta_ra[mbin])**2)*peso[mbin]).sum())
+                WEIGHTsin_sum_c  = np.append(WEIGHTsin_sum_c,((np.sin(2.*theta_ra[mbin])**2)*peso[mbin]).sum())
                 
                 index = np.arange(mbin.sum())
                 if mbin.sum() == 0:
@@ -113,10 +149,29 @@ def partial_profile(backcat_ids,RA0,DEC0,Z,
                         BOOTwsum_T[:,nbin] = np.sum(np.array(et[mbin]*peso[mbin])[INDEX],axis=1)
                         BOOTwsum_X[:,nbin] = np.sum(np.array(ex[mbin]*peso[mbin])[INDEX],axis=1)
                         BOOTwsum[:,nbin]   = np.sum(np.array(peso[mbin])[INDEX],axis=1)
+
+                        BOOTwsum_Tcos[:,nbin] = np.sum(np.array(et[mbin]*np.cos(2.*at[mbin])*peso[mbin])[INDEX],axis=1)
+                        BOOTwsum_Xsin[:,nbin] = np.sum(np.array(ex[mbin]*np.sin(2.*at[mbin])*peso[mbin])[INDEX],axis=1)
+                        BOOTwsum_cos[:,nbin]  = np.sum(np.array(peso[mbin]*(np.cos(2.*at[mbin])**2))[INDEX],axis=1)
+                        BOOTwsum_sin[:,nbin]  = np.sum(np.array(peso[mbin]*(np.sin(2.*at[mbin])**2))[INDEX],axis=1)
+
+                        BOOTwsum_Tcos_c[:,nbin] = np.sum(np.array(et[mbin]*np.cos(2.*theta_ra[mbin])*peso[mbin])[INDEX],axis=1)
+                        BOOTwsum_Xsin_c[:,nbin] = np.sum(np.array(ex[mbin]*np.sin(2.*theta_ra[mbin])*peso[mbin])[INDEX],axis=1)
+                        BOOTwsum_cos_c[:,nbin]  = np.sum(np.array(peso[mbin]*(np.cos(2.*theta_ra[mbin])**2))[INDEX],axis=1)
+                        BOOTwsum_sin_c[:,nbin]  = np.sum(np.array(peso[mbin]*(np.sin(2.*theta_ra[mbin])**2))[INDEX],axis=1)
+
         
         output = {'DSIGMAwsum_T':DSIGMAwsum_T,'DSIGMAwsum_X':DSIGMAwsum_X,
                    'WEIGHTsum':WEIGHTsum, 'Mwsum':Mwsum, 
-                   'BOOTwsum_T':BOOTwsum_T, 'BOOTwsum_X':BOOTwsum_X, 'BOOTwsum':BOOTwsum, 
+                   'BOOTwsum_T':BOOTwsum_T, 'BOOTwsum_X':BOOTwsum_X, 'BOOTwsum':BOOTwsum,
+                   'GAMMATcos_wsum': GAMMATcos_wsum, 'GAMMAXsin_wsum': GAMMAXsin_wsum,
+                   'WEIGHTcos_sum': WEIGHTcos_sum, 'WEIGHTsin_sum': WEIGHTsin_sum,
+                   'GAMMATcos_wsum_c': GAMMATcos_wsum_c, 'GAMMAXsin_wsum_c': GAMMAXsin_wsum_c,
+                   'WEIGHTcos_sum_c': WEIGHTcos_sum_c, 'WEIGHTsin_sum_c': WEIGHTsin_sum_c,
+                   'BOOTwsum_Tcos':BOOTwsum_Tcos, 'BOOTwsum_Xsin':BOOTwsum_Xsin, 
+                   'BOOTwsum_cos':BOOTwsum_cos, 'BOOTwsum_sin':BOOTwsum_sin, 
+                   'BOOTwsum_Tcos_c':BOOTwsum_Tcos, 'BOOTwsum_Xsin_c':BOOTwsum_Xsin, 
+                   'BOOTwsum_cos_c':BOOTwsum_cos, 'BOOTwsum_sin_c':BOOTwsum_sin, 
                    'Ntot':Ntot}
         
         return output
@@ -191,24 +246,33 @@ def main(sample='pru',N_min=10,N_max=1000.,
         # WHERE THE SUMS ARE GOING TO BE SAVED
         
         DSIGMAwsum_T = np.zeros(ndots) 
-        GAMMATcos_wsum = np.zeros(ndots) 
-        GAMMAXsin_wsum = np.zeros(ndots) 
         DSIGMAwsum_X = np.zeros(ndots)
         WEIGHTsum    = np.zeros(ndots)
-        WEIGHTcos_sum    = np.zeros(ndots)
-        WEIGHTsin_sum    = np.zeros(ndots)
-        
         Mwsum        = np.zeros(ndots)
         
         BOOTwsum_T   = np.zeros((100,ndots))
         BOOTwsum_X   = np.zeros((100,ndots))
         BOOTwsum     = np.zeros((100,ndots))
         
-        BOOTwsum_Tcos    = np.zeros((100,ndots))
-        BOOTwsum_Xsin    = np.zeros((100,ndots))
-        BOOTwsum_cos     = np.zeros((100,ndots))
-        BOOTwsum_sin     = np.zeros((100,ndots))
-
+        GAMMATcos_wsum = np.zeros(ndots)
+        GAMMAXsin_wsum = np.zeros(ndots)
+        WEIGHTcos_sum  = np.zeros(ndots)
+        WEIGHTsin_sum  = np.zeros(ndots)
+        
+        BOOTwsum_Tcos  = np.zeros((100,ndots))
+        BOOTwsum_Xsin  = np.zeros((100,ndots))
+        BOOTwsum_cos   = np.zeros((100,ndots))
+        BOOTwsum_sin   = np.zeros((100,ndots))
+        
+        GAMMATcos_wsum_c = np.zeros(ndots)
+        GAMMAXsin_wsum_c = np.zeros(ndots)
+        WEIGHTcos_sum_c  = np.zeros(ndots)
+        WEIGHTsin_sum_c  = np.zeros(ndots)
+        
+        BOOTwsum_Tcos_c  = np.zeros((100,ndots))
+        BOOTwsum_Xsin_c  = np.zeros((100,ndots))
+        BOOTwsum_cos_c   = np.zeros((100,ndots))
+        BOOTwsum_sin_c   = np.zeros((100,ndots))        
         
         Ntot         = []
         tslice       = np.array([])
@@ -228,23 +292,20 @@ def main(sample='pru',N_min=10,N_max=1000.,
                 if num == 1:
                         entrada = [Lsplit[l].CATID.iloc[0],Lsplit[l].RA_BG.iloc[0],
                                         Lsplit[l].DEC_BG.iloc[0],Lsplit[l].Z.iloc[0],
-                                        RIN,ROUT,ndots]
+                                        Tsplit[l][0],RIN,ROUT,ndots]
                         
                         salida = [partial_profile_unpack(entrada)]
                 else:          
                         entrada = np.array([Lsplit[l].CATID.iloc[:],Lsplit[l].RA_BG,
-                                        Lsplit[l].DEC_BG,Lsplit[l].Z,rin,rout,nd]).T
+                                        Lsplit[l].DEC_BG,Lsplit[l].Z,Tsplit[l][:],
+                                        rin,rout,nd]).T
                         
                         pool = Pool(processes=(num))
                         salida = np.array(pool.map(partial_profile_unpack, entrada))
                         pool.terminate()
                                 
-                for g in range(len(salida)):
-                        
-                        profilesums = salida[g]
-                        angle_g       = Tsplit[l][g]
-                        
-                        
+                for profilesums in salida:
+                                                
                         DSIGMAwsum_T += profilesums['DSIGMAwsum_T']
                         DSIGMAwsum_X += profilesums['DSIGMAwsum_X']
                         WEIGHTsum    += profilesums['WEIGHTsum']
@@ -254,15 +315,25 @@ def main(sample='pru',N_min=10,N_max=1000.,
                         BOOTwsum_X   += profilesums['BOOTwsum_X']
                         BOOTwsum     += profilesums['BOOTwsum']
                         
-                        GAMMATcos_wsum += profilesums['DSIGMAwsum_T']*np.cos(2.*angle_g)
-                        GAMMAXsin_wsum += profilesums['DSIGMAwsum_X']*np.sin(2.*angle_g)
-                        WEIGHTcos_sum  += profilesums['WEIGHTsum']*(np.cos(2.*angle_g)**2)
-                        WEIGHTsin_sum  += profilesums['WEIGHTsum']*(np.sin(2.*angle_g)**2)
-
-                        BOOTwsum_Tcos   += profilesums['BOOTwsum_T']*np.cos(2.*angle_g)
-                        BOOTwsum_Xsin   += profilesums['BOOTwsum_X']*np.sin(2.*angle_g)
-                        BOOTwsum_cos    += profilesums['BOOTwsum']*(np.cos(2.*angle_g)**2)
-                        BOOTwsum_sin    += profilesums['BOOTwsum']*(np.sin(2.*angle_g)**2)
+                        GAMMATcos_wsum += profilesums['GAMMATcos_wsum']
+                        GAMMAXsin_wsum += profilesums['GAMMAXsin_wsum']
+                        WEIGHTcos_sum  += profilesums['WEIGHTcos_sum'] 
+                        WEIGHTsin_sum  += profilesums['WEIGHTsin_sum'] 
+                        
+                        BOOTwsum_Tcos  += profilesums['BOOTwsum_Tcos']
+                        BOOTwsum_Xsin  += profilesums['BOOTwsum_Xsin']
+                        BOOTwsum_cos   += profilesums['BOOTwsum_cos']
+                        BOOTwsum_sin   += profilesums['BOOTwsum_sin'] 
+                        
+                        GAMMATcos_wsum_c += profilesums['GAMMATcos_wsum_c']
+                        GAMMAXsin_wsum_c += profilesums['GAMMAXsin_wsum_c']
+                        WEIGHTcos_sum_c  += profilesums['WEIGHTcos_sum_c'] 
+                        WEIGHTsin_sum_c  += profilesums['WEIGHTsin_sum_c'] 
+                        
+                        BOOTwsum_Tcos_c  += profilesums['BOOTwsum_Tcos_c']
+                        BOOTwsum_Xsin_c  += profilesums['BOOTwsum_Xsin_c']
+                        BOOTwsum_cos_c   += profilesums['BOOTwsum_cos_c']
+                        BOOTwsum_sin_c   += profilesums['BOOTwsum_sin_c'] 
                         
                         Ntot         = np.append(Ntot,profilesums['Ntot'])
                 
@@ -286,6 +357,12 @@ def main(sample='pru',N_min=10,N_max=1000.,
         GAMMA_Xsin = (GAMMAXsin_wsum/WEIGHTsin_sum)/(1+Mcorr)
         eGAMMA_Tcos =  np.std((BOOTwsum_Tcos/BOOTwsum_cos),axis=0)/(1+Mcorr)
         eGAMMA_Xsin =  np.std((BOOTwsum_Xsin/BOOTwsum_sin),axis=0)/(1+Mcorr)
+
+        GAMMA_Tcos_c = (GAMMATcos_wsum_c/WEIGHTcos_sum_c)/(1+Mcorr)
+        GAMMA_Xsin_c = (GAMMAXsin_wsum_c/WEIGHTsin_sum_c)/(1+Mcorr)
+        eGAMMA_Tcos_c =  np.std((BOOTwsum_Tcos_c/BOOTwsum_cos_c),axis=0)/(1+Mcorr)
+        eGAMMA_Xsin_c =  np.std((BOOTwsum_Xsin_c/BOOTwsum_sin_c),axis=0)/(1+Mcorr)
+
         
         # AVERAGE LENS PARAMETERS
         
@@ -324,7 +401,11 @@ def main(sample='pru',N_min=10,N_max=1000.,
                 fits.Column(name='GAMMA_Tcos', format='D', array=GAMMA_Tcos),
                 fits.Column(name='error_GAMMA_Tcos', format='D', array=eGAMMA_Tcos),
                 fits.Column(name='GAMMA_Xsin', format='D', array=GAMMA_Xsin),
-                fits.Column(name='error_GAMMA_Xsin', format='D', array=eGAMMA_Xsin)])
+                fits.Column(name='error_GAMMA_Xsin', format='D', array=eGAMMA_Xsin),
+                fits.Column(name='GAMMA_Tcos_c', format='D', array=GAMMA_Tcos_c),
+                fits.Column(name='error_GAMMA_Tcos_c', format='D', array=eGAMMA_Tcos_c),
+                fits.Column(name='GAMMA_Xsin_c', format='D', array=GAMMA_Xsin_c),
+                fits.Column(name='error_GAMMA_Xsin_c', format='D', array=eGAMMA_Xsin_c)])
         
         h = tbhdu.header
         h.append(('N_LENSES',np.int(Nlenses)))
@@ -412,4 +493,9 @@ for i in range(len(L.data)-1):
 
        
         data = pd.concat((data,datag))
+
+Z = data.Z
+RA0 = data.RA_BG
+DEC0 = data.DEC_BG
+pangle = data.ang
 '''
