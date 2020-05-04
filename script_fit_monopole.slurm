@@ -16,5 +16,5 @@ export MKL_NUM_THREADS=10
 
 source activate py2env
 
-srun -u python fit_profile_monopole_misscentred.py -folder '/mnt/clemente/lensing/RodriguezGroups/N_all/' -file 'profile_N1.fits' -ncores 10
+srun -u python fit_profile_monopole_misscentred_pcc.py -folder '/mnt/clemente/lensing/RodriguezGroups/N_all/' -file 'profile_N26M_conM.fits' -ncores 10
  
