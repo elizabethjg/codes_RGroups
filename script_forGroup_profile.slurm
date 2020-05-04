@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=profileN1
+#SBATCH --job-name=N1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=56
 #SBATCH --time=3-0:00
@@ -16,5 +16,5 @@ export MKL_NUM_THREADS=56
 
 source activate py2env
 
-srun python -u forGroup_qprofile.py -sample 'N2M_q' -N_min 2 -N_max 11 -ncores 56
+srun python -u forGroup_profile.py -sample 'N1_conM' -N_min 1 -N_max 2 -C_BG_min 2.73 -ncores 56
  

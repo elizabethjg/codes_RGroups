@@ -156,7 +156,8 @@ def main(sample='pru',N_min=10,N_max=1000.,
         print 'Selecting groups with:'
         print N_min,' <= N_GAL < ',N_max
         print z_min,' <= z < ',z_max
-        print 'Backgroun galaxies with:'
+        print conmin,' <= C_BG < ',conmax
+        print 'Background galaxies with:'
         print 'ODDS > ',odds_min
         print 'Profile has ',ndots,'bins'
         print 'from ',RIN,'kpc to ',ROUT,'kpc'
