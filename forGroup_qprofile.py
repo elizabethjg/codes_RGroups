@@ -182,6 +182,7 @@ def partial_profile_unpack(minput):
 
 def main(sample='pru',N_min=10,N_max=1000.,
                 z_min = 0.0, z_max = 0.5,
+                conmin = 0.5, conmax = 5.0,
                 odds_min=0.5, RIN = 100., ROUT =5000.,
                 ndots= 15,ncores=10):
 
@@ -194,6 +195,8 @@ def main(sample='pru',N_min=10,N_max=1000.,
         N_max          (int) higher limit of galaxy members - <
         z_min          (float) lower limit for z - >=
         z_max          (float) higher limit for z - <
+        conmin         (float) lower limit for C_BG - >=
+        conmax         (float) higher limit for C_BG - <
         odds_min       (float) cut in odds
         RIN            (float) Inner bin radius of profile
         ROUT           (float) Outer bin radius of profile
@@ -209,7 +212,8 @@ def main(sample='pru',N_min=10,N_max=1000.,
         print 'Selecting groups with:'
         print N_min,' <= N_GAL < ',N_max
         print z_min,' <= z < ',z_max
-        print 'Backgroun galaxies with:'
+        print conmin,' <= C_BG < ',conmax
+        print 'Background galaxies with:'
         print 'ODDS > ',odds_min
         print 'Profile has ',ndots,'bins'
         print 'from ',RIN,'kpc to ',ROUT,'kpc'
@@ -220,9 +224,11 @@ def main(sample='pru',N_min=10,N_max=1000.,
         
         #reading cats
         
-        L = LensCat.Catalog.read_catalog(folder+'gx_L_RM_FINAL.fits')        
-        A = fits.open('/mnt/clemente/lensing/RodriguezGroups/angle_Rgroups_FINAL.fits')[1].data
-        mlenses = (L.data.N_GAL >= N_min)*(L.data.N_GAL < N_max)*(L.data.Z >= z_min)*(L.data.Z < z_max)
+        L=LensCat.Catalog.read_catalog(folder+'gx_L_RM_FINAL.fits')        
+        mrich = (L.data.N_GAL >= N_min)*(L.data.N_GAL < N_max)
+        mz    = (L.data.Z >= z_min)*(L.data.Z < z_max)
+        mcon  = (L.data.C_BG >= conmin)*(L.data.C_BG < conmax)
+        mlenses = mrich*mz*mcon
         Nlenses = mlenses.sum()
 
         if Nlenses < ncores:
@@ -231,9 +237,18 @@ def main(sample='pru',N_min=10,N_max=1000.,
         print 'Nlenses',Nlenses
         print 'CORRIENDO EN ',ncores,' CORES'
 
+        # A = fits.open('/mnt/clemente/lensing/RodriguezGroups/angle_Rgroups_FINAL.fits')[1].data
+        # theta  = A.theta[mlenses]
         
         L.data = L.data[mlenses]
-        theta  = A.theta[mlenses]
+        theta  = L.data.deVPhi_BG
+        mneg   = theta < 0.
+        theta[mneg]  = 360. + theta[mneg]  
+        theta = (360. - theta) + 90.
+        mmas  = theta > 360.
+        theta[mmas]  = theta[mmas] - 360.
+        mmas  = theta > 180.
+        theta[mmas]  = theta[mmas] - 180.
         
         # SPLIT LENSING CAT
         
@@ -446,6 +461,8 @@ if __name__ == '__main__':
         parser.add_argument('-N_max', action='store', dest='N_max', default=1000)
         parser.add_argument('-z_min', action='store', dest='z_min', default=0.0)
         parser.add_argument('-z_max', action='store', dest='z_max', default=0.5)
+        parser.add_argument('-C_BG_min', action='store', dest='conmin', default=0.5)
+        parser.add_argument('-C_BG_max', action='store', dest='conmax', default=5.0)
         parser.add_argument('-ODDS_min', action='store', dest='ODDS_min', default=0.5)
         parser.add_argument('-RIN', action='store', dest='RIN', default=100.)
         parser.add_argument('-ROUT', action='store', dest='ROUT', default=5000.)
@@ -458,14 +475,17 @@ if __name__ == '__main__':
         N_max      = int(args.N_max) 
         z_min      = float(args.z_min) 
         z_max      = float(args.z_max) 
+        conmin     = float(args.conmin) 
+        conmax     = float(args.conmax) 
         ODDS_min   = float(args.ODDS_min)
         RIN        = float(args.RIN)
         ROUT       = float(args.ROUT)
         nbins      = int(args.nbins)
         ncores     = int(args.ncores)
 	
-	main(sample,N_min,N_max,z_min,z_max,ODDS_min,RIN,
-             ROUT,nbins,ncores)
+	main(sample,N_min,N_max,z_min,z_max,
+             conmin,conmax,
+             ODDS_min,RIN,ROUT,nbins,ncores)
 
 '''
 data = S.data.loc[L.data['CATID'].iloc[0]]

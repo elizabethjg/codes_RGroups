@@ -661,10 +661,10 @@ j = np.argsort(N_mean)
 
 out = np.array([NMIN[j],NMAX[j],N_mean[j],ZMEAN[j],lMH[j],lMDYN[j],
                 lMNFW[j],elMNFW[0][j],elMNFW[1][j],pcc[j],
-                e_pcc.T[0][j],e_pcc.T[1][j]])
+                e_pcc.T[0][j],e_pcc.T[1][j],Nlenses[j]])
 
-f1.close()
+
 f1=open(folder+'Lens_results.out','w')
-f1.write('# NMIN     NMAX    Nmean  zmean  logMHALO    logMDYN   logMNFW   elogMNFW-   elogMNFW+   pcc   epcc-   epcc+ \n')
-np.savetxt(f1,out.T,fmt = ['%4i']*2+['%12.4f']*10)
+f1.write('# NMIN     NMAX    Nmean  zmean  logMHALO    logMDYN   logMNFW   elogMNFW-   elogMNFW+   pcc   epcc-   epcc+   Nlenses \n')
+np.savetxt(f1,out.T,fmt = ['%4i']*2+['%12.4f']*10+['%6i'])
 f1.close()
