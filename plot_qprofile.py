@@ -38,7 +38,7 @@ def make_plot_centred(file_name,folder):
           print h['N_min'],h['N_max']-1
      except:
           print h['N_GAL_mean']
-
+     print 'CON_min',h['C_BG_MIN']
      
      print '####################'
 

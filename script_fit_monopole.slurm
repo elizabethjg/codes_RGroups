@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=N1
+#SBATCH --job-name=fitMbins
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=10
 #SBATCH --time=3-0:00
@@ -16,5 +16,6 @@ export MKL_NUM_THREADS=10
 
 source activate py2env
 
-srun -u python fit_profile_monopole_misscentred_pcc.py -folder '/mnt/clemente/lensing/RodriguezGroups/N_all/' -file 'profile_N26M_conM.fits' -ncores 10
- 
+srun -u python fit_profile_monopole_misscentred_pcc.py \
+-folder '/mnt/clemente/lensing/RodriguezGroups/N_all/' \
+-file 'profile_Mbin1.fits' -ncores 10 
