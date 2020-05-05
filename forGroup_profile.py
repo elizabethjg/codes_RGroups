@@ -124,9 +124,10 @@ def partial_profile_unpack(minput):
 	return partial_profile(*minput)
         
 
-def main(sample='pru',N_min=10,N_max=1000.,
+def main(sample='pru',N_min=0,N_max=1000.,
                 z_min = 0.0, z_max = 0.5,
                 conmin = 0.5, conmax = 5.0,
+                lMHmin = 11., lMHmax = 15.5,
                 odds_min=0.5, RIN = 100., ROUT =5000.,
                 ndots= 15,ncores=10):
 
@@ -141,6 +142,8 @@ def main(sample='pru',N_min=10,N_max=1000.,
         z_max          (float) higher limit for z - <
         conmin         (float) lower limit for C_BG - >=
         conmax         (float) higher limit for C_BG - <
+        lMHmin         (float) lower limit for log(MHALO) - >=
+        lMHmax         (float) higher limit for log(MHALO) - <        
         odds_min       (float) cut in odds
         RIN            (float) Inner bin radius of profile
         ROUT           (float) Outer bin radius of profile
@@ -157,6 +160,7 @@ def main(sample='pru',N_min=10,N_max=1000.,
         print N_min,' <= N_GAL < ',N_max
         print z_min,' <= z < ',z_max
         print conmin,' <= C_BG < ',conmax
+        print lMHmin,' <= log(MH) < ',lMHmax
         print 'Background galaxies with:'
         print 'ODDS > ',odds_min
         print 'Profile has ',ndots,'bins'
@@ -172,7 +176,8 @@ def main(sample='pru',N_min=10,N_max=1000.,
         mrich = (L.data.N_GAL >= N_min)*(L.data.N_GAL < N_max)
         mz    = (L.data.Z >= z_min)*(L.data.Z < z_max)
         mcon  = (L.data.C_BG >= conmin)*(L.data.C_BG < conmax)
-        mlenses = mrich*mz*mcon
+        mmass = (np.log10(L.data.MASS_HALO) >= lMHmin)*(np.log10(L.data.MASS_HALO) < lMHmax)
+        mlenses = mrich*mz*mcon*mmass
         Nlenses = mlenses.sum()
 
         if Nlenses < ncores:
@@ -298,6 +303,8 @@ def main(sample='pru',N_min=10,N_max=1000.,
         h.append(('z_max',np.round(z_max,4)))
         h.append(('C_BG_min',np.round(conmin,4)))
         h.append(('C_BG_max',np.round(conmax,4)))
+        h.append(('lMH_min',np.round(lMHmin,4)))
+        h.append(('lMH_max',np.round(lMHmax,4)))
         h.append(('lM200_NFW',np.round(np.log10(M200_NFW),4)))
         h.append(('elM200_NFW',np.round(le_M200,4)))
         h.append(('CHI2_NFW',np.round(nfw[2],4)))
@@ -327,12 +334,14 @@ if __name__ == '__main__':
         
         parser = argparse.ArgumentParser()
         parser.add_argument('-sample', action='store', dest='sample',default='pru')
-        parser.add_argument('-N_min', action='store', dest='N_min', default=10)
+        parser.add_argument('-N_min', action='store', dest='N_min', default=0)
         parser.add_argument('-N_max', action='store', dest='N_max', default=1000)
         parser.add_argument('-z_min', action='store', dest='z_min', default=0.0)
         parser.add_argument('-z_max', action='store', dest='z_max', default=0.5)
         parser.add_argument('-C_BG_min', action='store', dest='conmin', default=0.5)
         parser.add_argument('-C_BG_max', action='store', dest='conmax', default=5.0)
+        parser.add_argument('-lMH_min', action='store', dest='lMHmin', default=11.)
+        parser.add_argument('-lMH_max', action='store', dest='lMHmax', default=15.5)        
         parser.add_argument('-ODDS_min', action='store', dest='ODDS_min', default=0.5)
         parser.add_argument('-RIN', action='store', dest='RIN', default=100.)
         parser.add_argument('-ROUT', action='store', dest='ROUT', default=5000.)
@@ -345,8 +354,10 @@ if __name__ == '__main__':
         N_max      = int(args.N_max) 
         z_min      = float(args.z_min) 
         z_max      = float(args.z_max) 
+        lMHmin     = float(args.lMHmin) 
+        lMHmax     = float(args.lMHmax) 
         conmin     = float(args.conmin) 
-        conmax     = float(args.conmax) 
+        conmax     = float(args.conmax)         
         ODDS_min   = float(args.ODDS_min)
         RIN        = float(args.RIN)
         ROUT       = float(args.ROUT)
@@ -354,6 +365,6 @@ if __name__ == '__main__':
         ncores     = int(args.ncores)
 	
 	main(sample,N_min,N_max,z_min,z_max,
-             conmin,conmax,
+             conmin,conmax,lMHmin,lMHmax,
              ODDS_min,RIN,ROUT,nbins,ncores)
 
