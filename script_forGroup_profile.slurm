@@ -18,9 +18,10 @@ source activate py2env
 
 srun python -u forGroup_profile.py -sample 'Mbin1' -lMH_min 12. -lMH_max 12.4 -ncores 56
 srun python -u forGroup_profile.py -sample 'Mbin2' -lMH_min 12.4 -lMH_max 12.8 -ncores 56
-srun python -u forGroup_profile.py -sample 'Mbin3' -lMH_min 13.2 -lMH_max 13.6 -ncores 56
-srun python -u forGroup_profile.py -sample 'Mbin4' -lMH_min 14.0 -lMH_max 14.4 -ncores 56
-srun python -u forGroup_profile.py -sample 'Mbin5' -lMH_min 14.4 -lMH_max 15.5 -ncores 56
+srun python -u forGroup_profile.py -sample 'Mbin3' -lMH_min 12.8 -lMH_max 13.2 -ncores 56
+srun python -u forGroup_profile.py -sample 'Mbin4' -lMH_min 13.2 -lMH_max 13.6 -ncores 56
+srun python -u forGroup_profile.py -sample 'Mbin5' -lMH_min 13.6 -lMH_max 14.0 -ncores 56
+srun python -u forGroup_profile.py -sample 'Mbin6' -lMH_min 14.0 -lMH_max 15.5 -ncores 56
 
 
 
