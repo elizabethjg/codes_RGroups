@@ -614,7 +614,7 @@ def make_plot_misscentred_monopole_pcc(file_name,folder,plot = False):
 
 folder = '/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles/'
      
-f = open(folder+'list_conM','r')
+f = open(folder+'list_conMm','r')
 # f = open(folder+'list_m1','r')
 lines = f.readlines()
 
@@ -649,8 +649,8 @@ for line in lines:
      NMAX   = np.append(NMAX,nmax)
      ZMEAN   = np.append(ZMEAN,zmean)
 
-eMNFW = np.reshape(eMNFW,(8,2))
-e_pcc = np.reshape(e_pcc,(8,2))
+eMNFW = np.reshape(eMNFW,(len(lines),2))
+e_pcc = np.reshape(e_pcc,(len(lines),2))
 
 lMNFW = np.log10(MNFW*1.e14)
 lMDYN = np.log10(MDYN*1.e14)
@@ -664,7 +664,7 @@ out = np.array([NMIN[j],NMAX[j],N_mean[j],ZMEAN[j],lMH[j],lMDYN[j],
                 e_pcc.T[0][j],e_pcc.T[1][j],Nlenses[j]])
 
 
-f1=open(folder+'Lens_results_conM.out','w')
+f1=open(folder+'Lens_results_conMm.out','w')
 f1.write('# NMIN     NMAX    Nmean  zmean  logMHALO    logMDYN   logMNFW   elogMNFW-   elogMNFW+   pcc   epcc-   epcc+   Nlenses \n')
 np.savetxt(f1,out.T,fmt = ['%4i']*2+['%12.4f']*10+['%6i'])
 f1.close()

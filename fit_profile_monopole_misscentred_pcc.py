@@ -72,8 +72,8 @@ def log_probability(data_model, r, Gamma, e_Gamma):
 
 # initializing
 
-pos = np.array([np.random.uniform(11.5,15.0,15),
-                np.random.uniform(0.3,0.8,15)]).T
+pos = np.array([np.random.uniform(11.5,15.0,10),
+                np.random.uniform(0.3,0.8,10)]).T
 
 
 nwalkers, ndim = pos.shape
@@ -88,7 +88,7 @@ maskr = (p.Rp < ROUT)
 t1 = time.time()
 sampler = emcee.EnsembleSampler(nwalkers, ndim, log_probability, 
                                 args=(p.Rp[maskr],p.DSigma_T[maskr],p.error_DSigma_T[maskr]))
-sampler.run_mcmc(pos, 500, progress=True)
+sampler.run_mcmc(pos, 300, progress=True)
 print '//////////////////////'
 print '         TIME         '
 print '----------------------'
