@@ -664,7 +664,7 @@ out = np.array([NMIN[j],NMAX[j],N_mean[j],ZMEAN[j],lMH[j],lMDYN[j],
                 e_pcc.T[0][j],e_pcc.T[1][j],Nlenses[j]])
 
 
-f1=open(folder+'Lens_results_conMm.out','w')
+f1=open(folder+'Lens_results_Mbin.out','w')
 f1.write('# NMIN     NMAX    Nmean  zmean  logMHALO    logMDYN   logMNFW   elogMNFW-   elogMNFW+   pcc   epcc-   epcc+   Nlenses \n')
 np.savetxt(f1,out.T,fmt = ['%4i']*2+['%12.4f']*10+['%6i'])
 f1.close()
