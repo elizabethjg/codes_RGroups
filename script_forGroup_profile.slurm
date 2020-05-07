@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=Mbins
+#SBATCH --job-name=Mbins_conM
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=56
 #SBATCH --time=3-0:00
@@ -16,15 +16,15 @@ export MKL_NUM_THREADS=56
 
 source activate py2env
 
-srun python -u forGroup_profile.py -sample 'Mbin1_2' -lMH_min 12.5 -lMH_max 12.8 -ncores 56
-srun python -u forGroup_profile.py -sample 'Mbin2_2' -lMH_min 12.8 -lMH_max 13.1 -ncores 56
-srun python -u forGroup_profile.py -sample 'Mbin3_2' -lMH_min 13.1 -lMH_max 13.4 -ncores 56
-srun python -u forGroup_profile.py -sample 'Mbin4_2' -lMH_min 13.4 -lMH_max 13.7 -ncores 56
-srun python -u forGroup_profile.py -sample 'Mbin5_2' -lMH_min 13.7 -lMH_max 14.0 -ncores 56
-srun python -u forGroup_profile.py -sample 'Mbin7_2' -lMH_min 14.0 -lMH_max 14.3 -ncores 56
-srun python -u forGroup_profile.py -sample 'Mbin8_2' -lMH_min 14.3 -lMH_max 14.6 -ncores 56
-srun python -u forGroup_profile.py -sample 'Mbin9_2' -lMH_min 14.6 -lMH_max 14.9 -ncores 56
-srun python -u forGroup_profile.py -sample 'Mbin10_2' -lMH_min 14.9 -lMH_max 15.5 -ncores 56
+srun python -u forGroup_profile.py -sample 'Mbin1_conM' -lMH_min 12.5 -lMH_max 12.8  -C_BG_min 2.73 -ncores 56
+srun python -u forGroup_profile.py -sample 'Mbin2_conM' -lMH_min 12.8 -lMH_max 13.1  -C_BG_min 2.73 -ncores 56
+srun python -u forGroup_profile.py -sample 'Mbin3_conM' -lMH_min 13.1 -lMH_max 13.4  -C_BG_min 2.73 -ncores 56
+srun python -u forGroup_profile.py -sample 'Mbin4_conM' -lMH_min 13.4 -lMH_max 13.7  -C_BG_min 2.73 -ncores 56
+srun python -u forGroup_profile.py -sample 'Mbin5_conM' -lMH_min 13.7 -lMH_max 14.0  -C_BG_min 2.73 -ncores 56
+srun python -u forGroup_profile.py -sample 'Mbin7_conM' -lMH_min 14.0 -lMH_max 14.3  -C_BG_min 2.73 -ncores 56
+srun python -u forGroup_profile.py -sample 'Mbin8_conM' -lMH_min 14.3 -lMH_max 14.6  -C_BG_min 2.73 -ncores 56
+srun python -u forGroup_profile.py -sample 'Mbin9_conM' -lMH_min 14.6 -lMH_max 14.9  -C_BG_min 2.73 -ncores 56
+srun python -u forGroup_profile.py -sample 'Mbin10_conM' -lMH_min 14.9 -lMH_max 15.5 -C_BG_min 2.73  -ncores 56
 
 
 
