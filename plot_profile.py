@@ -614,7 +614,7 @@ def make_plot_misscentred_monopole_pcc(file_name,folder,plot = False):
 
 folder = '/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles/'
      
-f = open(folder+'list_conMm','r')
+f = open(folder+'list_Mbin','r')
 # f = open(folder+'list_m1','r')
 lines = f.readlines()
 

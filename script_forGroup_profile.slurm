@@ -16,12 +16,15 @@ export MKL_NUM_THREADS=56
 
 source activate py2env
 
-srun python -u forGroup_profile.py -sample 'Mbin1' -lMH_min 12. -lMH_max 12.4 -ncores 56
-srun python -u forGroup_profile.py -sample 'Mbin2' -lMH_min 12.4 -lMH_max 12.8 -ncores 56
-srun python -u forGroup_profile.py -sample 'Mbin3' -lMH_min 12.8 -lMH_max 13.2 -ncores 56
-srun python -u forGroup_profile.py -sample 'Mbin4' -lMH_min 13.2 -lMH_max 13.6 -ncores 56
-srun python -u forGroup_profile.py -sample 'Mbin5' -lMH_min 13.6 -lMH_max 14.0 -ncores 56
-srun python -u forGroup_profile.py -sample 'Mbin6' -lMH_min 14.0 -lMH_max 15.5 -ncores 56
+srun python -u forGroup_profile.py -sample 'Mbin1_2' -lMH_min 12.5 -lMH_max 12.8 -ncores 56
+srun python -u forGroup_profile.py -sample 'Mbin2_2' -lMH_min 12.8 -lMH_max 13.1 -ncores 56
+srun python -u forGroup_profile.py -sample 'Mbin3_2' -lMH_min 13.1 -lMH_max 13.4 -ncores 56
+srun python -u forGroup_profile.py -sample 'Mbin4_2' -lMH_min 13.4 -lMH_max 13.7 -ncores 56
+srun python -u forGroup_profile.py -sample 'Mbin5_2' -lMH_min 13.7 -lMH_max 14.0 -ncores 56
+srun python -u forGroup_profile.py -sample 'Mbin7_2' -lMH_min 14.0 -lMH_max 14.3 -ncores 56
+srun python -u forGroup_profile.py -sample 'Mbin8_2' -lMH_min 14.3 -lMH_max 14.6 -ncores 56
+srun python -u forGroup_profile.py -sample 'Mbin9_2' -lMH_min 14.6 -lMH_max 14.9 -ncores 56
+srun python -u forGroup_profile.py -sample 'Mbin10_2' -lMH_min 14.9 -lMH_max 15.5 -ncores 56
 
 
 
