@@ -1,7 +1,7 @@
 #!/bin/bash
-#SBATCH --job-name=qN1
+#SBATCH --job-name=qMbin
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=46
+#SBATCH --cpus-per-task=56
 #SBATCH --time=3-0:00
 ## An email is sent when the job is canceled or finished
 ## Change "root" for your e-mail address
@@ -11,10 +11,10 @@
 
 cd /mnt/clemente/lensing/RodriguezGroups/codes_RGroups/
 
-export OMP_NUM_THREADS=46
-export MKL_NUM_THREADS=46
+export OMP_NUM_THREADS=56
+export MKL_NUM_THREADS=56
 
 source activate py2env
 
-srun python -u forGroup_qprofile.py -sample 'N1qBG' -N_min 1 -N_max 2 -C_BG_min 2.73 -ROUT 1000. -ncores 46
+srun python -u forGroup_qprofile.py -sample 'Mbin125-14' -lMH_min 12.5 -lMH_max 14.0  -C_BG_min 0. -C_BG_max 100. -ncores 56
  

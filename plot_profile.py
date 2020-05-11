@@ -531,7 +531,11 @@ def make_plot_misscentred_monopole_pcc(file_name,folder,plot = False):
           print h['N_GAL_mean']
           nmin = h['N_GAL_mean']
           nmax = h['N_GAL_mean']
-          
+     
+     print 'C_BG, min, mas'
+     print h['C_BG_min'],h['C_BG_max']
+     print 'lMH, min, mas'
+     print h['lMH_min'],h['lMH_max']
      
      
      print '####################'
@@ -614,7 +618,7 @@ def make_plot_misscentred_monopole_pcc(file_name,folder,plot = False):
 
 folder = '/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles/'
      
-f = open(folder+'list_Mbin','r')
+f = open(folder+'list_Mbins2_conM','r')
 # f = open(folder+'list_m1','r')
 lines = f.readlines()
 
@@ -634,7 +638,7 @@ ZMEAN = np.array([])
 
 for line in lines:
      
-     Mhalo, M200, eM200, Nmean, Nlens, sn, pcc_, e_pcc_,mdyn,nmin,nmax,zmean = make_plot_misscentred_monopole_pcc(line[:-1],folder,True)
+     Mhalo, M200, eM200, Nmean, Nlens, sn, pcc_, e_pcc_,mdyn,nmin,nmax,zmean = make_plot_misscentred_monopole_pcc(line[:-1],folder)
      
      MH    = np.append(MH,Mhalo)
      MNFW  = np.append(MNFW,M200*0.7)
@@ -664,7 +668,7 @@ out = np.array([NMIN[j],NMAX[j],N_mean[j],ZMEAN[j],lMH[j],lMDYN[j],
                 e_pcc.T[0][j],e_pcc.T[1][j],Nlenses[j]])
 
 
-f1=open(folder+'Lens_results_Mbin.out','w')
+f1=open(folder+'Lens_results_Mbin_conM.out','w')
 f1.write('# NMIN     NMAX    Nmean  zmean  logMHALO    logMDYN   logMNFW   elogMNFW-   elogMNFW+   pcc   epcc-   epcc+   Nlenses \n')
 np.savetxt(f1,out.T,fmt = ['%4i']*2+['%12.4f']*10+['%6i'])
 f1.close()
