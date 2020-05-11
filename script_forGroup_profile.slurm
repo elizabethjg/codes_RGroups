@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=MbinscM
+#SBATCH --job-name=Mbins_rest
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=56
 #SBATCH --time=3-0:00
@@ -16,16 +16,21 @@ export MKL_NUM_THREADS=56
 
 source activate py2env
 
-srun python -u forGroup_profile.py -sample 'Mbin1_conM' -lMH_min 12.5 -lMH_max 12.7  -C_BG_min 2.73 -C_BG_max 100. -ncores 56
-srun python -u forGroup_profile.py -sample 'Mbin2_conM' -lMH_min 12.7 -lMH_max 12.9  -C_BG_min 2.73 -C_BG_max 100. -ncores 56
-srun python -u forGroup_profile.py -sample 'Mbin3_conM' -lMH_min 12.9 -lMH_max 13.1  -C_BG_min 2.73 -C_BG_max 100. -ncores 56
-srun python -u forGroup_profile.py -sample 'Mbin4_conM' -lMH_min 13.1 -lMH_max 13.3  -C_BG_min 2.73 -C_BG_max 100. -ncores 56
-srun python -u forGroup_profile.py -sample 'Mbin5_conM' -lMH_min 13.3 -lMH_max 13.5  -C_BG_min 2.73 -C_BG_max 100. -ncores 56
-srun python -u forGroup_profile.py -sample 'Mbin6_conM' -lMH_min 13.5 -lMH_max 13.7  -C_BG_min 2.73 -C_BG_max 100. -ncores 56
-srun python -u forGroup_profile.py -sample 'Mbin7_conM' -lMH_min 13.9 -lMH_max 14.1  -C_BG_min 2.73 -C_BG_max 100. -ncores 56
-srun python -u forGroup_profile.py -sample 'Mbin8_conM' -lMH_min 14.1 -lMH_max 14.3  -C_BG_min 2.73 -C_BG_max 100. -ncores 56
-srun python -u forGroup_profile.py -sample 'Mbin9_conM' -lMH_min 14.3 -lMH_max 14.5  -C_BG_min 2.73 -C_BG_max 100. -ncores 56
-srun python -u forGroup_profile.py -sample 'Mbin10_conM' -lMH_min 14.5 -lMH_max 15.5 -C_BG_min 2.73 -C_BG_max 100. -ncores 56
+srun python -u forGroup_profile.py -sample 'Mbin7' -lMH_min 13.7 -lMH_max 13.9  -C_BG_min 0. -C_BG_max 100. -ncores 56
+srun python -u forGroup_profile.py -sample 'Mbin10' -lMH_min 14.3 -lMH_max 15.5  -C_BG_min 0. -C_BG_max 100. -ncores 56
+srun python -u forGroup_profile.py -sample 'Mbin7_conM' -lMH_min 13.7 -lMH_max 13.9  -C_BG_min 2.73 -C_BG_max 100. -ncores 56
+srun python -u forGroup_profile.py -sample 'Mbin10_conM' -lMH_min 14.3 -lMH_max 15.5  -C_BG_min 2.73 -C_BG_max 100. -ncores 56
+
+##srun python -u forGroup_profile.py -sample 'Mbin1_conM' -lMH_min 12.5 -lMH_max 12.7  -C_BG_min 2.73 -C_BG_max 100. -ncores 56
+##srun python -u forGroup_profile.py -sample 'Mbin2_conM' -lMH_min 12.7 -lMH_max 12.9  -C_BG_min 2.73 -C_BG_max 100. -ncores 56
+##srun python -u forGroup_profile.py -sample 'Mbin3_conM' -lMH_min 12.9 -lMH_max 13.1  -C_BG_min 2.73 -C_BG_max 100. -ncores 56
+##srun python -u forGroup_profile.py -sample 'Mbin4_conM' -lMH_min 13.1 -lMH_max 13.3  -C_BG_min 2.73 -C_BG_max 100. -ncores 56
+##srun python -u forGroup_profile.py -sample 'Mbin5_conM' -lMH_min 13.3 -lMH_max 13.5  -C_BG_min 2.73 -C_BG_max 100. -ncores 56
+##srun python -u forGroup_profile.py -sample 'Mbin6_conM' -lMH_min 13.5 -lMH_max 13.7  -C_BG_min 2.73 -C_BG_max 100. -ncores 56
+##srun python -u forGroup_profile.py -sample 'Mbin7_conM' -lMH_min 13.9 -lMH_max 14.1  -C_BG_min 2.73 -C_BG_max 100. -ncores 56
+##srun python -u forGroup_profile.py -sample 'Mbin8_conM' -lMH_min 14.1 -lMH_max 14.3  -C_BG_min 2.73 -C_BG_max 100. -ncores 56
+##srun python -u forGroup_profile.py -sample 'Mbin9_conM' -lMH_min 14.3 -lMH_max 14.5  -C_BG_min 2.73 -C_BG_max 100. -ncores 56
+##srun python -u forGroup_profile.py -sample 'Mbin10_conM' -lMH_min 14.5 -lMH_max 15.5 -C_BG_min 2.73 -C_BG_max 100. -ncores 56
 
 
 
