@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=Mbins_rest
+#SBATCH --job-name=FOF_redo
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=56
 #SBATCH --time=3-0:00
