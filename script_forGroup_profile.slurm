@@ -1,7 +1,7 @@
 #!/bin/bash
-#SBATCH --job-name=FOF_redo
+#SBATCH --job-name=Mbins_redo
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=56
+#SBATCH --cpus-per-task=50
 #SBATCH --time=3-0:00
 ## An email is sent when the job is canceled or finished
 ## Change "root" for your e-mail address
@@ -11,15 +11,15 @@
 
 cd /mnt/clemente/lensing/RodriguezGroups/codes_RGroups/
 
-export OMP_NUM_THREADS=56
-export MKL_NUM_THREADS=56
+export OMP_NUM_THREADS=50
+export MKL_NUM_THREADS=50
 
 source activate py2env
 
-srun python -u forGroup_profile.py -sample 'Mbin7' -lMH_min 13.7 -lMH_max 13.9  -C_BG_min 0. -C_BG_max 100. -ncores 56
-srun python -u forGroup_profile.py -sample 'Mbin10' -lMH_min 14.3 -lMH_max 15.5  -C_BG_min 0. -C_BG_max 100. -ncores 56
-srun python -u forGroup_profile.py -sample 'Mbin7_conM' -lMH_min 13.7 -lMH_max 13.9  -C_BG_min 2.73 -C_BG_max 100. -ncores 56
-srun python -u forGroup_profile.py -sample 'Mbin10_conM' -lMH_min 14.3 -lMH_max 15.5  -C_BG_min 2.73 -C_BG_max 100. -ncores 56
+srun python -u forGroup_profile.py -sample 'Mbin7' -lMH_min 13.7 -lMH_max 13.9  -C_BG_min 0. -C_BG_max 100. -ncores 50
+srun python -u forGroup_profile.py -sample 'Mbin10' -lMH_min 14.3 -lMH_max 15.5  -C_BG_min 0. -C_BG_max 100. -ncores 50
+srun python -u forGroup_profile.py -sample 'Mbin7_conM' -lMH_min 13.7 -lMH_max 13.9  -C_BG_min 2.73 -C_BG_max 100. -ncores 50
+srun python -u forGroup_profile.py -sample 'Mbin10_conM' -lMH_min 14.3 -lMH_max 15.5  -C_BG_min 2.73 -C_BG_max 100. -ncores 50
 
 ##srun python -u forGroup_profile.py -sample 'Mbin1_conM' -lMH_min 12.5 -lMH_max 12.7  -C_BG_min 2.73 -C_BG_max 100. -ncores 56
 ##srun python -u forGroup_profile.py -sample 'Mbin2_conM' -lMH_min 12.7 -lMH_max 12.9  -C_BG_min 2.73 -C_BG_max 100. -ncores 56
