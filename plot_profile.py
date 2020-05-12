@@ -616,9 +616,9 @@ def make_plot_misscentred_monopole_pcc(file_name,folder,plot = False):
      return Mhalo/1.e14, M200/1.e14, e_M200/1.e14, Nmean, Nlens, SN, pcc_out[1], np.diff(pcc_out), MDYN/1.e14, nmin, nmax, zmean
 
 
-folder = '/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles/'
+folder = '/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_FOF/'
      
-f = open(folder+'list_Mbins2_conM','r')
+f = open(folder+'list_Mbin_conM','r')
 # f = open(folder+'list_m1','r')
 lines = f.readlines()
 
@@ -638,7 +638,7 @@ ZMEAN = np.array([])
 
 for line in lines:
      
-     Mhalo, M200, eM200, Nmean, Nlens, sn, pcc_, e_pcc_,mdyn,nmin,nmax,zmean = make_plot_misscentred_monopole_pcc(line[:-1],folder)
+     Mhalo, M200, eM200, Nmean, Nlens, sn, pcc_, e_pcc_,mdyn,nmin,nmax,zmean = make_plot_misscentred_monopole_pcc(line[:-1],folder,True)
      
      MH    = np.append(MH,Mhalo)
      MNFW  = np.append(MNFW,M200*0.7)
