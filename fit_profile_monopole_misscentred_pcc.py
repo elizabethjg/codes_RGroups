@@ -66,13 +66,13 @@ def log_likelihood(data_model, r, Gamma, e_Gamma):
 
 def log_probability(data_model, r, Gamma, e_Gamma):
     log_M200, pcc = data_model
-    if 11. < log_M200 < 15.5 and 0.3 < pcc < 1.0:
+    if 11. < log_M200 < 16.5 and 0.3 < pcc < 1.0:
         return log_likelihood(data_model, r, Gamma, e_Gamma)
     return -np.inf
 
 # initializing
 
-pos = np.array([np.random.uniform(11.5,15.0,10),
+pos = np.array([np.random.uniform(11.5,16.0,10),
                 np.random.uniform(0.3,0.8,10)]).T
 
 
