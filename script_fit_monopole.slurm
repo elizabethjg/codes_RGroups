@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=fitMbins
+#SBATCH --job-name=Mbin1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=10
 #SBATCH --time=3-0:00
@@ -18,4 +18,13 @@ source activate py2env
 
 srun -u python fit_profile_monopole_misscentred_pcc.py \
 -folder '/mnt/clemente/lensing/RodriguezGroups/N_all/' \
--file 'profile_Mbin1.fits' -ncores 10 
+-file 'profile_Mbin1_cM_zL.fits' -ncores 10 
+srun -u python fit_profile_monopole_misscentred_pcc.py \
+-folder '/mnt/clemente/lensing/RodriguezGroups/N_all/' \
+-file 'profile_Mbin1_cM_zH.fits' -ncores 10 
+srun -u python fit_profile_monopole_misscentred_pcc.py \
+-folder '/mnt/clemente/lensing/RodriguezGroups/N_all/' \
+-file 'profile_Mbin1_zL.fits' -ncores 10 
+srun -u python fit_profile_monopole_misscentred_pcc.py \
+-folder '/mnt/clemente/lensing/RodriguezGroups/N_all/' \
+-file 'profile_Mbin1_zH.fits' -ncores 10 
