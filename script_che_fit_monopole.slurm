@@ -1,7 +1,8 @@
 #!/bin/bash
-#SBATCH --job-name=Mbin1cM
+##SBATCH --job-name=Mbin1cM
+#SBATCH --job-name=M9
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=10
+#SBATCH --cpus-per-task=8
 #SBATCH --time=24:00:00
 ## An email is sent when the job is canceled or finished
 ## Change "root" for your e-mail address
@@ -18,7 +19,16 @@ source activate py2env
 
 srun -u python fit_profile_monopole_misscentred_pcc.py \
 -folder '/home/elizabeth/profilesFR_FINAL/' \
--file 'profile_Mbin1_cM_zL.fits' -ncores 10 
+-file 'profile_Mbin9.fits' -ncores 15
 srun -u python fit_profile_monopole_misscentred_pcc.py \
 -folder '/home/elizabeth/profilesFR_FINAL/' \
--file 'profile_Mbin1_cM_zH.fits' -ncores 10 
+-file 'profile_Mbin9_conM.fits' -ncores 15 
+
+
+
+##srun -u python fit_profile_monopole_misscentred_pcc.py \
+##-folder '/home/elizabeth/profilesFR_FINAL/' \
+##-file 'profile_Mbin1_cM_zL.fits' -ncores 10 
+##srun -u python fit_profile_monopole_misscentred_pcc.py \
+##-folder '/home/elizabeth/profilesFR_FINAL/' \
+##-file 'profile_Mbin1_cM_zH.fits' -ncores 10 
