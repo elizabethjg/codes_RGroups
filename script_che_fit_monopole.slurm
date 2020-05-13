@@ -1,6 +1,5 @@
 #!/bin/bash
-##SBATCH --job-name=Mbin1cM
-#SBATCH --job-name=26M
+#SBATCH --job-name=Mbin2cM
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=8
 #SBATCH --time=24:00:00
@@ -19,13 +18,7 @@ source activate py2env
 
 srun -u python fit_profile_monopole_misscentred_pcc.py \
 -folder '/home/elizabeth/profilesFR_FINAL/' \
--file 'profile_N26M.fits' -ncores 15
-
-
-
-##srun -u python fit_profile_monopole_misscentred_pcc.py \
-##-folder '/home/elizabeth/profilesFR_FINAL/' \
-##-file 'profile_Mbin1_cM_zL.fits' -ncores 10 
-##srun -u python fit_profile_monopole_misscentred_pcc.py \
-##-folder '/home/elizabeth/profilesFR_FINAL/' \
-##-file 'profile_Mbin1_cM_zH.fits' -ncores 10 
+-file 'profile_Mbin2_cM_zL.fits' -ncores 10 
+srun -u python fit_profile_monopole_misscentred_pcc.py \
+-folder '/home/elizabeth/profilesFR_FINAL/' \
+-file 'profile_Mbin2_cM_zH.fits' -ncores 10 
