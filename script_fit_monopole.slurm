@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=3cM_zL
+#SBATCH --job-name=4cM_zL
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=10
 #SBATCH --time=3-0:00
@@ -18,4 +18,4 @@ source activate py2env
 
 srun -u python fit_profile_monopole_misscentred_pcc.py \
 -folder '/mnt/clemente/lensing/RodriguezGroups/N_all/' \
--file 'profile_Mbin3_cM_zL.fits' -ncores 15 
+-file 'profile_Mbin4_cM_zL.fits' -ncores 15 
