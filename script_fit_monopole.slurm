@@ -1,8 +1,8 @@
 #!/bin/bash
-#SBATCH --job-name=4cM_zL
+#SBATCH --job-name=N1_Mbin1
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=10
-#SBATCH --time=5:30
+#SBATCH --cpus-per-task=7
+#SBATCH --time=20:00:00
 ## An email is sent when the job is canceled or finished
 ## Change "root" for your e-mail address
 #SBATCH --mail-type=FAIL,END
@@ -18,4 +18,10 @@ source activate py2env
 
 srun -u python fit_profile_monopole_misscentred_pcc.py \
 -folder '/mnt/clemente/lensing/RodriguezGroups/N_all/' \
--file 'profile_Mbin4_cM_zL.fits' -ncores 15 
+-file 'profile_N1_Mbin1_cM_zL.fits' -ncores 15 
+srun -u python fit_profile_monopole_misscentred_pcc.py \
+-folder '/mnt/clemente/lensing/RodriguezGroups/N_all/' \
+-file 'profile_N1_Mbin1_cM_zH.fits' -ncores 15 
+srun -u python fit_profile_monopole_misscentred_pcc.py \
+-folder '/mnt/clemente/lensing/RodriguezGroups/N_all/' \
+-file 'profile_N1_Mbin1_cM.fits' -ncores 15 
