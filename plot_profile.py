@@ -119,7 +119,11 @@ def make_plot_misscentred_monopole(file_name,folder,plot = False):
      ROUT = (2.5*(2.*(Mhalo/2.21e14)**0.75)**(1./3.))/0.7
      soff = 0.4*Rmean
      
-     mcmc = (np.loadtxt(folder+file_mcmc)).T
+     try:
+          mcmc = (np.loadtxt(folder+file_mcmc)).T
+     except:
+          return 'out' 
+          
      labels = ['M200','pcc']
 
      mout    = np.percentile(mcmc[0][1000:], [16, 50, 84])
@@ -179,7 +183,7 @@ def make_plot_misscentred_monopole(file_name,folder,plot = False):
           Gtmiss = (1-pcc_out[1])*multipoles['Gt_off']
      
           fig = corner.corner(mcmc.T, labels=labels)
-          plt.savefig(folder+'plots_monopole_misscentred_pcconly/corner'+file_mcmc[:-3]+'png')
+          plt.savefig(folder+'plots_monopole_misscentred/corner'+file_mcmc[:-3]+'png')
           
           f, ax = plt.subplots(2, 1, figsize=(6,3))
           ax[0].plot(mcmc[0],'k.',alpha=0.3)
@@ -193,7 +197,7 @@ def make_plot_misscentred_monopole(file_name,folder,plot = False):
           ax[1].axhline(pcc_out[1] - (pcc_out[1]-pcc_out[0]),ls='--')
           ax[1].axhline(pcc_out[1] + (pcc_out[2]-pcc_out[1]),ls='--')
           f.subplots_adjust(hspace=0,wspace=0)
-          plt.savefig(folder+'plots_monopole_misscentred_pcconly/iter'+file_mcmc[:-3]+'png')
+          plt.savefig(folder+'plots_monopole_misscentred/iter'+file_mcmc[:-3]+'png')
           
           f, ax = plt.subplots(2, 1, figsize=(5,8), sharex=True)
           f.subplots_adjust(hspace=0,wspace=0)
@@ -229,7 +233,7 @@ def make_plot_misscentred_monopole(file_name,folder,plot = False):
           ax[1].set_yticklabels([-25,0,25])
           ax[1].set_ylabel(r'$\Delta \Sigma_\times [h_{70}M_\odot\,\rm{pc}^{-2}]$')
           matplotlib.rcParams.update({'font.size': 12})
-          plt.savefig(folder+'plots_monopole_misscentred_pcconly/'+file_name[:-5]+'.png')
+          plt.savefig(folder+'plots_monopole_misscentred/'+file_name[:-5]+'.png')
      
      return Mhalo/1.e14, M200/1.e14, e_M200/1.e14, Nmean, Nlens, SN, pcc_out[1], np.diff(pcc_out), MDYN/1.e14, nmin, nmax, zmean
 
@@ -254,11 +258,18 @@ NMAX = np.array([])
 ZMEAN = np.array([])
 # lines = lines[:3]+lines[4:]
 
+nbins = 0
+
 for line in lines:
      
-     # Mhalo, M200, eM200, Nmean, Nlens, sn, pcc_, e_pcc_,mdyn,nmin,nmax,zmean = make_plot_misscentred_monopole_pcc(line[:-1],folder)
-     Mhalo, M200, eM200, Nmean, Nlens, sn, pcc_, e_pcc_,mdyn,nmin,nmax,zmean = make_plot_centred_monopole(line[:-1],folder)
      
+     try:
+          Mhalo, M200, eM200, Nmean, Nlens, sn, pcc_, e_pcc_,mdyn,nmin,nmax,zmean = make_plot_misscentred_monopole(line[:-1],folder,True)
+          # Mhalo, M200, eM200, Nmean, Nlens, sn, pcc_, e_pcc_,mdyn,nmin,nmax,zmean = make_plot_centred_monopole(line[:-1],folder)
+     except:
+          continue
+     
+     nbins += 1
      MH    = np.append(MH,Mhalo)
      MNFW  = np.append(MNFW,M200*0.7)
      eMNFW = np.append(eMNFW,[eM200*0.7])
@@ -272,8 +283,8 @@ for line in lines:
      NMAX   = np.append(NMAX,nmax)
      ZMEAN   = np.append(ZMEAN,zmean)
 
-eMNFW = np.reshape(eMNFW,(len(lines),2))
-e_pcc = np.reshape(e_pcc,(len(lines),2))
+eMNFW = np.reshape(eMNFW,(nbins,2))
+e_pcc = np.reshape(e_pcc,(nbins,2))
 
 lMNFW = np.log10(MNFW*1.e14)
 lMDYN = np.log10(MDYN*1.e14)

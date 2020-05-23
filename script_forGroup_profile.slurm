@@ -49,17 +49,17 @@ source activate py2env
 ##srun python -u forGroup_profile.py -sample 'N2-3_Mbin3_cM_zH'  -N_min 2 -N_max 4 -lMH_min 13.3 -lMH_max 13.7 -z_min 0.118 -C_BG_min 2.73 -C_BG_max 100. -ncores 46
 ##srun python -u forGroup_profile.py -sample 'N2-3_Mbin4_cM_zH'  -N_min 2 -N_max 4 -lMH_min 13.7 -lMH_max 14.5 -z_min 0.118 -C_BG_min 2.73 -C_BG_max 100. -ncores 46
                                             
-srun python -u forGroup_profile.py -sample 'N4-10_Mbin1_cM'  -N_min 4 -N_max 11 -lMH_min 12.5 -lMH_max 13.3 -z_max 1.0 -C_BG_min 2.73 -C_BG_max 100. -ncores 46
-srun python -u forGroup_profile.py -sample 'N4-10_Mbin2_cM'  -N_min 4 -N_max 11 -lMH_min 13.3 -lMH_max 13.7 -z_max 1.0 -C_BG_min 2.73 -C_BG_max 100. -ncores 46
-srun python -u forGroup_profile.py -sample 'N4-10_Mbin3_cM'  -N_min 4 -N_max 11 -lMH_min 13.7 -lMH_max 14.5 -z_max 1.0 -C_BG_min 2.73 -C_BG_max 100. -ncores 46
+##srun python -u forGroup_profile.py -sample 'N4-10_Mbin1_cM'  -N_min 4 -N_max 11 -lMH_min 12.5 -lMH_max 13.3 -z_max 1.0 -C_BG_min 2.73 -C_BG_max 100. -ncores 46
+##srun python -u forGroup_profile.py -sample 'N4-10_Mbin2_cM'  -N_min 4 -N_max 11 -lMH_min 13.3 -lMH_max 13.7 -z_max 1.0 -C_BG_min 2.73 -C_BG_max 100. -ncores 46
+##srun python -u forGroup_profile.py -sample 'N4-10_Mbin3_cM'  -N_min 4 -N_max 11 -lMH_min 13.7 -lMH_max 14.5 -z_max 1.0 -C_BG_min 2.73 -C_BG_max 100. -ncores 46
+##                                            
+##srun python -u forGroup_profile.py -sample 'N4-10_Mbin1_cM_zL'  -N_min 4 -N_max 11 -lMH_min 12.5 -lMH_max 13.3 -z_max 0.096 -C_BG_min 2.73 -C_BG_max 100. -ncores 46
+##srun python -u forGroup_profile.py -sample 'N4-10_Mbin2_cM_zL'  -N_min 4 -N_max 11 -lMH_min 13.3 -lMH_max 13.7 -z_max 0.096 -C_BG_min 2.73 -C_BG_max 100. -ncores 46
+##srun python -u forGroup_profile.py -sample 'N4-10_Mbin3_cM_zL'  -N_min 4 -N_max 11 -lMH_min 13.7 -lMH_max 14.5 -z_max 0.096 -C_BG_min 2.73 -C_BG_max 100. -ncores 46
                                             
-srun python -u forGroup_profile.py -sample 'N4-10_Mbin1_cM_zL'  -N_min 4 -N_max 11 -lMH_min 12.5 -lMH_max 13.3 -z_max 0.096 -C_BG_min 2.73 -C_BG_max 100. -ncores 46
-srun python -u forGroup_profile.py -sample 'N4-10_Mbin2_cM_zL'  -N_min 4 -N_max 11 -lMH_min 13.3 -lMH_max 13.7 -z_max 0.096 -C_BG_min 2.73 -C_BG_max 100. -ncores 46
-srun python -u forGroup_profile.py -sample 'N4-10_Mbin3_cM_zL'  -N_min 4 -N_max 11 -lMH_min 13.7 -lMH_max 14.5 -z_max 0.096 -C_BG_min 2.73 -C_BG_max 100. -ncores 46
-                                            
-srun python -u forGroup_profile.py -sample 'N4-10_Mbin1_cM_zH'  -N_min 4 -N_max 11 -lMH_min 12.5 -lMH_max 13.0 -z_min 0.096 -C_BG_min 2.73 -C_BG_max 100. -ncores 46
-srun python -u forGroup_profile.py -sample 'N4-10_Mbin2_cM_zH'  -N_min 4 -N_max 11 -lMH_min 13.3 -lMH_max 13.7 -z_min 0.096 -C_BG_min 2.73 -C_BG_max 100. -ncores 46
-srun python -u forGroup_profile.py -sample 'N4-10_Mbin3_cM_zH'  -N_min 4 -N_max 11 -lMH_min 13.7 -lMH_max 14.5 -z_min 0.096 -C_BG_min 2.73 -C_BG_max 100. -ncores 46
+srun python -u forGroup_profile.py -sample 'N4-10_Mbin1_cM_zH'  -N_min 4 -N_max 11 -lMH_min 12.5 -lMH_max 13.3 -z_min 0.096 -C_BG_min 2.73 -C_BG_max 100. -ncores 46
+##srun python -u forGroup_profile.py -sample 'N4-10_Mbin2_cM_zH'  -N_min 4 -N_max 11 -lMH_min 13.3 -lMH_max 13.7 -z_min 0.096 -C_BG_min 2.73 -C_BG_max 100. -ncores 46
+##srun python -u forGroup_profile.py -sample 'N4-10_Mbin3_cM_zH'  -N_min 4 -N_max 11 -lMH_min 13.7 -lMH_max 14.5 -z_min 0.096 -C_BG_min 2.73 -C_BG_max 100. -ncores 46
                                             
 ##srun python -u forGroup_profile.py -sample 'N10M_Mbin1_cM'  -N_min 10 -lMH_min 13.0 -lMH_max 14.0 -z_max 1.0 -C_BG_min 2.73 -C_BG_max 100. -ncores 46
 ##srun python -u forGroup_profile.py -sample 'N10M_Mbin2_cM'  -N_min 10 -lMH_min 14.0 -lMH_max 15.0 -z_max 1.0 -C_BG_min 2.73 -C_BG_max 100. -ncores 46
