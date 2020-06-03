@@ -34,10 +34,10 @@ ncores    = args.ncores
 ncores    = int(ncores)
 
 if 'True' in args.yan:
-	ymiss      = True
+    ymiss      = True
     outfile = 'monopole_pcconly_ymiss_'+file_name[:-4]+'out'
 elif 'False' in args.miss:
-	ymiss     = False
+    ymiss     = False
     outfile = 'monopole_pcconly_'+file_name[:-4]+'out'
 
 
