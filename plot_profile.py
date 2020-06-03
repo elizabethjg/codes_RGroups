@@ -43,12 +43,16 @@ def make_plot_centred_monopole(file_name,folder):
           nmin = h['N_GAL_mean']
           nmax = h['N_GAL_mean']
      
+     cmin, cmax = h['C_BG_min'],h['C_BG_max']
+     Mmin, Mmax = h['lMH_min'],h['lMH_max']
+     zmin, zmax = h['z_min'],h['z_max']
+     
      print 'C_BG, min, max'
-     print h['C_BG_min'],h['C_BG_max']
+     print cmin, cmax
      print 'lMH, min, max'
-     print h['lMH_min'],h['lMH_max']
+     print Mmin, Mmax
      print 'z, min, max'
-     print h['z_min'],h['z_max']
+     print zmin, zmax
 
      
      print '####################'
@@ -100,7 +104,10 @@ def make_plot_centred_monopole(file_name,folder):
      matplotlib.rcParams.update({'font.size': 12})
      plt.savefig(folder+'plots_monopole_centred/'+file_name[:-5]+'.png')
      
-     return Mhalo/1.e14, M200/1.e14, np.array([e_M200,e_M200])/1.e14, Nmean, Nlens, SN, 0., np.array([0.,0.]), MDYN/1.e14, nmin, nmax, zmean
+     return [Mhalo/1.e14, M200/1.e14, e_M200/1.e14, Nmean, Nlens, SN, 
+            1., np.array([0,0]), MDYN/1.e14, nmin, nmax, 
+            Mmin, Mmax, zmin, zmax, zmean]
+
 
 
 def make_plot_misscentred_monopole(file_name,folder,plot = False):
@@ -151,20 +158,23 @@ def make_plot_misscentred_monopole(file_name,folder,plot = False):
           print h['N_GAL_mean']
           nmin = h['N_GAL_mean']
           nmax = h['N_GAL_mean']
+
+     cmin, cmax = h['C_BG_min'],h['C_BG_max']
+     Mmin, Mmax = h['lMH_min'],h['lMH_max']
+     zmin, zmax = h['z_min'],h['z_max']
      
      print 'C_BG, min, max'
-     print h['C_BG_min'],h['C_BG_max']
+     print cmin, cmax
      print 'lMH, min, max'
-     print h['lMH_min'],h['lMH_max']
+     print Mmin, Mmax
      print 'z, min, max'
-     print h['z_min'],h['z_max']
+     print zmin, zmax
      
      
      print '####################'
      
      M200   = 10**(mout[1])
      e_M200 = (10**(mout[1])*np.log(10.)*np.diff(mout))
-     
      
      SN = np.mean(p.DSigma_T/p.error_DSigma_T)
      
@@ -235,7 +245,9 @@ def make_plot_misscentred_monopole(file_name,folder,plot = False):
           matplotlib.rcParams.update({'font.size': 12})
           plt.savefig(folder+'plots_monopole_misscentred/'+file_name[:-5]+'.png')
      
-     return Mhalo/1.e14, M200/1.e14, e_M200/1.e14, Nmean, Nlens, SN, pcc_out[1], np.diff(pcc_out), MDYN/1.e14, nmin, nmax, zmean
+     return [Mhalo/1.e14, M200/1.e14, e_M200/1.e14, Nmean, Nlens, SN, 
+            pcc_out[1], np.diff(pcc_out), MDYN/1.e14, nmin, nmax, 
+            Mmin, Mmax, zmin, zmax, zmean]
 
 
 folder = '/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_NMbin/'
@@ -244,18 +256,28 @@ f = open(folder+'list_NMbin','r')
 # f = open(folder+'list_m1','r')
 lines = f.readlines()
 
-MH    = np.array([])
-MDYN    = np.array([])
+
+
 MNFW  = np.array([])
 eMNFW = np.array([])
-N_mean = np.array([])
+
 Nlenses = np.array([])
 SN = np.array([])
 pcc = np.array([])
 e_pcc = np.array([])
+
 NMIN = np.array([])
 NMAX = np.array([])
-ZMEAN = np.array([])
+MMIN = np.array([])
+MMAX = np.array([])
+ZMIN = np.array([])
+ZMAX = np.array([])
+
+Zmean = np.array([])
+Mmean = np.array([])
+Nmean = np.array([])
+MDYN    = np.array([])
+
 # lines = lines[:3]+lines[4:]
 
 nbins = 0
@@ -264,41 +286,51 @@ for line in lines:
      
      
      try:
-          Mhalo, M200, eM200, Nmean, Nlens, sn, pcc_, e_pcc_,mdyn,nmin,nmax,zmean = make_plot_misscentred_monopole(line[:-1],folder,True)
-          # Mhalo, M200, eM200, Nmean, Nlens, sn, pcc_, e_pcc_,mdyn,nmin,nmax,zmean = make_plot_centred_monopole(line[:-1],folder)
+          out = make_plot_misscentred_monopole(line[:-1],folder)
+          # out = make_plot_centred_monopole(line[:-1],folder)
      except:
           continue
-     
+    
      nbins += 1
-     MH    = np.append(MH,Mhalo)
-     MNFW  = np.append(MNFW,M200*0.7)
-     eMNFW = np.append(eMNFW,[eM200*0.7])
-     N_mean = np.append(N_mean,Nmean)
-     Nlenses = np.append(Nlenses,Nlens)
-     SN      = np.append(SN,sn)
-     pcc     = np.append(pcc,pcc_)
-     e_pcc   = np.append(e_pcc,e_pcc_)
-     MDYN   = np.append(MDYN,mdyn)
-     NMIN   = np.append(NMIN,nmin)
-     NMAX   = np.append(NMAX,nmax)
-     ZMEAN   = np.append(ZMEAN,zmean)
+     Mmean    = np.append(Mmean,out[0])
+     MNFW     = np.append(MNFW,out[1]*0.7)
+     eMNFW = np.append(eMNFW,[out[2]*0.7])
+     
+     Nmean = np.append(Nmean,out[3])
+     Nlenses = np.append(Nlenses,out[4])
+     SN      = np.append(SN,out[5])
+     pcc     = np.append(pcc,out[6])
+     e_pcc   = np.append(e_pcc,out[7])
+     MDYN   = np.append(MDYN,out[8])
+     
+     NMIN   = np.append(NMIN,out[9])
+     NMAX   = np.append(NMAX,out[10])
+     MMIN   = np.append(MMIN,10**out[11]/1.e14)
+     MMAX   = np.append(MMAX,10**out[12]/1.e14)
+     ZMIN   = np.append(ZMIN,out[13])
+     ZMAX   = np.append(ZMAX,out[14])
+     
+     Zmean   = np.append(Zmean,out[15])
 
-eMNFW = np.reshape(eMNFW,(nbins,2))
-e_pcc = np.reshape(e_pcc,(nbins,2))
 
-lMNFW = np.log10(MNFW*1.e14)
-lMDYN = np.log10(MDYN*1.e14)
-lMH   = np.log10(MH*1.e14)
-elMNFW = [eMNFW.T[0]/(MNFW*np.log(10.)),eMNFW.T[1]/(MNFW*np.log(10.))]
+eMNFW = np.reshape(eMNFW,(nbins,2)).T
+e_pcc = np.reshape(e_pcc,(nbins,2)).T
 
-j = np.argsort(N_mean)
+#lMNFW = np.log10(MNFW*1.e14)
+#lMDYN = np.log10(MDYN*1.e14)
+#lMH   = np.log10(MH*1.e14)
+#elMNFW = [eMNFW.T[0]/(MNFW*np.log(10.)),eMNFW.T[1]/(MNFW*np.log(10.))]
 
-out = np.array([NMIN[j],NMAX[j],N_mean[j],ZMEAN[j],lMH[j],lMDYN[j],
-                lMNFW[j],elMNFW[0][j],elMNFW[1][j],pcc[j],
-                e_pcc.T[0][j],e_pcc.T[1][j],Nlenses[j]])
+j = np.argsort(Nmean)
+
+out = np.array([Nlenses[j], NMIN[j],NMAX[j],Nmean[j],
+                MMIN[j],MMAX[j],Mmean[j],
+                ZMIN[j],ZMAX[j],Zmean[j],
+                MDYN[j], MNFW[j], eMNFW[0][j],eMNFW[1][j],
+                pcc[j], e_pcc[0][j],e_pcc[1][j]])
 
 
 f1=open(folder+'Lens_NMbin.out','w')
-f1.write('# NMIN     NMAX    Nmean  zmean  logMHALO    logMDYN   logMNFW   elogMNFW-   elogMNFW+   pcc   epcc-   epcc+   Nlenses \n')
-np.savetxt(f1,out.T,fmt = ['%4i']*2+['%12.4f']*10+['%6i'])
+f1.write('# Nlenses    Nmin    Nmax   Nmean   Mmin        Mmax         Mmean       zmin         zmax         zmean         Mdyn         Mlens       eMlens                    pcc          e_pcc  \n')
+np.savetxt(f1,out.T,fmt = ['%4i']*3+['%12.4f']*14)
 f1.close()

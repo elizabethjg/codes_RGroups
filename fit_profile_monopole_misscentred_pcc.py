@@ -25,12 +25,19 @@ parser = argparse.ArgumentParser()
 parser.add_argument('-folder', action='store', dest='folder',default='./')
 parser.add_argument('-file', action='store', dest='file_name', default='profile.cat')
 parser.add_argument('-ncores', action='store', dest='ncores', default=4)
+parser.add_argument('-Yanmiss', action='store', dest='yan', default='False')
 args = parser.parse_args()
 
 folder    = args.folder
 file_name = args.file_name
 ncores    = args.ncores
 ncores    = int(ncores)
+
+if 'True' in args.yan:
+	ymiss      = True
+elif 'False' in args.miss:
+	ymiss     = False
+
 
 print 'fitting monopole misscentred'
 print folder
@@ -58,7 +65,7 @@ def log_likelihood(data_model, r, Gamma, e_Gamma):
     multipoles = multipole_shear_parallel(r,M200=M200,
                                 misscentred = True,s_off = soff,
                                 ellip=0,z=zmean,components = ['t'],
-                                verbose=False,ncores=ncores)
+                                verbose=False,ncores=ncores,Yanmiss=ymiss)
     model = model_Gamma(multipoles,'t', misscentred = True, pcc = pcc)
     sigma2 = e_Gamma**2
     return -0.5 * np.sum((Gamma - model)**2 / sigma2 + np.log(2.*np.pi*sigma2))
@@ -66,14 +73,14 @@ def log_likelihood(data_model, r, Gamma, e_Gamma):
 
 def log_probability(data_model, r, Gamma, e_Gamma):
     log_M200, pcc = data_model
-    if 11. < log_M200 < 16.5 and 0.3 < pcc < 1.0:
+    if 11. < log_M200 < 16.5 and 0.2 < pcc < 1.0:
         return log_likelihood(data_model, r, Gamma, e_Gamma)
     return -np.inf
 
 # initializing
 
 pos = np.array([np.random.uniform(11.5,16.0,10),
-                np.random.uniform(0.3,0.8,10)]).T
+                np.random.uniform(0.3,1.0,10)]).T
 
 
 nwalkers, ndim = pos.shape
