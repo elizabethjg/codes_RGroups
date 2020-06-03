@@ -35,8 +35,11 @@ ncores    = int(ncores)
 
 if 'True' in args.yan:
 	ymiss      = True
+    outfile = 'monopole_pcconly_ymiss_'+file_name[:-4]+'out'
 elif 'False' in args.miss:
 	ymiss     = False
+    outfile = 'monopole_pcconly_'+file_name[:-4]+'out'
+
 
 
 print 'fitting monopole misscentred'
@@ -113,7 +116,7 @@ print (time.time()-t1)/60.
 
 mcmc_out = sampler.get_chain(flat=True)
 
-f1=open(folder+'monopole_pcconly_'+file_name[:-4]+'out','w')
+f1=open(folder+outfile,'w')
 f1.write('# log(M200)  pcc  \n')
 np.savetxt(f1,mcmc_out,fmt = ['%12.6f']*2)
 f1.close()
