@@ -22,8 +22,7 @@ c = Lcat[1].data.C_BG
 
 mN1 = N==1
 mN23 = (N>1)*(N<4)
-mN410 = (N>3)*(N<11)
-mN11M = N>10
+mN4M = (N>3)
 mc = c > 2.73
 
 plt.figure()
@@ -31,15 +30,13 @@ plt.figure()
 plt.hist(lMH[mid*(lMH > 12.5)],np.linspace(12.5,15,50),histtype='step',density=True      ,label='Total sample',color='k')
 plt.hist(lMH[mid*(lMH > 12.5)*mN1],np.linspace(12.5,15,50),histtype='step',density=True  ,label='$N_{GAL} = 1$',color='C6')
 plt.hist(lMH[mid*(lMH > 12.5)*mN23],np.linspace(12.5,15,50),histtype='step',density=True ,label='$ 2 \leq N_{GAL} \leq 3$',color='C7')
-plt.hist(lMH[mid*(lMH > 12.5)*mN410],np.linspace(12.5,15,50),histtype='step',density=True,label='$ 4 \leq N_{GAL} \leq 10$',color='C8')
-plt.hist(lMH[mid*(lMH > 12.5)*mN11M],np.linspace(12.5,15,50),histtype='step',density=True,label='$N_{GAL} \geq 11$',color='C9')
+plt.hist(lMH[mid*(lMH > 12.5)*mN4M],np.linspace(12.5,15,50),histtype='step',density=True,label='$ N_{GAL} \geq 4$',color='C8')
 plt.legend(loc=1,fontsize=14,ncol=2,columnspacing=0.2,frameon=False)
 
 plt.hist(lMH[mc*mid*(lMH > 12.5)],np.linspace(12.5,15,50),histtype='step',density=True,label='Total sample',color='k',ls='--')
 plt.hist(lMH[mc*mid*(lMH > 12.5)*mN1],np.linspace(12.5,15,50),histtype='step',density=True,label='$N_{GAL} = 1$',color='C6',ls='--')
 plt.hist(lMH[mc*mid*(lMH > 12.5)*mN23],np.linspace(12.5,15,50),histtype='step',density=True,label='$ 2 \leq N_{GAL} \leq 3$',color='C7',ls='--')
-plt.hist(lMH[mc*mid*(lMH > 12.5)*mN410],np.linspace(12.5,15,50),histtype='step',density=True,label='$ 4 \leq N_{GAL} \leq 10$',color='C8',ls='--')
-plt.hist(lMH[mc*mid*(lMH > 12.5)*mN11M],np.linspace(12.5,15,50),histtype='step',density=True,label='$N_{GAL} \geq 11$',color='C9',ls='--')
+plt.hist(lMH[mc*mid*(lMH > 12.5)*mN4M],np.linspace(12.5,15,50),histtype='step',density=True,label='$ N_{GAL} \geq 4$',color='C8',ls='--')
 
 plt.axis([12.5,15.,0.,2.5])
 plt.xlabel('$\log{M_{AM}}$')
