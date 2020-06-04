@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=Mbin1
+#SBATCH --job-name=f1_Mbin6
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=7
 #SBATCH --time=16:00:00
