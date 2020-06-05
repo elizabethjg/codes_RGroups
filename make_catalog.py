@@ -10,11 +10,12 @@ from astropy.cosmology import LambdaCDM
 cosmo = LambdaCDM(H0=70, Om0=0.3, Ode0=0.7)
 
 
-with fits.open('../FINAL_Group.fits') as f:
+with fits.open('../FOF_mod_Group_Expanded.fits') as f:
         ft = Table(f[1].data)
         cols = ['ID', 'RA', 'DEC', 'RA_BG', 'DEC_BG','Z', 'N_GAL', 'CONCENTRATION',
                 'MASS_HALO', 'VDISP_HALO', 'RADIUS_HALO', 
-                'MASS_DYN', 'VDISP_DYN', 'RADIUS_DYN']
+                'MASS_DYN', 'VDISP_DYN', 'RADIUS_DYN', 'RADIUS_GEO', 
+		'C_BG', 'deVRad_BG', 'deVPhi_BG', 'MAG_BG','MAG_GAP']
         df = ft[cols].to_pandas()
 
         ra = df['RA']
@@ -28,8 +29,8 @@ with fits.open('../FINAL_Group.fits') as f:
         in_rcsl = np.ones(len(df), dtype=bool)
 
         z_min, z_max = 0.05, 0.40
-        folder = '../N_all/'
-        lensname = 'RM_FINAL'
+        folder = '../N_all_FOF/'
+        lensname = 'RM_FOF'
         mask_z = (df['Z']>=z_min)&(df['Z']<z_max)
         #print z_min, z_max, (in_cs82*mask_z).sum(), (in_kids*mask_z).sum(), (in_cfht*mask_z).sum(), (in_rcsl*mask_z).sum()
         in_cs82 &= mask_z
