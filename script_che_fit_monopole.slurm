@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=Mbin1cM
+#SBATCH --job-name=Mbin1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=8
 #SBATCH --time=24:00:00
@@ -16,9 +16,7 @@ export OMP_NUM_THREADS=10
 module load softwares/anaconda2/5.0-intel-2018.0
 source activate py2env
 
-srun -u python fit_profile_monopole_misscentred_pcc.py \
--folder '/home/elizabeth/profilesFR_FINAL/' \
--file 'profile_N1_Mbin1_cM_mzL.fits' -ncores 15
-srun -u python fit_profile_monopole_misscentred_pcc.py \
--folder '/home/elizabeth/profilesFR_FINAL/' \
--file 'profile_N1_Mbin1_cM_mzH.fits' -ncores 15 
+srun -u python fit_profile_monopole_misscentred_pcc.py -folder '/mnt/clemente/lensing/RodriguezGroups/N_all/' \
+-file 'profile_Mbin1.fits' -ncores 15 -Yanmiss 'True'
+srun -u python fit_profile_monopole_misscentred_pcc.py -folder '/mnt/clemente/lensing/RodriguezGroups/N_all/' \
+-file 'profile_Mbin1_conM.fits' -ncores 15 -Yanmiss 'True'
