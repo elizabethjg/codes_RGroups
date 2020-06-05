@@ -16,7 +16,7 @@ export OMP_NUM_THREADS=10
 module load softwares/anaconda2/5.0-intel-2018.0
 source activate py2env
 
-srun -u python fit_profile_monopole_misscentred_pcc.py -folder '/mnt/clemente/lensing/RodriguezGroups/N_all/' \
+srun -u python fit_profile_monopole_misscentred_pcc.py -folder '/home/elizabeth/profilesFR_FINAL' \
 -file 'profile_Mbin1.fits' -ncores 15 -Yanmiss 'True'
-srun -u python fit_profile_monopole_misscentred_pcc.py -folder '/mnt/clemente/lensing/RodriguezGroups/N_all/' \
+srun -u python fit_profile_monopole_misscentred_pcc.py -folder '/home/elizabeth/profilesFR_FINAL' \
 -file 'profile_Mbin1_conM.fits' -ncores 15 -Yanmiss 'True'
