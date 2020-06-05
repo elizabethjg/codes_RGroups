@@ -8,8 +8,9 @@ from multipoles_shear import *
 from astropy.io import fits
 import corner
 from profiles_fit import *
+import os
 
-def make_plot_centred_monopole(file_name,folder):
+def make_plot_centred_monopole(file_name,folder,samples):
           
 
      profile = fits.open(folder+file_name)
@@ -102,7 +103,7 @@ def make_plot_centred_monopole(file_name,folder):
      ax[1].set_yticklabels([-25,0,25])
      ax[1].set_ylabel(r'$\Delta \Sigma_\times [h_{70}M_\odot\,\rm{pc}^{-2}]$')
      matplotlib.rcParams.update({'font.size': 12})
-     plt.savefig(folder+'plots_monopole_centred/'+file_name[:-5]+'.png')
+     plt.savefig(folder+'plots_'+samples+'/'+file_name[:-5]+'_cen.png')
      
      return [Mhalo/1.e14, M200/1.e14, e_M200/1.e14, Nmean, Nlens, SN, 
             1., np.array([0,0]), MDYN/1.e14, nmin, nmax, 
@@ -110,15 +111,18 @@ def make_plot_centred_monopole(file_name,folder):
 
 
 
-def make_plot_misscentred_monopole(file_name,folder,plot = False):
+def make_plot_misscentred_monopole(file_name,folder,samples,plot = False,ymiss = False):
           
 
      profile = fits.open(folder+file_name)
      h       = profile[1].header
      p       = profile[1].data
 
-     file_mcmc = 'monopole_pcconly_'+file_name[:-4]+'out'
-
+     if ymiss:
+          file_mcmc = 'monopole_pcconly_ymiss_'+file_name[:-4]+'out'
+     else:
+          file_mcmc = 'monopole_pcconly_'+file_name[:-4]+'out'
+          
      Mhalo   = 10**h['lMASS_HALO_mean']
      Nmean   = h['N_GAL_mean']
      Nlens   = h['N_LENSES']
@@ -185,7 +189,7 @@ def make_plot_misscentred_monopole(file_name,folder,plot = False):
           multipoles = multipole_shear_parallel(r,M200=10**mout[1],
                                    misscentred = True,s_off = soff,
                                    ellip=0,z=zmean,components = ['t'],
-                                   verbose=False,ncores=2)
+                                   verbose=False,ncores=2,Yanmiss=ymiss)
           
           Gt    = model_Gamma(multipoles,'t',misscentred=True,pcc=pcc_out[1])     
           
@@ -193,7 +197,7 @@ def make_plot_misscentred_monopole(file_name,folder,plot = False):
           Gtmiss = (1-pcc_out[1])*multipoles['Gt_off']
      
           fig = corner.corner(mcmc.T, labels=labels)
-          plt.savefig(folder+'plots_monopole_misscentred/corner'+file_mcmc[:-3]+'png')
+          plt.savefig(folder+'plots_'+samples+'/'+'corner'+file_mcmc[:-3]+'png')
           
           f, ax = plt.subplots(2, 1, figsize=(6,3))
           ax[0].plot(mcmc[0],'k.',alpha=0.3)
@@ -207,7 +211,7 @@ def make_plot_misscentred_monopole(file_name,folder,plot = False):
           ax[1].axhline(pcc_out[1] - (pcc_out[1]-pcc_out[0]),ls='--')
           ax[1].axhline(pcc_out[1] + (pcc_out[2]-pcc_out[1]),ls='--')
           f.subplots_adjust(hspace=0,wspace=0)
-          plt.savefig(folder+'plots_monopole_misscentred/iter'+file_mcmc[:-3]+'png')
+          plt.savefig(folder+'plots_'+samples+'/'+file_mcmc[:-3]+'png')
           
           f, ax = plt.subplots(2, 1, figsize=(5,8), sharex=True)
           f.subplots_adjust(hspace=0,wspace=0)
@@ -243,20 +247,22 @@ def make_plot_misscentred_monopole(file_name,folder,plot = False):
           ax[1].set_yticklabels([-25,0,25])
           ax[1].set_ylabel(r'$\Delta \Sigma_\times [h_{70}M_\odot\,\rm{pc}^{-2}]$')
           matplotlib.rcParams.update({'font.size': 12})
-          plt.savefig(folder+'plots_monopole_misscentred/'+file_name[:-5]+'.png')
+          plt.savefig(folder+'plots_'+samples+'/'+file_name[:-5]+'_miss.png')
      
      return [Mhalo/1.e14, M200/1.e14, e_M200/1.e14, Nmean, Nlens, SN, 
             pcc_out[1], np.diff(pcc_out), MDYN/1.e14, nmin, nmax, 
             Mmin, Mmax, zmin, zmax, zmean]
 
 
-folder = '/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_NMbin/'
-     
-f = open(folder+'list_NMbin','r')
+folder = '/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles/'
+samples = 'Mbin_Yan'
+ymiss   = True
+
+f = open(folder+'list_'+samples,'r')
 # f = open(folder+'list_m1','r')
 lines = f.readlines()
 
-
+os.system('mkdir '+folder+'plots_'+samples)
 
 MNFW  = np.array([])
 eMNFW = np.array([])
@@ -286,8 +292,8 @@ for line in lines:
      
      
      try:
-          out = make_plot_misscentred_monopole(line[:-1],folder)
-          # out = make_plot_centred_monopole(line[:-1],folder)
+          out = make_plot_misscentred_monopole(line[:-1],folder,samples,True,ymiss)
+          # out = make_plot_centred_monopole(line[:-1],folder,samples)
      except:
           continue
     
@@ -330,7 +336,7 @@ out = np.array([Nlenses[j], NMIN[j],NMAX[j],Nmean[j],
                 pcc[j], e_pcc[0][j],e_pcc[1][j]])
 
 
-f1=open(folder+'Lens_NMbin.out','w')
+f1=open(folder+'Lens_'+samples+'.out','w')
 f1.write('# Nlenses    Nmin    Nmax   Nmean   Mmin        Mmax         Mmean       zmin         zmax         zmean         Mdyn         Mlens       eMlens                    pcc          e_pcc  \n')
 np.savetxt(f1,out.T,fmt = ['%4i']*3+['%12.4f']*14)
 f1.close()
