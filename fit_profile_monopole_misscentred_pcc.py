@@ -36,7 +36,7 @@ ncores    = int(ncores)
 if 'True' in args.yan:
     ymiss      = True
     outfile = 'monopole_pcconly_ymiss_'+file_name[:-4]+'out'
-elif 'False' in args.miss:
+elif 'False' in args.yan:
     ymiss     = False
     outfile = 'monopole_pcconly_'+file_name[:-4]+'out'
 
