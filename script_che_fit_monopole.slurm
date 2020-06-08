@@ -17,8 +17,8 @@ module load softwares/anaconda2/5.0-intel-2018.0
 source activate py2env
 
 srun -u python fit_profile_monopole_misscentred_pcc.py -folder '/home/elizabeth/profiles_restantes/' \
--file 'profile_N1_Mbin6.fits' -ncores 15 
+-file 'profile_N1_Mbin6_cM.fits' -ncores 15 
 srun -u python fit_profile_monopole_misscentred_pcc.py -folder '/home/elizabeth/profiles_restantes/' \
--file 'profile_N1_Mbin6_mzH.fits' -ncores 15 
+-file 'profile_N1_Mbin6_cM_mzH.fits' -ncores 15 
 srun -u python fit_profile_monopole_misscentred_pcc.py -folder '/home/elizabeth/profiles_restantes/' \
--file 'profile_N1_Mbin6_mzL.fits.fits' -ncores 15 
+-file 'profile_N1_Mbin6_cM_mzL.fits.fits' -ncores 15 
