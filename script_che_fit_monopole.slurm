@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=N1_6
+#SBATCH --job-name=N1_6cM
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=8
 #SBATCH --time=24:00:00
