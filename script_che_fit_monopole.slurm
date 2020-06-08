@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=n1_5
+#SBATCH --job-name=n1_6
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=8
 #SBATCH --time=24:00:00
@@ -17,8 +17,8 @@ module load softwares/anaconda2/5.0-intel-2018.0
 source activate py2env
 
 srun -u python fit_profile_monopole_misscentred_pcc.py -folder '/home/elizabeth/profiles_restantes/' \
--file 'profile_Mbin5_n1.fits' -ncores 15 
+-file 'profile_Mbin6_n1.fits' -ncores 15 
 srun -u python fit_profile_monopole_misscentred_pcc.py -folder '/home/elizabeth/profiles_restantes/' \
--file 'profile_Mbin5_n1_mzL.fits' -ncores 15 
+-file 'profile_Mbin6_n1_mzL.fits' -ncores 15 
 srun -u python fit_profile_monopole_misscentred_pcc.py -folder '/home/elizabeth/profiles_restantes/' \
--file 'profile_Mbin5_n1_mzH.fits' -ncores 15 
+-file 'profile_Mbin6_n1_mzH.fits' -ncores 15 
