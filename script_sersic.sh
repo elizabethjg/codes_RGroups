@@ -1,6 +1,6 @@
 #!/bin/bash
 cd /mnt/clemente/lensing/RodriguezGroups/codes_RGroups/
-source activate py2env
+conda activate py2env
 
 python -u forGroup_profile.py -sample 'Mbin1_n1_cM' -lMH_min 12.5 -lMH_max 12.7 -z_max 1. -C_BG_min 2.73 -C_BG_max 100. -ncores 48
 python -u forGroup_profile.py -sample 'Mbin2_n1_cM' -lMH_min 12.7 -lMH_max 12.9 -z_max 1. -C_BG_min 2.73 -C_BG_max 100. -ncores 48
