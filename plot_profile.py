@@ -271,10 +271,10 @@ def make_plot_misscentred_monopole(file_name,folder,samples,plot = False,ymiss =
             Mmin, Mmax, zmin, zmax, zmean, chi_t]
 
 
-folder    = '/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles/'
-samples   = 'Mbin_conM'
+folder    = '/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_NMbin/'
+samples   = 'nMbin_mzH'
 ymiss     = False
-makeplots = False
+makeplots = True
 
 f = open(folder+'list_'+samples,'r')
 # f = open(folder+'list_m1','r')
