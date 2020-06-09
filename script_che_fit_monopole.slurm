@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=N1_2
+#SBATCH --job-name=N1_3
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=8
 #SBATCH --time=8:00:00
@@ -21,4 +21,4 @@ source activate py2env
 ##srun -u python fit_profile_monopole_misscentred_pcc.py -folder '/home/elizabeth/profiles_restantes/' \
 ##-file 'profile_N1_Mbin6_cM_mzH.fits' -ncores 15 
 srun -u python fit_profile_monopole_misscentred_pcc.py -folder '/home/elizabeth/profiles_restantes/' \
--file 'profile_N1_Mbin2_cM_mzL.fits' -ncores 15 
+-file 'profile_N1_Mbin3_cM_mzL.fits' -ncores 15 
