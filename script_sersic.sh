@@ -2,12 +2,12 @@
 cd /mnt/clemente/lensing/RodriguezGroups/codes_RGroups/
 ##conda activate py2env
 
-python -u forGroup_profile.py -sample 'Mbin1_n1_cM' -lMH_min 12.5 -lMH_max 12.7 -z_max 1. -C_BG_min 2.73 -C_BG_max 100. -ncores 48
-python -u forGroup_profile.py -sample 'Mbin2_n1_cM' -lMH_min 12.7 -lMH_max 12.9 -z_max 1. -C_BG_min 2.73 -C_BG_max 100. -ncores 48
-python -u forGroup_profile.py -sample 'Mbin3_n1_cM' -lMH_min 12.9 -lMH_max 13.1 -z_max 1. -C_BG_min 2.73 -C_BG_max 100. -ncores 48
-python -u forGroup_profile.py -sample 'Mbin4_n1_cM' -lMH_min 13.1 -lMH_max 13.3 -z_max 1. -C_BG_min 2.73 -C_BG_max 100. -ncores 48
-python -u forGroup_profile.py -sample 'Mbin5_n1_cM' -lMH_min 13.3 -lMH_max 13.5 -z_max 1. -C_BG_min 2.73 -C_BG_max 100. -ncores 48
-python -u forGroup_profile.py -sample 'Mbin6_n1_cM' -lMH_min 13.5 -lMH_max 15.0   -z_max 1. -C_BG_min 2.73 -C_BG_max 100. -ncores 48
+python -u forGroup_profile.py -sample 'Mbin1_n1' -lMH_min 12.5 -lMH_max 12.7 -z_max 1. -C_BG_min 0. -C_BG_max 100. -ncores 48
+python -u forGroup_profile.py -sample 'Mbin2_n1' -lMH_min 12.7 -lMH_max 12.9 -z_max 1. -C_BG_min 0. -C_BG_max 100. -ncores 48
+python -u forGroup_profile.py -sample 'Mbin3_n1' -lMH_min 12.9 -lMH_max 13.1 -z_max 1. -C_BG_min 0. -C_BG_max 100. -ncores 48
+python -u forGroup_profile.py -sample 'Mbin4_n1' -lMH_min 13.1 -lMH_max 13.3 -z_max 1. -C_BG_min 0. -C_BG_max 100. -ncores 48
+python -u forGroup_profile.py -sample 'Mbin5_n1' -lMH_min 13.3 -lMH_max 13.5 -z_max 1. -C_BG_min 0. -C_BG_max 100. -ncores 48
+python -u forGroup_profile.py -sample 'Mbin6_n1' -lMH_min 13.5 -lMH_max 15.0   -z_max 1. -C_BG_min 0. -C_BG_max 100. -ncores 48
 
 ##python -u forGroup_profile.py -sample 'Mbin1_n1_mzL' -lMH_min 12.5 -lMH_max 12.7 -z_max 0.141 -C_BG_min 0.0 -C_BG_max 100. -ncores 48
 ##python -u forGroup_profile.py -sample 'Mbin2_n1_mzL' -lMH_min 12.7 -lMH_max 12.9 -z_max 0.166 -C_BG_min 0.0 -C_BG_max 100. -ncores 48
