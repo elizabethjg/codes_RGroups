@@ -29,13 +29,13 @@ plt.figure()
 
 plt.hist(lMH[mid*(lMH > 12.5)],np.linspace(12.5,15,70),histtype='step',density=True      ,label='Total sample',color='k')
 plt.hist(lMH[mid*(lMH > 12.5)*mN1],np.linspace(12.5,15,70),histtype='step',density=True  ,label='$N_{GAL} = 1$',color='C6')
-plt.hist(lMH[mid*(lMH > 12.5)*mN23],np.linspace(12.5,15,70),histtype='step',density=True ,label='$ 2 \leq N_{GAL} \leq 3$',color='C9')
+plt.hist(lMH[mid*(lMH > 12.5)*mN23],np.linspace(12.5,15,70),histtype='step',density=True ,label='$ 2 \leq N_{GAL} \leq 3$',color='C7')
 plt.hist(lMH[mid*(lMH > 12.5)*mN4M],np.linspace(12.5,15,70),histtype='step',density=True,label='$ N_{GAL} \geq 4$',color='C8')
 plt.legend(loc=1,fontsize=14,ncol=2,columnspacing=0.2,frameon=False)
 
 plt.hist(lMH[mc*mid*(lMH > 12.5)],np.linspace(12.5,15,70),histtype='step',density=True,label='Total sample',color='k',ls='--')
 plt.hist(lMH[mc*mid*(lMH > 12.5)*mN1],np.linspace(12.5,15,70),histtype='step',density=True,label='$N_{GAL} = 1$',color='C6',ls='--')
-plt.hist(lMH[mc*mid*(lMH > 12.5)*mN23],np.linspace(12.5,15,70),histtype='step',density=True,label='$ 2 \leq N_{GAL} \leq 3$',color='C9',ls='--')
+plt.hist(lMH[mc*mid*(lMH > 12.5)*mN23],np.linspace(12.5,15,70),histtype='step',density=True,label='$ 2 \leq N_{GAL} \leq 3$',color='C7',ls='--')
 plt.hist(lMH[mc*mid*(lMH > 12.5)*mN4M],np.linspace(12.5,15,70),histtype='step',density=True,label='$ N_{GAL} \geq 4$',color='C8',ls='--')
 
 plt.axis([12.5,15.,0.,2.3])
@@ -47,13 +47,13 @@ plt.figure()
 
 plt.hist(lMH[mid*(lMH > 12.5)],np.linspace(12.5,15,70),histtype='step',density=False      ,label='Total sample',color='k')
 plt.hist(lMH[mid*(lMH > 12.5)*mN1],np.linspace(12.5,15,70),histtype='step',density=False  ,label='$N_{GAL} = 1$',color='C6')
-plt.hist(lMH[mid*(lMH > 12.5)*mN23],np.linspace(12.5,15,70),histtype='step',density=False ,label='$ 2 \leq N_{GAL} \leq 3$',color='C9')
+plt.hist(lMH[mid*(lMH > 12.5)*mN23],np.linspace(12.5,15,70),histtype='step',density=False ,label='$ 2 \leq N_{GAL} \leq 3$',color='C7')
 plt.hist(lMH[mid*(lMH > 12.5)*mN4M],np.linspace(12.5,15,70),histtype='step',density=False,label='$ N_{GAL} \geq 4$',color='C8')
 plt.legend(loc=1,fontsize=13,frameon=False)
 
 plt.hist(lMH[mc*mid*(lMH > 12.5)],np.linspace(12.5,15,70),histtype='step',density=False,label='Total sample',color='k',ls='--')
 plt.hist(lMH[mc*mid*(lMH > 12.5)*mN1],np.linspace(12.5,15,70),histtype='step',density=False,label='$N_{GAL} = 1$',color='C6',ls='--')
-plt.hist(lMH[mc*mid*(lMH > 12.5)*mN23],np.linspace(12.5,15,70),histtype='step',density=False,label='$ 2 \leq N_{GAL} \leq 3$',color='C9',ls='--')
+plt.hist(lMH[mc*mid*(lMH > 12.5)*mN23],np.linspace(12.5,15,70),histtype='step',density=False,label='$ 2 \leq N_{GAL} \leq 3$',color='C7',ls='--')
 plt.hist(lMH[mc*mid*(lMH > 12.5)*mN4M],np.linspace(12.5,15,70),histtype='step',density=False,label='$ N_{GAL} \geq 4$',color='C8',ls='--')
 
 plt.yscale('log')
@@ -68,7 +68,7 @@ plt.figure()
 
 plt.hist(c[mid*(lMH > 12.5)],np.linspace(1.5,4,70),histtype='step',density=True,label='Total sample',color='k')
 plt.hist(c[mid*(lMH > 12.5)*mN1],np.linspace(1.5,4,70),histtype='step',density=True,label='$N_{GAL} = 1$',color='C6')
-plt.hist(c[mid*(lMH > 12.5)*mN23],np.linspace(1.5,4,70),histtype='step',density=True,label='$ 2 \leq N_{GAL} \leq 3$',color='C9')
+plt.hist(c[mid*(lMH > 12.5)*mN23],np.linspace(1.5,4,70),histtype='step',density=True,label='$ 2 \leq N_{GAL} \leq 3$',color='C7')
 plt.hist(c[mid*(lMH > 12.5)*mN4M],np.linspace(1.5,4,70),histtype='step',density=True,label='$ N_{GAL} \geq 4$',color='C8')
 plt.axvline(2.73,color='k',ls=':')
 

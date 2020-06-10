@@ -4,6 +4,11 @@ from matplotlib import *
 from astropy.io import fits
 from profiles_fit import *
 
+def ratio(x,ex,y,ey):
+    r  = x/y
+    er = np.sqrt((ex/y)**2 + ((x*ey)/(y**2))**2)
+    return r, er
+
 out    = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles/Lens_Mbin.out').T
 outH   = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles/Lens_Mbin_mzH.out').T
 outL   = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles/Lens_Mbin_mzL.out').T
@@ -36,12 +41,8 @@ eM200c  = [outc[12],outc[13]]
 eM200Hc = [outHc[12],outHc[13]]
 eM200Lc = [outLc[12],outLc[13]]
 
-ratio_LH  = M200H/M200L
-eratio_LH = np.sqrt((eM200H/M200L)**2 + ((eM200L*M200H)/(M200L**2))**2)
-
-ratio_LHc  = M200Hc/M200Lc
-eratio_LHc = np.sqrt((eM200Hc/M200Lc)**2 + ((eM200Lc*M200Hc)/(M200Lc**2))**2)
-
+ratio_LH, eratio_LH = ratio(M200H,eM200H,M200L,eM200L)
+ratio_LHc, eratio_LHc = ratio(M200Hc,eM200Hc,M200Lc,eM200Lc)
 
 lM200  = np.log10(out[11]*1.e14)
 lM200H = np.log10(outH[11]*1.e14)
@@ -75,11 +76,12 @@ epcc_c   = np.array([outc[15],outc[16]])
 epccH_c   = np.array([outHc[15],outHc[16]])
 epccL_c   = np.array([outLc[15],outLc[16]])
 
+ratio_pcc, eratio_pcc = ratio(pcc_c,epcc_c,pcc,epcc)
 
 # -----------------------
 plt.figure()
 plt.scatter(lMH,lM200,facecolor='none',edgecolors='k', label = 'Total sample')
-plt.scatter(lMHc,lM200c,facecolor='none',edgecolors='C4', label = u'$C-$sample')
+plt.scatter(lMHc,lM200c,facecolor='none',edgecolors='C9', label = u'$C-$sample')
 
 # plt.plot(lMHH,lM200H,'k^')
 # plt.plot(lMHHc,lM200Hc,'C4^')
@@ -88,13 +90,13 @@ plt.scatter(lMHc,lM200c,facecolor='none',edgecolors='C4', label = u'$C-$sample')
 # plt.plot(lMHLc,lM200Lc,'C4v')
 
 plt.errorbar(lMH,lM200,yerr=elM200,fmt = 'none',ecolor='k')
-plt.errorbar(lMHc,lM200c,yerr=elM200c,fmt = 'none',ecolor='C4')
+plt.errorbar(lMHc,lM200c,yerr=elM200c,fmt = 'none',ecolor='C9')
 
 # plt.errorbar(lMHH,lM200H,yerr=elM200H,fmt = 'none',ecolor='k')
-# plt.errorbar(lMHHc,lM200Hc,yerr=elM200Hc,fmt = 'none',ecolor='C4')
+# plt.errorbar(lMHHc,lM200Hc,yerr=elM200Hc,fmt = 'none',ecolor='C9')
 
 # plt.errorbar(lMHL,lM200L,yerr=elM200L,fmt = 'none',ecolor='k')
-# plt.errorbar(lMHLc,lM200Lc,yerr=elM200Lc,fmt = 'none',ecolor='C4')
+# plt.errorbar(lMHLc,lM200Lc,yerr=elM200Lc,fmt = 'none',ecolor='C9')
 
 
 plt.plot([12.3,14.6],[12.3,14.6],'C7--')
@@ -107,10 +109,10 @@ plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots/Mhalo_M200_Mbi
 
 plt.figure()
 plt.scatter(lM200,pcc,facecolor='none',edgecolors='k', label = 'Total sample')
-plt.scatter(lM200c,pcc_c,facecolor='none',edgecolors='C4', label = u'$C-$sample')
+plt.scatter(lM200c,pcc_c,facecolor='none',edgecolors='C9', label = u'$C-$sample')
 
 plt.errorbar(lM200,pcc,xerr=elM200,yerr=epcc,fmt = 'none',ecolor='k')
-plt.errorbar(lM200c,pcc_c,xerr=elM200c,yerr=epcc_c,fmt = 'none',ecolor='C4')
+plt.errorbar(lM200c,pcc_c,xerr=elM200c,yerr=epcc_c,fmt = 'none',ecolor='C9')
 
 
 # plt.legend(frameon = False)
@@ -121,17 +123,30 @@ plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots/M200_pcc_Mbin.
 # -----------------------
 plt.figure()
 plt.scatter(lM200,ratio_LH,facecolor='none',edgecolors='k', label = 'Total sample')
-plt.scatter(lM200c,ratio_LHc,facecolor='none',edgecolors='C4', label = u'$C-$sample')
+plt.scatter(lM200c,ratio_LHc,facecolor='none',edgecolors='C9', label = u'$C-$sample')
 
 plt.errorbar(lM200,ratio_LH,xerr=elM200,yerr=eratio_LH,fmt = 'none',ecolor='k')
-plt.errorbar(lM200c,ratio_LHc,xerr=elM200c,yerr=eratio_LHc,fmt = 'none',ecolor='C4')
+plt.errorbar(lM200c,ratio_LHc,xerr=elM200c,yerr=eratio_LHc,fmt = 'none',ecolor='C9')
 
 plt.yscale('log')
-
+plt.legend(frameon = False)
 # plt.legend(frameon = False)
 plt.plot([12.3,14.6],[1.,1.],'C7--')
 plt.xlabel('$\log (M_{200})$')
 plt.ylabel('$M^H_{200}/M^L_{200}$')
 plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots/ratioLH_Mbin.pdf',bbox_inches='tight')
 
+# -----------------------
+plt.figure()
+plt.scatter(lM200,ratio_pcc,facecolor='none',edgecolors='k', label = u'$C-$sample')
+plt.errorbar(lM200,ratio_pcc,xerr=elM200,yerr=eratio_pcc,fmt = 'none',ecolor='k')
+
+
+# plt.yscale('log')
+
+# plt.legend(frameon = False)
+plt.plot([12.3,14.6],[1.,1.],'C7--')
+plt.xlabel('$\log (M_{200})$')
+plt.ylabel('$p^c_{cc}/p_{cc}$')
+plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots/ratiopcc_Mbin.pdf',bbox_inches='tight')
 
