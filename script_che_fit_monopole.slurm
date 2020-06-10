@@ -21,4 +21,4 @@ source activate py2env
 ##srun -u python fit_profile_monopole_misscentred_pcc.py -folder '/home/elizabeth/profiles_restantes/' \
 ##-file 'profile_N1_Mbin6_cM_mzH.fits' -ncores 15 
 srun -u python fit_profile_monopole_misscentred_pcc.py -folder '/home/elizabeth/profiles_restantes/' \
--file 'profile_N1_Mbin6_mzL.fits' -ncores 15 
+-file 'profile_Mbin1_n1_cM.fits' -ncores 15 
