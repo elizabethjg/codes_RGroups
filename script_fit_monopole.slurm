@@ -20,6 +20,6 @@ export MKL_NUM_THREADS=10
 source activate py2env
 
 srun -u python fit_profile_monopole_misscentred_pcc.py -folder '/mnt/clemente/lensing/RodriguezGroups/N_all/' \
--file 'profile_'+$SLURM_JOB_NAME+'.fits' -ncores 15 -Yanmiss 'True'
+-file 'profile_'$SLURM_JOB_NAME'.fits' -ncores 15 -Yanmiss 'True'
 srun -u python fit_profile_monopole_misscentred_pcc.py -folder '/mnt/clemente/lensing/RodriguezGroups/N_all/' \
--file 'profile_'+$SLURM_JOB_NAME+'_cM.fits' -ncores 15 -Yanmiss 'True'
+-file 'profile_'$SLURM_JOB_NAME'_cM.fits' -ncores 15 -Yanmiss 'True'
