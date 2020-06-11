@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=N2-3_Mbin1
+#SBATCH --job-name=N1_Mbin1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=8
 #SBATCH --time=8:00:00
@@ -16,7 +16,5 @@ export OMP_NUM_THREADS=10
 module load softwares/anaconda2/5.0-intel-2018.0
 source activate py2env
 
-srun -u python fit_profile_monopole_misscentred_pcc.py -folder '/home/elizabeth/profiles_restantes/' \
--file 'profile_'$SLURM_JOB_NAME'.fits' -ncores 15 -Yanmiss 'True'
 srun -u python fit_profile_monopole_misscentred_pcc.py -folder '/home/elizabeth/profiles_restantes/' \
 -file 'profile_'$SLURM_JOB_NAME'_cM.fits' -ncores 15 -Yanmiss 'True'
