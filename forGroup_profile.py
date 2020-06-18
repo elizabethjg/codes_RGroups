@@ -23,108 +23,7 @@ G    = 6.670e-11;   # Gravitational constant (m3.kg-1.s-2)
 pc   = 3.085678e16; # 1 pc (m)
 Msun = 1.989e30 # Solar mass (kg)
 
-folder = '/mnt/clemente/lensing/RodriguezGroups/N_all/'
-S=LensCat.Catalog.read_catalog(folder+'gx_S_RM_FINAL.fits')
-# folder = '/mnt/clemente/lensing/RodriguezGroups/N_all_FOF/'
-# S=LensCat.Catalog.read_catalog(folder+'gx_S_RM_FOF.fits')
-S.data.set_index('CATID', inplace=True)
-
-
-def partial_profile(backcat_ids,RA0,DEC0,Z,
-                    RIN,ROUT,ndots,nboot=100):
-
-        
-        
-        backcat = S.data.loc[backcat_ids]
-        
-        ndots = int(ndots)
-               
-        mask = backcat.Z_B > (Z + 0.1)
-        
-        catdata = backcat[mask]
-
-
-        dl, ds, dls = gentools.compute_lensing_distances(np.array([Z]), catdata.Z_B, precomputed=True)
-        
-        KPCSCALE   = dl*(((1.0/3600.0)*np.pi)/180.0)*1000.0
-        BETA_array = dls/ds
-        
-        Dl = dl*1.e6*pc
-        sigma_c = (((cvel**2.0)/(4.0*np.pi*G*Dl))*(1./BETA_array))*(pc**2/Msun)
-
-
-
-        rads, theta, test1,test2 = eq2p2(np.deg2rad(catdata.RAJ2000),
-                                        np.deg2rad(catdata.DECJ2000),
-                                        np.deg2rad(RA0),
-                                        np.deg2rad(DEC0))
-               
-        #Correct polar angle for e1, e2
-        theta = theta+np.pi/2.
-        
-        e1     = catdata.e1
-        e2     = catdata.e2
-        
-        
-        
-        #get tangential ellipticities 
-        et = (-e1*np.cos(2*theta)-e2*np.sin(2*theta))*sigma_c
-        #get cross ellipticities
-        ex = (-e1*np.sin(2*theta)+e2*np.cos(2*theta))*sigma_c
-        
-        del(e1)
-        del(e2)
-        
-        r=np.rad2deg(rads)*3600*KPCSCALE
-        del(rads)
-        
-        peso = catdata.weight
-        peso = peso/(sigma_c**2) 
-        m    = catdata.m
-        
-        Ntot = len(catdata)
-        del(catdata)    
-        
-        bines = np.logspace(np.log10(RIN),np.log10(ROUT),num=ndots+1)
-        dig = np.digitize(r,bines)
-        
-        DSIGMAwsum_T = []
-        DSIGMAwsum_X = []
-        WEIGHTsum    = []
-        Mwsum        = []
-        BOOTwsum_T   = np.zeros((nboot,ndots))
-        BOOTwsum_X   = np.zeros((nboot,ndots))
-        BOOTwsum     = np.zeros((nboot,ndots))
-        
-        for nbin in range(ndots):
-                mbin = dig == nbin+1              
-                
-                DSIGMAwsum_T = np.append(DSIGMAwsum_T,(et[mbin]*peso[mbin]).sum())
-                DSIGMAwsum_X = np.append(DSIGMAwsum_X,(ex[mbin]*peso[mbin]).sum())
-                WEIGHTsum    = np.append(WEIGHTsum,(peso[mbin]).sum())
-                Mwsum        = np.append(Mwsum,(m[mbin]*peso[mbin]).sum())
-                
-                index = np.arange(mbin.sum())
-                if mbin.sum() == 0:
-                        continue
-                else:
-                        with NumpyRNGContext(1):
-                                bootresult = bootstrap(index, nboot)
-                        INDEX=bootresult.astype(int)
-                        BOOTwsum_T[:,nbin] = np.sum(np.array(et[mbin]*peso[mbin])[INDEX],axis=1)
-                        BOOTwsum_X[:,nbin] = np.sum(np.array(ex[mbin]*peso[mbin])[INDEX],axis=1)
-                        BOOTwsum[:,nbin]   = np.sum(np.array(peso[mbin])[INDEX],axis=1)
-        
-        output = {'DSIGMAwsum_T':DSIGMAwsum_T,'DSIGMAwsum_X':DSIGMAwsum_X,
-                   'WEIGHTsum':WEIGHTsum, 'Mwsum':Mwsum, 
-                   'BOOTwsum_T':BOOTwsum_T, 'BOOTwsum_X':BOOTwsum_X, 'BOOTwsum':BOOTwsum, 
-                   'Ntot':Ntot}
-        
-        return output
-
-def partial_profile_unpack(minput):
-	return partial_profile(*minput)
-        
+     
 
 def main(sample='pru',N_min=0,N_max=1000.,
                 z_min = 0.0, z_max = 0.5,
@@ -153,7 +52,108 @@ def main(sample='pru',N_min=0,N_max=1000.,
         ncores         (int) to run in parallel, number of cores
         
         '''
-
+        
+        folder = '/mnt/clemente/lensing/RodriguezGroups/N_all/'
+        S=LensCat.Catalog.read_catalog(folder+'gx_S_RM_FINAL.fits')
+        # folder = '/mnt/clemente/lensing/RodriguezGroups/N_all_FOF/'
+        # S=LensCat.Catalog.read_catalog(folder+'gx_S_RM_FOF.fits')
+        S.data.set_index('CATID', inplace=True)
+        
+        
+        def partial_profile(backcat_ids,RA0,DEC0,Z,
+                        RIN,ROUT,ndots,nboot=100):
+        
+                
+                
+                backcat = S.data.loc[backcat_ids]
+                
+                ndots = int(ndots)
+                
+                mask = backcat.Z_B > (Z + 0.1)
+                
+                catdata = backcat[mask]
+        
+        
+                dl, ds, dls = gentools.compute_lensing_distances(np.array([Z]), catdata.Z_B, precomputed=True)
+                
+                KPCSCALE   = dl*(((1.0/3600.0)*np.pi)/180.0)*1000.0
+                BETA_array = dls/ds
+                
+                Dl = dl*1.e6*pc
+                sigma_c = (((cvel**2.0)/(4.0*np.pi*G*Dl))*(1./BETA_array))*(pc**2/Msun)
+        
+        
+        
+                rads, theta, test1,test2 = eq2p2(np.deg2rad(catdata.RAJ2000),
+                                                np.deg2rad(catdata.DECJ2000),
+                                                np.deg2rad(RA0),
+                                                np.deg2rad(DEC0))
+                
+                #Correct polar angle for e1, e2
+                theta = theta+np.pi/2.
+                
+                e1     = catdata.e1
+                e2     = catdata.e2
+                
+                
+                
+                #get tangential ellipticities 
+                et = (-e1*np.cos(2*theta)-e2*np.sin(2*theta))*sigma_c
+                #get cross ellipticities
+                ex = (-e1*np.sin(2*theta)+e2*np.cos(2*theta))*sigma_c
+                
+                del(e1)
+                del(e2)
+                
+                r=np.rad2deg(rads)*3600*KPCSCALE
+                del(rads)
+                
+                peso = catdata.weight
+                peso = peso/(sigma_c**2) 
+                m    = catdata.m
+                
+                Ntot = len(catdata)
+                del(catdata)    
+                
+                bines = np.logspace(np.log10(RIN),np.log10(ROUT),num=ndots+1)
+                dig = np.digitize(r,bines)
+                
+                DSIGMAwsum_T = []
+                DSIGMAwsum_X = []
+                WEIGHTsum    = []
+                Mwsum        = []
+                BOOTwsum_T   = np.zeros((nboot,ndots))
+                BOOTwsum_X   = np.zeros((nboot,ndots))
+                BOOTwsum     = np.zeros((nboot,ndots))
+                
+                for nbin in range(ndots):
+                        mbin = dig == nbin+1              
+                        
+                        DSIGMAwsum_T = np.append(DSIGMAwsum_T,(et[mbin]*peso[mbin]).sum())
+                        DSIGMAwsum_X = np.append(DSIGMAwsum_X,(ex[mbin]*peso[mbin]).sum())
+                        WEIGHTsum    = np.append(WEIGHTsum,(peso[mbin]).sum())
+                        Mwsum        = np.append(Mwsum,(m[mbin]*peso[mbin]).sum())
+                        
+                        index = np.arange(mbin.sum())
+                        if mbin.sum() == 0:
+                                continue
+                        else:
+                                with NumpyRNGContext(1):
+                                        bootresult = bootstrap(index, nboot)
+                                INDEX=bootresult.astype(int)
+                                BOOTwsum_T[:,nbin] = np.sum(np.array(et[mbin]*peso[mbin])[INDEX],axis=1)
+                                BOOTwsum_X[:,nbin] = np.sum(np.array(ex[mbin]*peso[mbin])[INDEX],axis=1)
+                                BOOTwsum[:,nbin]   = np.sum(np.array(peso[mbin])[INDEX],axis=1)
+                
+                output = {'DSIGMAwsum_T':DSIGMAwsum_T,'DSIGMAwsum_X':DSIGMAwsum_X,
+                        'WEIGHTsum':WEIGHTsum, 'Mwsum':Mwsum, 
+                        'BOOTwsum_T':BOOTwsum_T, 'BOOTwsum_X':BOOTwsum_X, 'BOOTwsum':BOOTwsum, 
+                        'Ntot':Ntot}
+                
+                return output
+        
+        def partial_profile_unpack(minput):
+                return partial_profile(*minput)
 
         tini = time.time()
         

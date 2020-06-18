@@ -200,7 +200,12 @@ def make_plot_misscentred_monopole(file_name,folder,samples,plot = False,ymiss =
 	#--------------------
     
      if plot:
-     
+          
+          if ymiss:
+               folder_plot = 'plots_ymiss_'+samples+'/'
+          else:
+               folder_plot = 'plots_'+samples+'/'
+          
           r  = np.logspace(np.log10(0.05),np.log10(5.5),20)
           
           multipoles = multipole_shear_parallel(r,M200=10**mout[1],
@@ -214,7 +219,7 @@ def make_plot_misscentred_monopole(file_name,folder,samples,plot = False,ymiss =
           Gtmiss = (1-pcc_out[1])*multipoles['Gt_off']
      
           fig = corner.corner(mcmc.T, labels=labels)
-          plt.savefig(folder+'plots_'+samples+'/'+'corner'+file_mcmc[:-3]+'png')
+          plt.savefig(folder+folder_plot+'corner'+file_mcmc[:-3]+'png')
           
           f, ax = plt.subplots(2, 1, figsize=(6,3))
           ax[0].plot(mcmc[0],'k.',alpha=0.3)
@@ -228,7 +233,7 @@ def make_plot_misscentred_monopole(file_name,folder,samples,plot = False,ymiss =
           ax[1].axhline(pcc_out[1] - (pcc_out[1]-pcc_out[0]),ls='--')
           ax[1].axhline(pcc_out[1] + (pcc_out[2]-pcc_out[1]),ls='--')
           f.subplots_adjust(hspace=0,wspace=0)
-          plt.savefig(folder+'plots_'+samples+'/'+file_mcmc[:-3]+'png')
+          plt.savefig(folder+folder_plot+file_mcmc[:-3]+'png')
           
           f, ax = plt.subplots(2, 1, figsize=(5,8), sharex=True)
           f.subplots_adjust(hspace=0,wspace=0)
@@ -264,23 +269,27 @@ def make_plot_misscentred_monopole(file_name,folder,samples,plot = False,ymiss =
           ax[1].set_yticklabels([-25,0,25])
           ax[1].set_ylabel(r'$\Delta \Sigma_\times [h_{70}M_\odot\,\rm{pc}^{-2}]$')
           matplotlib.rcParams.update({'font.size': 12})
-          plt.savefig(folder+'plots_'+samples+'/'+file_name[:-5]+'_miss.png')
+          plt.savefig(folder+folder_plot+file_name[:-5]+'_miss.png')
      
      return [Mhalo/1.e14, M200/1.e14, e_M200/1.e14, Nmean, Nlens, SN, 
             pcc_out[1], np.diff(pcc_out), MDYN/1.e14, nmin, nmax, 
             Mmin, Mmax, zmin, zmax, zmean, chi_t]
 
 
-folder    = '/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_NMbin/'
-samples   = 'NMbin_cM'
-ymiss     = False
-makeplots = False
+folder    = '/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles/'
+samples   = 'Mbin_cM'
+ymiss     = True
+makeplots = True
 
 f = open(folder+'list_'+samples,'r')
 # f = open(folder+'list_m1','r')
 lines = f.readlines()
 
-os.system('mkdir '+folder+'plots_'+samples)
+if ymiss:
+     print 'Y miss!!!!!!!!!!!!!!!!!'
+     os.system('mkdir '+folder+'plots_ymiss_'+samples)
+else:
+     os.system('mkdir '+folder+'plots_'+samples)
 
 MNFW  = np.array([])
 eMNFW = np.array([])
@@ -356,8 +365,11 @@ out = np.array([Nlenses[j], NMIN[j],NMAX[j],Nmean[j],
                 MDYN[j], MNFW[j], eMNFW[0][j],eMNFW[1][j],
                 pcc[j], e_pcc[0][j],e_pcc[1][j],CHI2[j]])
 
-
-f1=open(folder+'Lens_'+samples+'.out','w')
+if ymiss:
+     f1=open(folder+'Lens_'+samples+'_ymiss.out','w')
+else:
+     f1=open(folder+'Lens_'+samples+'.out','w')
+     
 f1.write('# Nlenses    Nmin    Nmax   Nmean   Mmin        Mmax         Mmean       zmin         zmax         zmean         Mdyn         Mlens       eMlens                    pcc          e_pcc                        chi2\n')
 np.savetxt(f1,out.T,fmt = ['%4i']*3+['%12.4f']*15)
 f1.close()
