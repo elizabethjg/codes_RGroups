@@ -19,6 +19,7 @@ mid = np.in1d(Lcat[1].data.ID,IDused)
 lMH = np.log10(Lcat[1].data.MASS_HALO)
 N = Lcat[1].data.N_GAL
 c = Lcat[1].data.C_BG
+z = Lcat[1].data.Z
 
 mN1 = N==1
 mN23 = (N>1)*(N<4)
@@ -26,6 +27,8 @@ mN4M = (N>3)
 mc = c > 2.73
 
 plt.figure()
+
+
 
 plt.hist(lMH[mid*(lMH > 12.5)],np.linspace(12.5,15,70),histtype='step',density=True      ,label='Total sample',color='k')
 plt.hist(lMH[mid*(lMH > 12.5)*mN1],np.linspace(12.5,15,70),histtype='step',density=True  ,label='$N_{GAL} = 1$',color='C6')
