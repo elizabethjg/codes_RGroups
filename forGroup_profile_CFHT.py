@@ -178,9 +178,9 @@ def main(sample='pru',N_min=0,N_max=1000.,
         # L=LensCat.Catalog.read_catalog(folder+'gx_L_RM_FOF.fits')        
         mrich = (L.data.N_GAL >= N_min)*(L.data.N_GAL < N_max)
         mz    = (L.data.Z >= z_min)*(L.data.Z < z_max)
-        mcon  = (L.data.C_BG >= conmin)*(L.data.C_BG < conmax)
+        # mcon  = (L.data.C_BG >= conmin)*(L.data.C_BG < conmax)
         mmass = (np.log10(L.data.MASS_HALO) >= lMHmin)*(np.log10(L.data.MASS_HALO) < lMHmax)
-        mlenses = mrich*mz*mcon*mmass
+        mlenses = mrich*mz*mmass
         Nlenses = mlenses.sum()
 
         if Nlenses < ncores:
