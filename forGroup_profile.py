@@ -355,7 +355,7 @@ if __name__ == '__main__':
         parser.add_argument('-ROUT', action='store', dest='ROUT', default=5000.)
         parser.add_argument('-nbins', action='store', dest='nbins', default=15)
         parser.add_argument('-ncores', action='store', dest='ncores', default=10)
-        parser.add_argument('-h', action='store', dest='h', default=1.)
+        parser.add_argument('-h_cosmo', action='store', dest='h_cosmo', default=1.)
         args = parser.parse_args()
         
         sample     = args.sample
@@ -372,7 +372,7 @@ if __name__ == '__main__':
         ROUT       = float(args.ROUT)
         nbins      = int(args.nbins)
         ncores     = int(args.ncores)
-	h          = float(args.h)
+	h          = float(args.h_cosmo)
         
 	main(sample,N_min,N_max,z_min,z_max,
              conmin,conmax,lMHmin,lMHmax,
