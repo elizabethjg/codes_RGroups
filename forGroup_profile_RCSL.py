@@ -16,7 +16,7 @@ from multiprocessing import Pool
 from multiprocessing import Process
 import argparse
 
-cosmo = LambdaCDM(H0=70, Om0=0.3, Ode0=0.7)
+
 #parameters
 cvel = 299792458;   # Speed of light (m.s-1)
 G    = 6.670e-11;   # Gravitational constant (m3.kg-1.s-2)
@@ -31,9 +31,9 @@ S.data.set_index('CATID', inplace=True)
 
 
 def partial_profile(backcat_ids,RA0,DEC0,Z,
-                    RIN,ROUT,ndots,nboot=100):
+                    RIN,ROUT,ndots,h,nboot=100):
 
-        
+        cosmo = LambdaCDM(H0=100*h, Om0=0.3, Ode0=0.7)
         
         backcat = S.data.loc[backcat_ids]
         
@@ -45,6 +45,9 @@ def partial_profile(backcat_ids,RA0,DEC0,Z,
 
 
         dl, ds, dls = gentools.compute_lensing_distances(np.array([Z]), catdata.Z_B, precomputed=True)
+        dl  = (dl/0.7)*h
+        ds  = (ds/0.7)*h
+        dls = (dls/0.7)*h
         
         KPCSCALE   = dl*(((1.0/3600.0)*np.pi)/180.0)*1000.0
         BETA_array = dls/ds
@@ -131,7 +134,7 @@ def main(sample='pru',N_min=0,N_max=1000.,
                 conmin = 0.5, conmax = 5.0,
                 lMHmin = 11., lMHmax = 15.5,
                 odds_min=0.5, RIN = 100., ROUT =5000.,
-                ndots= 15,ncores=10):
+                ndots= 15,ncores=10,h=1.):
 
         '''
         
@@ -151,7 +154,7 @@ def main(sample='pru',N_min=0,N_max=1000.,
         ROUT           (float) Outer bin radius of profile
         ndots          (int) Number of bins of the profile
         ncores         (int) to run in parallel, number of cores
-        
+        h              (float) H0 = 100.*h
         '''
 
 
@@ -167,6 +170,7 @@ def main(sample='pru',N_min=0,N_max=1000.,
         print 'ODDS > ',odds_min
         print 'Profile has ',ndots,'bins'
         print 'from ',RIN,'kpc to ',ROUT,'kpc'
+        print 'h = ',h
               
         # Defining radial bins
         bines = np.logspace(np.log10(RIN),np.log10(ROUT),num=ndots+1)
@@ -178,9 +182,9 @@ def main(sample='pru',N_min=0,N_max=1000.,
         # L=LensCat.Catalog.read_catalog(folder+'gx_L_RM_FOF.fits')        
         mrich = (L.data.N_GAL >= N_min)*(L.data.N_GAL < N_max)
         mz    = (L.data.Z >= z_min)*(L.data.Z < z_max)
-        # mcon  = (L.data.C_BG >= conmin)*(L.data.C_BG < conmax)
+        mcon  = (L.data.C_BG >= conmin)*(L.data.C_BG < conmax)
         mmass = (np.log10(L.data.MASS_HALO) >= lMHmin)*(np.log10(L.data.MASS_HALO) < lMHmax)
-        mlenses = mrich*mz*mmass
+        mlenses = mrich*mz*mcon*mmass
         Nlenses = mlenses.sum()
 
         if Nlenses < ncores:
@@ -222,16 +226,17 @@ def main(sample='pru',N_min=0,N_max=1000.,
                 rin  = RIN*np.ones(num)
                 rout = ROUT*np.ones(num)
                 nd   = ndots*np.ones(num)
+                h_a  = h*np.ones(num)
                 
                 if num == 1:
                         entrada = [Lsplit[l].CATID.iloc[0],Lsplit[l].RA_BG.iloc[0],
                                         Lsplit[l].DEC_BG.iloc[0],Lsplit[l].Z.iloc[0],
-                                        RIN,ROUT,ndots]
+                                        RIN,ROUT,ndots,h]
                         
                         salida = [partial_profile_unpack(entrada)]
                 else:          
                         entrada = np.array([Lsplit[l].CATID.iloc[:],Lsplit[l].RA_BG,
-                                        Lsplit[l].DEC_BG,Lsplit[l].Z,rin,rout,nd]).T
+                                        Lsplit[l].DEC_BG,Lsplit[l].Z,rin,rout,nd,h_a]).T
                         
                         pool = Pool(processes=(num))
                         salida = np.array(pool.map(partial_profile_unpack, entrada))
@@ -346,10 +351,11 @@ if __name__ == '__main__':
         parser.add_argument('-lMH_min', action='store', dest='lMHmin', default=11.)
         parser.add_argument('-lMH_max', action='store', dest='lMHmax', default=15.5)        
         parser.add_argument('-ODDS_min', action='store', dest='ODDS_min', default=0.5)
-        parser.add_argument('-RIN', action='store', dest='RIN', default=100.)
+        parser.add_argument('-RIN', action='store', dest='RIN', default=300.)
         parser.add_argument('-ROUT', action='store', dest='ROUT', default=5000.)
         parser.add_argument('-nbins', action='store', dest='nbins', default=15)
         parser.add_argument('-ncores', action='store', dest='ncores', default=10)
+        parser.add_argument('-h', action='store', dest='h', default=1.)
         args = parser.parse_args()
         
         sample     = args.sample
@@ -366,8 +372,9 @@ if __name__ == '__main__':
         ROUT       = float(args.ROUT)
         nbins      = int(args.nbins)
         ncores     = int(args.ncores)
-	
+	h          = float(args.h)
+        
 	main(sample,N_min,N_max,z_min,z_max,
              conmin,conmax,lMHmin,lMHmax,
-             ODDS_min,RIN,ROUT,nbins,ncores)
+             ODDS_min,RIN,ROUT,nbins,ncores,h)
 
