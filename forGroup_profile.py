@@ -157,7 +157,7 @@ def main(sample='pru',N_min=0,N_max=1000.,
         h              (float) H0 = 100.*h
         '''
 
-
+        cosmo = LambdaCDM(H0=100*h, Om0=0.3, Ode0=0.7)
         tini = time.time()
         
         print 'Sample ',sample
