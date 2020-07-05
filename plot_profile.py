@@ -2,6 +2,7 @@ import sys
 sys.path.append('/home/eli/Documentos/PostDoc/halo-elongation/multipole_density_profile')
 sys.path.append('/home/eli/Documentos/Astronomia/posdoc/halo-elongation/multipole_density_profile')
 sys.path.append('/mnt/clemente/lensing/multipole_density_profile')
+sys.path.append('/home/eli/python_codes')
 import numpy as np
 from matplotlib import *
 from multipoles_shear import *
@@ -83,11 +84,11 @@ def make_plot_centred_monopole(file_name,folder,samples):
      ax[0].set_yscale('log')
      ax[0].set_xlabel('R [Mpc]')
      ax[0].set_ylim(1,200)
-     ax[0].set_xlim(0.1,5)
-     ax[0].xaxis.set_ticks([0.1,1,5])
-     ax[0].set_xticklabels([0.1,1,5])
-     ax[0].yaxis.set_ticks([0.1,10,100])
-     ax[0].set_yticklabels([0.1,10,100])
+     ax[0].set_xlim(0.3,5)
+     ax[0].xaxis.set_ticks([0.3,1,5])
+     ax[0].set_xticklabels([0.3,1,5])
+     ax[0].yaxis.set_ticks([0.3,10,100])
+     ax[0].set_yticklabels([0.3,10,100])
      ax[0].set_ylabel(r'$\Delta \Sigma_T [h_{70}M_\odot\,\rm{pc}^{-2}]$')
      
      ax[1].plot([0,5],[0,0],'k--')
@@ -96,9 +97,9 @@ def make_plot_centred_monopole(file_name,folder,samples):
      ax[1].set_xscale('log')
      ax[1].set_xlabel('R [mpc]')
      ax[1].set_ylim(-50,50)
-     ax[1].set_xlim(0.1,5)
-     ax[1].xaxis.set_ticks([0.1,1,5])
-     ax[1].set_xticklabels([0.1,1,5])
+     ax[1].set_xlim(0.3,5)
+     ax[1].xaxis.set_ticks([0.3,1,5])
+     ax[1].set_xticklabels([0.3,1,5])
      ax[1].yaxis.set_ticks([-25,0,25])
      ax[1].set_yticklabels([-25,0,25])
      ax[1].set_ylabel(r'$\Delta \Sigma_\times [h_{70}M_\odot\,\rm{pc}^{-2}]$')
@@ -248,12 +249,12 @@ def make_plot_misscentred_monopole(file_name,folder,samples,plot = False,ymiss =
           ax[0].set_yscale('log')
           ax[0].set_xlabel('R [Mpc]')
           ax[0].set_ylim(1,200)
-          ax[0].set_xlim(0.1,5)
+          ax[0].set_xlim(0.3,5)
           ax[0].axvline(ROUT,ls='--',c='C7')
-          ax[0].xaxis.set_ticks([0.1,1,5])
-          ax[0].set_xticklabels([0.1,1,5])
-          ax[0].yaxis.set_ticks([0.1,10,100])
-          ax[0].set_yticklabels([0.1,10,100])
+          ax[0].xaxis.set_ticks([0.3,1,5])
+          ax[0].set_xticklabels([0.3,1,5])
+          ax[0].yaxis.set_ticks([0.3,10,100])
+          ax[0].set_yticklabels([0.3,10,100])
           ax[0].set_ylabel(r'$\Delta \Sigma_T [h_{70}M_\odot\,\rm{pc}^{-2}]$')
           
           ax[1].plot([0,5],[0,0],'k--')
@@ -262,9 +263,9 @@ def make_plot_misscentred_monopole(file_name,folder,samples,plot = False,ymiss =
           ax[1].set_xscale('log')
           ax[1].set_xlabel('R [mpc]')
           ax[1].set_ylim(-50,50)
-          ax[1].set_xlim(0.1,5)
-          ax[1].xaxis.set_ticks([0.1,1,5])
-          ax[1].set_xticklabels([0.1,1,5])
+          ax[1].set_xlim(0.3,5)
+          ax[1].xaxis.set_ticks([0.3,1,5])
+          ax[1].set_xticklabels([0.3,1,5])
           ax[1].yaxis.set_ticks([-25,0,25])
           ax[1].set_yticklabels([-25,0,25])
           ax[1].set_ylabel(r'$\Delta \Sigma_\times [h_{70}M_\odot\,\rm{pc}^{-2}]$')
@@ -276,8 +277,8 @@ def make_plot_misscentred_monopole(file_name,folder,samples,plot = False,ymiss =
             Mmin, Mmax, zmin, zmax, zmean, chi_t]
 
 
-folder    = '/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_indcat/'
-samples   = 'RCSL'
+folder    = '/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_new/'
+samples   = 'Mbin'
 ymiss     = False
 makeplots = True
 
@@ -321,15 +322,15 @@ for line in lines:
      
      
      try:
-          out = make_plot_misscentred_monopole(line[:-1],folder,samples,makeplots,ymiss)
-          # out = make_plot_centred_monopole(line[:-1],folder,samples)
+          # out = make_plot_misscentred_monopole(line[:-1],folder,samples,makeplots,ymiss)
+          out = make_plot_centred_monopole(line[:-1],folder,samples)
      except:
           continue
     
      nbins += 1
      Mmean    = np.append(Mmean,out[0])
-     MNFW     = np.append(MNFW,out[1]*0.7)
-     eMNFW = np.append(eMNFW,[out[2]*0.7])
+     MNFW     = np.append(MNFW,out[1])
+     eMNFW = np.append(eMNFW,[out[2]])
      
      Nmean = np.append(Nmean,out[3])
      Nlenses = np.append(Nlenses,out[4])
