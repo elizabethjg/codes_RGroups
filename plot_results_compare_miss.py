@@ -9,11 +9,11 @@ def ratio(x,ex,y,ey):
     er = np.sqrt((ex/y)**2 + ((x*ey)/(y**2))**2)
     return r, er
 
-out    = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles/Lens_Mbin.out').T
-outc  = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles/Lens_Mbin_cM.out').T
+out    = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_new/Lens_Mbin.out').T
+outc  = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_new/Lens_Mbin_cM.out').T
 
-outy    = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles/Lens_Mbin_ymiss.out').T
-outyc  = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles/Lens_Mbin_cM_ymiss.out').T
+outy    = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_new/Lens_Mbin_ymiss.out').T
+outyc  = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_new/Lens_Mbin_cM_ymiss.out').T
 
 chi2 = out[-1]
 chi2c = outc[-1]
@@ -80,7 +80,7 @@ plt.errorbar(lM200c,ratio_Mc,xerr=elM200c,yerr=eratio_Mc,fmt = 'none',ecolor='C9
 plt.plot([12.3,14.6],[1.,1.],'C7--')
 plt.xlabel('$\log (M_{200})$')
 plt.ylabel('$M^y_{200}/M_{200}$')
-plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots/ratio_Mbin_centreY.pdf',bbox_inches='tight')
+plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newzbin/ratio_Mbin_centreY.pdf',bbox_inches='tight')
 
 
 # -----------------------
@@ -97,7 +97,7 @@ plt.errorbar(lM200c,ratio_pc,xerr=elM200c,yerr=eratio_pc,fmt = 'none',ecolor='C9
 plt.plot([12.3,14.6],[1.,1.],'C7--')
 plt.xlabel('$\log (M_{200})$')
 plt.ylabel('$pcc^y/pcc$')
-plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots/ratiopcc_Mbin_centreY.pdf',bbox_inches='tight')
+plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newzbin/ratiopcc_Mbin_centreY.pdf',bbox_inches='tight')
 
 # -----------------------
 plt.figure()
@@ -119,7 +119,7 @@ plt.xlabel('$\log (M_{AM})$')
 plt.ylabel('$\log (M_{200})$')
 plt.axis([12.3,14.6,12.3,14.6])
 
-plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots/Mhalo_Mbin_centreY.pdf',bbox_inches='tight')
+plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newzbin/Mhalo_Mbin_centreY.pdf',bbox_inches='tight')
 
 # -----------------------
 plt.figure()
@@ -131,7 +131,7 @@ plt.plot(lMHyc,chi2yc,'C9x')
 plt.xlabel('$\log (M_{AM})$')
 plt.ylabel('$Chi^2$')
 plt.plot([12.3,14.6],[1.,1.],'C7--')
-plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots/chi2_Mbin_centreY.pdf',bbox_inches='tight')
+plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newzbin/chi2_Mbin_centreY.pdf',bbox_inches='tight')
 
 # plt.errorbar(lMH,lM200,yerr=elM200,fmt = 'none',ecolor='k')
 # plt.errorbar(lMHc,lM200c,yerr=elM200c,fmt = 'none',ecolor='C9')

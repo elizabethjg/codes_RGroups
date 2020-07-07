@@ -2,7 +2,6 @@ import sys
 import numpy as np
 from matplotlib import *
 from astropy.io import fits
-from profiles_fit import *
 from matplotlib import rc
 rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})
 rc('text', usetex=True)
@@ -14,13 +13,13 @@ def ratio(x,ex,y,ey):
     er = np.sqrt((ex/y)**2 + ((x*ey)/(y**2))**2)
     return r, er
 
-out    = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles/Lens_Mbin_ymiss.out').T
-outH   = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles/Lens_Mbin_mzH.out').T
-outL   = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles/Lens_Mbin_mzL.out').T
+out    = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_new/Lens_Mbin_ymiss.out').T
+outH   = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_new/Lens_Mbin_zH_ymiss.out').T
+outL   = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_new/Lens_Mbin_zL_ymiss.out').T
 
-outc  = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles/Lens_Mbin_cM_ymiss.out').T
-outHc = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles/Lens_Mbin_mzH_conM.out').T
-outLc = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles/Lens_Mbin_mzL_conM.out').T
+outc  = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_new/Lens_Mbin_cM_ymiss.out').T
+outHc = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_new/Lens_Mbin_zH_cM_ymiss.out').T
+outLc = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_new/Lens_Mbin_zL_cM_ymiss.out').T
 
 lMH  = np.log10(out[6]*1.e14)
 lMHH = np.log10(outH[6]*1.e14)
@@ -110,7 +109,7 @@ plt.legend(frameon = False,fontsize=14)
 plt.xlabel('$\log (M_{AM})$')
 plt.ylabel('$\log (M_{200})$')
 plt.axis([12.3,14.6,12.3,14.6])
-plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots/Mhalo_M200_Mbin_ymiss.pdf',bbox_inches='tight')
+plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newzbin/Mhalo_M200_Mbin_ymiss.pdf',bbox_inches='tight')
 # -----------------------
 
 plt.figure()
@@ -124,7 +123,7 @@ plt.errorbar(lM200c,pcc_c,xerr=elM200c,yerr=epcc_c,fmt = 'none',ecolor='C9')
 # plt.legend(frameon = False)
 plt.xlabel('$\log (M_{200})$')
 plt.ylabel('$p_{cc}$')
-plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots/M200_pcc_Mbin_ymiss.pdf',bbox_inches='tight')
+plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots/M200_pcc_Mbin_2_ymiss.pdf',bbox_inches='tight')
 
 # -----------------------
 plt.figure()
@@ -138,7 +137,7 @@ plt.errorbar(lM200,ratio_pcc,xerr=elM200,yerr=eratio_pcc,fmt = 'none',ecolor='k'
 plt.plot([12.3,14.6],[1.,1.],'C7--')
 plt.xlabel('$\log (M_{200})$')
 plt.ylabel('$p^c_{cc}/p_{cc}$')
-plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots/ratiopcc_Mbin_ymiss.pdf',bbox_inches='tight')
+plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newzbin/ratiopcc_Mbin_ymiss.pdf',bbox_inches='tight')
 
 # -----------------------
 plt.figure()
@@ -152,9 +151,9 @@ plt.errorbar(lM200,ratio_M,xerr=elM200,yerr=eratio_M,fmt = 'none',ecolor='k')
 plt.plot([12.3,14.6],[1.,1.],'C7--')
 plt.xlabel('$\log (M_{200})$')
 plt.ylabel('$M^c_{200}/M_{200}$')
-plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots/ratioc_Mbin_ymiss.pdf',bbox_inches='tight')
+plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newzbin/ratioc_Mbin_ymiss.pdf',bbox_inches='tight')
 
-'''
+# '''
 # -----------------------
 plt.figure()
 plt.scatter(lM200,ratio_LH,facecolor='none',edgecolors='k', label = 'Total sample')
@@ -163,13 +162,15 @@ plt.scatter(lM200c,ratio_LHc,facecolor='none',edgecolors='C9', label = u'$C-$sam
 plt.errorbar(lM200,ratio_LH,xerr=elM200,yerr=eratio_LH,fmt = 'none',ecolor='k')
 plt.errorbar(lM200c,ratio_LHc,xerr=elM200c,yerr=eratio_LHc,fmt = 'none',ecolor='C9')
 
-plt.yscale('log')
+# plt.yscale('log')
 plt.legend(frameon = False)
 # plt.legend(frameon = False)
 plt.plot([12.3,14.6],[1.,1.],'C7--')
+plt.plot([12.3,14.6],[ratio_LH.mean(),ratio_LH.mean()],'k--')
+plt.plot([12.3,14.6],[ratio_LHc.mean(),ratio_LHc.mean()],'C9--')
 plt.xlabel('$\log (M_{200})$')
 plt.ylabel('$M^H_{200}/M^L_{200}$')
-plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots/ratioLH_Mbin.pdf',bbox_inches='tight')
+plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newzbin/ratioLH_Mbin_ymiss.pdf',bbox_inches='tight')
 
 
-'''
+# '''

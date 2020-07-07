@@ -98,7 +98,8 @@ plt.hist(z[mc*mz*mid*(lMH > 12.5)*mN23],np.linspace(0.05,0.2,70),histtype='step'
 plt.hist(z[mc*mz*mid*(lMH > 12.5)*mN4M],np.linspace(0.05,0.2,70),histtype='step',density=False,label='$ N_{GAL} \geq 4$',color='C8',ls='--')
 
 plt.yscale('log')
-# plt.axis([12.5,15.,0.,2.3])
+plt.axis([0.05,0.2,0.5,600.])
+plt.xticks([0.05,0.1,0.15,0.2])
 plt.xlabel('$z$')
 plt.ylabel('$N$')
 plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots/z_dist.pdf',bbox_inches='tight')
