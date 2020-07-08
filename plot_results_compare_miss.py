@@ -2,7 +2,6 @@ import sys
 import numpy as np
 from matplotlib import *
 from astropy.io import fits
-from profiles_fit import *
 
 def ratio(x,ex,y,ey):
     r  = x/y

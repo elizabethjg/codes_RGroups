@@ -23,7 +23,8 @@ def make_plot_centred_monopole(file_name,folder,samples):
      Mhalo   = 10**h['lMASS_HALO_mean']
      Nmean   = h['N_GAL_mean']
      Nlens   = h['N_LENSES']
-    
+     Vdisp   = h['VDISP_DYN_mean']
+     
      eM200 = 10**h['elM200_NFW']          
      try:
           MDYN = 10**h['lMASS_DYN_mean']
@@ -109,7 +110,7 @@ def make_plot_centred_monopole(file_name,folder,samples):
      
      return [Mhalo/1.e14, M200/1.e14, e_M200/1.e14, Nmean, Nlens, SN, 
             1., np.array([0,0]), MDYN/1.e14, nmin, nmax, 
-            Mmin, Mmax, zmin, zmax, zmean, 1.0]
+            Mmin, Mmax, zmin, zmax, zmean, 1.0, Vdisp]
 
 
 
@@ -131,6 +132,7 @@ def make_plot_misscentred_monopole(file_name,folder,samples,plot = False,ymiss =
      Rmean   = h['RADIUS_HALO_mean']
      ROUT = (2.5*(2.*(Mhalo/2.21e14)**0.75)**(1./3.))/0.7
      soff = 0.4*Rmean
+     Vdisp   = h['VDISP_DYN_mean']
      
      try:
           mcmc = (np.loadtxt(folder+file_mcmc)).T
@@ -275,13 +277,13 @@ def make_plot_misscentred_monopole(file_name,folder,samples,plot = False,ymiss =
      
      return [Mhalo/1.e14, M200/1.e14, e_M200/1.e14, Nmean, Nlens, SN, 
             pcc_out[1], np.diff(pcc_out), MDYN/1.e14, nmin, nmax, 
-            Mmin, Mmax, zmin, zmax, zmean, chi_t]
+            Mmin, Mmax, zmin, zmax, zmean, chi_t, Vdisp]
 
 
 folder    = '/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_new/'
-samples   = 'Nbin_cM'
+samples   = 'Nbin'
 ymiss     = False
-makeplots = True
+makeplots = False
 
 f = open(folder+'list_'+samples,'r')
 # f = open(folder+'list_m1','r')
@@ -312,6 +314,7 @@ Zmean = np.array([])
 Mmean = np.array([])
 Nmean = np.array([])
 MDYN  = np.array([])
+Vdisp = np.array([])
 
 CHI2  = np.array([])
 
@@ -323,8 +326,8 @@ for line in lines:
      
      
      try:
-          # out = make_plot_misscentred_monopole(line[:-1],folder,samples,makeplots,ymiss)
-          out = make_plot_centred_monopole(line[:-1],folder,samples)
+          out = make_plot_misscentred_monopole(line[:-1],folder,samples,makeplots,ymiss)
+          # out = make_plot_centred_monopole(line[:-1],folder,samples)
      except:
           continue
     
@@ -349,6 +352,7 @@ for line in lines:
      
      Zmean   = np.append(Zmean,out[15])
      CHI2    = np.append(CHI2,out[16])
+     Vdisp   = np.append(Vdisp,out[17])
 
 
 eMNFW = np.reshape(eMNFW,(nbins,2)).T
@@ -365,13 +369,13 @@ out = np.array([Nlenses[j], NMIN[j],NMAX[j],Nmean[j],
                 MMIN[j],MMAX[j],Mmean[j],
                 ZMIN[j],ZMAX[j],Zmean[j],
                 MDYN[j], MNFW[j], eMNFW[0][j],eMNFW[1][j],
-                pcc[j], e_pcc[0][j],e_pcc[1][j],CHI2[j]])
+                pcc[j], e_pcc[0][j],e_pcc[1][j],CHI2[j],Vdisp[j]])
 
 if ymiss:
      f1=open(folder+'Lens_'+samples+'_ymiss.out','w')
 else:
      f1=open(folder+'Lens_'+samples+'.out','w')
      
-f1.write('# Nlenses    Nmin    Nmax   Nmean   Mmin        Mmax         Mmean       zmin         zmax         zmean         Mdyn         Mlens       eMlens                    pcc          e_pcc                        chi2\n')
-np.savetxt(f1,out.T,fmt = ['%4i']*3+['%12.4f']*15)
+f1.write('# Nlenses    Nmin    Nmax   Nmean   Mmin        Mmax         Mmean       zmin         zmax         zmean         Mdyn         Mlens       eMlens                    pcc          e_pcc                        chi2       Vdisp\n')
+np.savetxt(f1,out.T,fmt = ['%4i']*3+['%12.4f']*16)
 f1.close()

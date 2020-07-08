@@ -2,12 +2,21 @@ import sys
 import numpy as np
 from matplotlib import *
 from astropy.io import fits
-from profiles_fit import *
 from matplotlib import rc
+from astropy.cosmology import LambdaCDM
 rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})
 rc('text', usetex=True)
 matplotlib.rcParams.update({'font.size': 16})
 plt.rc('font', family='serif', size='16.0')
+
+cosmo = LambdaCDM(H0=100, Om0=0.3, Ode0=0.7)
+        
+#parameters
+cvel = 299792458;   # Speed of light (m.s-1)
+G    = 6.670e-11;   # Gravitational constant (m3.kg-1.s-2)
+pc   = 3.085678e16; # 1 pc (m)
+Msun = 1.989e30 # Solar mass (kg)
+
 
 def ratio(x,ex,y,ey):
     r  = x/y
@@ -20,6 +29,20 @@ outc    = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_ne
 
 lMH  = np.log10(out[6]*1.e14)
 lMHc  = np.log10(outc[6]*1.e14)
+
+# lMdyn  = np.log10(out[10]*1.e14)
+# lMdyn_c  = np.log10(outc[10]*1.e14)
+
+
+
+H        = cosmo.H(out[9]).value/(1.0e3*pc) #H at z_pair s-1
+M200_SIS  = ((2.*(out[-1]*1.e3)**3)/((50**0.5)*G*H))/(Msun)
+
+H        = cosmo.H(outc[9]).value/(1.0e3*pc) #H at z_pair s-1
+M200_SISc = ((2.*(outc[-1]*1.e3)**3)/((50**0.5)*G*H))/(Msun)
+
+lMdyn  = np.log10(M200_SIS)
+lMdyn_c  = np.log10(M200_SISc)
 
 
 M200  = out[11] 
@@ -50,6 +73,26 @@ N = out[3]
 mN1 = N==1
 mN23 = (N>1)*(N<4)
 mN4M = (N>3)
+
+# -----------------------
+plt.figure()
+
+plt.scatter(lMdyn[mN4M],lM200[mN4M],facecolor='none',edgecolors='C8')
+plt.errorbar(lMdyn[mN4M],lM200[mN4M],yerr=elM200[:,mN4M],fmt = 'none',ecolor='C8',label='$  N_{GAL} \geq 4$')
+
+plt.plot(lMdyn_c[mN4M],lM200c[mN4M],'C8^')
+plt.errorbar(lMdyn_c[mN4M],lM200c[mN4M],yerr=elM200c[:,mN4M],fmt = 'none',ecolor='C8')
+
+
+plt.plot([12.3,14.6],[12.3,14.6],'C7--')
+
+plt.xlabel('$\log (M_{dyn})$')
+plt.ylabel('$\log (M_{200})$')
+plt.axis([13.5,14.2,12.5,14.5])
+plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newzbin/Mdyn_M200_NMbin.pdf',bbox_inches='tight')
+
+
+
 
 # -----------------------
 plt.figure()
