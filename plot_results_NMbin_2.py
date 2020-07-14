@@ -26,23 +26,11 @@ def ratio(x,ex,y,ey):
 
 out    = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_new/Lens_Nbin.out').T
 outc    = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_new/Lens_Nbin_cM.out').T
+lMdyn,sdisp     = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_new/median_dyn').T
+lMdyn_c,sdisp_c = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_new/median_dyn_c').T
 
 lMH  = np.log10(out[6]*1.e14)
 lMHc  = np.log10(outc[6]*1.e14)
-
-# lMdyn  = np.log10(out[10]*1.e14)
-# lMdyn_c  = np.log10(outc[10]*1.e14)
-
-
-
-H        = cosmo.H(out[9]).value/(1.0e3*pc) #H at z_pair s-1
-M200_SIS  = ((2.*(out[-1]*1.e3)**3)/((50**0.5)*G*H))/(Msun)
-
-H        = cosmo.H(outc[9]).value/(1.0e3*pc) #H at z_pair s-1
-M200_SISc = ((2.*(outc[-1]*1.e3)**3)/((50**0.5)*G*H))/(Msun)
-
-lMdyn  = np.log10(M200_SIS)
-lMdyn_c  = np.log10(M200_SISc)
 
 
 M200  = out[11] 
@@ -74,53 +62,79 @@ mN1 = N==1
 mN23 = (N>1)*(N<4)
 mN4M = (N>3)
 
+H        = cosmo.H(out[9][mN4M]).value/(1.0e3*pc) #H at z_pair s-1
+M200_SIS  = ((2.*(sdisp*1.e3)**3)/((50**0.5)*G*H))/(Msun)
+
+H        = cosmo.H(outc[9][mN4M]).value/(1.0e3*pc) #H at z_pair s-1
+M200_SISc = ((2.*(sdisp_c*1.e3)**3)/((50**0.5)*G*H))/(Msun)
+
+lMdyn2  = np.log10(M200_SIS)
+lMdyn_c2 = np.log10(M200_SISc)
+
+
 # -----------------------
 plt.figure()
 
-plt.scatter(lMdyn[mN4M],lM200[mN4M],facecolor='none',edgecolors='C8')
-plt.errorbar(lMdyn[mN4M],lM200[mN4M],yerr=elM200[:,mN4M],fmt = 'none',ecolor='C8',label='$  N_{GAL} \geq 4$')
+plt.scatter(lMdyn,lM200[mN4M],facecolor='none',edgecolors='C8')
+plt.errorbar(lMdyn,lM200[mN4M],yerr=elM200[:,mN4M],fmt = 'none',ecolor='C8',label='$  N_{GAL} \geq 4$')
 
-plt.plot(lMdyn_c[mN4M],lM200c[mN4M],'C8^')
-plt.errorbar(lMdyn_c[mN4M],lM200c[mN4M],yerr=elM200c[:,mN4M],fmt = 'none',ecolor='C8')
+plt.plot(lMdyn_c,lM200c[mN4M],'C8^')
+plt.errorbar(lMdyn_c,lM200c[mN4M],yerr=elM200c[:,mN4M],fmt = 'none',ecolor='C8')
 
 
 plt.plot([12.3,14.6],[12.3,14.6],'C7--')
 
 plt.xlabel('$\log (M_{dyn})$')
 plt.ylabel('$\log (M_{200})$')
-plt.axis([13.5,14.2,12.5,14.5])
+plt.axis([13.,14.5,12.7,14.5])
 plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newzbin/Mdyn_M200_NMbin.pdf',bbox_inches='tight')
 
+# -----------------------
+plt.figure()
+
+plt.scatter(lMdyn2,lM200[mN4M],facecolor='none',edgecolors='C8')
+plt.errorbar(lMdyn2,lM200[mN4M],yerr=elM200[:,mN4M],fmt = 'none',ecolor='C8',label='$  N_{GAL} \geq 4$')
+
+plt.plot(lMdyn_c2,lM200c[mN4M],'C8^')
+plt.errorbar(lMdyn_c2,lM200c[mN4M],yerr=elM200c[:,mN4M],fmt = 'none',ecolor='C8')
+
+
+plt.plot([12.3,14.6],[12.3,14.6],'C7--')
+
+plt.xlabel('$\log (M_{dyn})$')
+plt.ylabel('$\log (M_{200})$')
+plt.axis([13.,14.5,12.7,14.5])
+plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newzbin/Mdyn_M200_NMbin_SIS.pdf',bbox_inches='tight')
 
 
 
 # -----------------------
 plt.figure()
-plt.plot(100,100,'k^', label = '$C-$sample')
-plt.scatter(100,100,facecolor='none',edgecolors='k', label = 'Total sample')
+# plt.plot(100,100,'k^', label = '$C-$sample')
+# plt.scatter(100,100,facecolor='none',edgecolors='k', label = 'Total sample')
 
-plt.scatter(lMH[mN1],lM200[mN1],facecolor='none',edgecolors='C6'  )
-plt.scatter(lMH[mN23],lM200[mN23],facecolor='none',edgecolors='C7')
-plt.scatter(lMH[mN4M],lM200[mN4M],facecolor='none',edgecolors='C8')
+plt.scatter(lMH[mN1],lM200[mN1],facecolor='none',edgecolors='C6'  ,label='$N_{GAL} = 1$')
+plt.scatter(lMH[mN23],lM200[mN23],facecolor='none',edgecolors='C7',label='$ 2 \leq N_{GAL} \leq 3$')
+plt.scatter(lMH[mN4M],lM200[mN4M],facecolor='none',edgecolors='C8',label='$  N_{GAL} \geq 4$')
 
-plt.errorbar(lMH[mN1],lM200[mN1],yerr=elM200[:,mN1],fmt = 'none',ecolor='C6'   ,label='$N_{GAL} = 1$')
-plt.errorbar(lMH[mN23],lM200[mN23],yerr=elM200[:,mN23],fmt = 'none',ecolor='C7',label='$ 2 \leq N_{GAL} \leq 3$')
-plt.errorbar(lMH[mN4M],lM200[mN4M],yerr=elM200[:,mN4M],fmt = 'none',ecolor='C8',label='$  N_{GAL} \geq 4$')
+plt.errorbar(lMH[mN1],lM200[mN1],yerr=elM200[:,mN1],fmt = 'none',ecolor='C6'   )
+plt.errorbar(lMH[mN23],lM200[mN23],yerr=elM200[:,mN23],fmt = 'none',ecolor='C7')
+plt.errorbar(lMH[mN4M],lM200[mN4M],yerr=elM200[:,mN4M],fmt = 'none',ecolor='C8')
 
-plt.plot(lMHc[mN1] ,lM200c[mN1] ,'C6^')
-plt.plot(lMHc[mN23],lM200c[mN23],'C7^')
-plt.plot(lMHc[mN4M],lM200c[mN4M],'C8^')
+# plt.plot(lMHc[mN1] ,lM200c[mN1] ,'C6^')
+# plt.plot(lMHc[mN23],lM200c[mN23],'C7^')
+# plt.plot(lMHc[mN4M],lM200c[mN4M],'C8^')
 
-plt.errorbar(lMHc[mN1],lM200c[mN1],yerr=elM200c[:,mN1],fmt = 'none',ecolor='C6')
-plt.errorbar(lMHc[mN23],lM200c[mN23],yerr=elM200c[:,mN23],fmt = 'none',ecolor='C7')
-plt.errorbar(lMHc[mN4M],lM200c[mN4M],yerr=elM200c[:,mN4M],fmt = 'none',ecolor='C8')
+# plt.errorbar(lMHc[mN1],lM200c[mN1],yerr=elM200c[:,mN1],fmt = 'none',ecolor='C6')
+# plt.errorbar(lMHc[mN23],lM200c[mN23],yerr=elM200c[:,mN23],fmt = 'none',ecolor='C7')
+# plt.errorbar(lMHc[mN4M],lM200c[mN4M],yerr=elM200c[:,mN4M],fmt = 'none',ecolor='C8')
 
 
 plt.plot([12.3,14.6],[12.3,14.6],'C7--')
 plt.legend(frameon = False,fontsize = 14)
 plt.xlabel('$\log (M_{AM})$')
 plt.ylabel('$\log (M_{200})$')
-plt.axis([12.3,14.2,12.3,14.2])
+plt.axis([12.3,14.7,12.3,14.7])
 plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newzbin/Mhalo_M200_NMbin.pdf',bbox_inches='tight')
 
 # -----------------------
@@ -136,13 +150,13 @@ plt.errorbar(lM200[mN1],pcc[mN1],xerr=elM200[:,mN1],yerr=epcc[:,mN1],fmt = 'none
 plt.errorbar(lM200[mN23],pcc[mN23],xerr=elM200[:,mN23],yerr=epcc[:,mN23],fmt = 'none',ecolor='C7')
 plt.errorbar(lM200[mN4M],pcc[mN4M],xerr=elM200[:,mN4M],yerr=epcc[:,mN4M],fmt = 'none',ecolor='C8')
 
-plt.plot(lM200c[mN1] ,pcc_c[mN1]  ,'C6^',label='$N_{GAL} = 1$')
-plt.plot(lM200c[mN23],pcc_c[mN23],'C7^',label='$ 2 \leq N_{GAL} \leq 3$')
-plt.plot(lM200c[mN4M],pcc_c[mN4M],'C8^',label='$ 4 \leq N_{GAL} \leq 10$')
+# plt.plot(lM200c[mN1] ,pcc_c[mN1]  ,'C6^',label='$N_{GAL} = 1$')
+# plt.plot(lM200c[mN23],pcc_c[mN23],'C7^',label='$ 2 \leq N_{GAL} \leq 3$')
+# plt.plot(lM200c[mN4M],pcc_c[mN4M],'C8^',label='$ 4 \leq N_{GAL} \leq 10$')
 
-plt.errorbar(lM200c[mN1] ,pcc_c[mN1] ,xerr=elM200c[:,mN1] ,yerr=epcc_c[:,mN1],fmt = 'none',ecolor='C6')
-plt.errorbar(lM200c[mN23],pcc_c[mN23],xerr=elM200c[:,mN23],yerr=epcc_c[:,mN23],fmt = 'none',ecolor='C7')
-plt.errorbar(lM200c[mN4M],pcc_c[mN4M],xerr=elM200c[:,mN4M],yerr=epcc_c[:,mN4M],fmt = 'none',ecolor='C8')
+# plt.errorbar(lM200c[mN1] ,pcc_c[mN1] ,xerr=elM200c[:,mN1] ,yerr=epcc_c[:,mN1],fmt = 'none',ecolor='C6')
+# plt.errorbar(lM200c[mN23],pcc_c[mN23],xerr=elM200c[:,mN23],yerr=epcc_c[:,mN23],fmt = 'none',ecolor='C7')
+# plt.errorbar(lM200c[mN4M],pcc_c[mN4M],xerr=elM200c[:,mN4M],yerr=epcc_c[:,mN4M],fmt = 'none',ecolor='C8')
 
 
 # plt.legend(frameon = False)

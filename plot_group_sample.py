@@ -17,7 +17,10 @@ IDused = fits.open(folder+'ID_FINALcat_used.fits')[1].data.ID
 
 mid = np.in1d(Lcat[1].data.ID,IDused)
 
+lMdyn = np.log10(Lcat[1].data.MASS_DYN)
 lMH = np.log10(Lcat[1].data.MASS_HALO)
+sdisp = Lcat[1].data.VDISP_DYN
+
 N = Lcat[1].data.N_GAL
 c = Lcat[1].data.C_BG
 z = Lcat[1].data.Z

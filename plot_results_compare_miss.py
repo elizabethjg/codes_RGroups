@@ -67,6 +67,34 @@ ratio_pc, eratio_pc  = ratio(pcc_yc,epcc_yc,pcc,epcc)
 
 # -----------------------
 plt.figure()
+plt.plot(chi2,chi2y,'o')
+plt.plot([0.8,2.75],[0.8,2.75],'k--')
+plt.xlabel('$\chi^2$')
+plt.ylabel('$\chi^2_{Y}$')
+plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newzbin/chi2_centreY.pdf',bbox_inches='tight')
+
+# -----------------------
+plt.figure()
+plt.plot(epcc[0],epcc_y[0],'o')
+plt.plot(epcc[1],epcc_y[1],'o')
+plt.plot([0.11,0.25],[0.11,0.25],'k--')
+plt.ylabel('$\epsilon_{Y}$')
+plt.xlabel('$\epsilon$')
+plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newzbin/epcc_centreY.pdf',bbox_inches='tight')
+
+# -----------------------
+plt.figure()
+plt.plot(elM200[0],elM200y[0],'o')
+plt.plot(elM200[1],elM200y[1],'o')
+plt.plot([0.,0.25],[0.,0.25],'k--')
+plt.ylabel('$\epsilon_{Y}$')
+plt.xlabel('$\epsilon$')
+plt.axis([0.055,0.12,0.07,0.135])
+plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newzbin/elM200_centreY.pdf',bbox_inches='tight')
+
+
+# -----------------------
+plt.figure()
 plt.scatter(lM200,ratio_M,facecolor='none',edgecolors='k', label = 'Total sample')
 plt.scatter(lM200c,ratio_Mc,facecolor='none',edgecolors='C9', label = u'$C-$sample')
 
