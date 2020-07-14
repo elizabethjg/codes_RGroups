@@ -283,7 +283,7 @@ def make_plot_misscentred_monopole(file_name,folder,samples,plot = False,ymiss =
 folder    = '/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_new/'
 samples   = 'Nbin'
 ymiss     = False
-makeplots = False
+makeplots = True
 
 f = open(folder+'list_'+samples,'r')
 # f = open(folder+'list_m1','r')
@@ -326,8 +326,8 @@ for line in lines:
      
      
      try:
-          out = make_plot_misscentred_monopole(line[:-1],folder,samples,makeplots,ymiss)
-          # out = make_plot_centred_monopole(line[:-1],folder,samples)
+          # out = make_plot_misscentred_monopole(line[:-1],folder,samples,makeplots,ymiss)
+          out = make_plot_centred_monopole(line[:-1],folder,samples)
      except:
           continue
     
