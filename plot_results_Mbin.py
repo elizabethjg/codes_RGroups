@@ -106,7 +106,7 @@ plt.errorbar(lMH,lM200,yerr=elM200,fmt = 'none',ecolor='k')
 
 plt.plot([12.3,14.6],[12.3,14.6],'C7--')
 # plt.legend(frameon = False,fontsize=14)
-plt.xlabel('$\log (M_{AM})$')
+plt.xlabel(r'$\log (\langle M_{AM} \rangle)$')
 plt.ylabel('$\log (M_{200})$')
 plt.axis([12.3,14.7,12.3,14.7])
 plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newzbin/Mhalo_M200_Mbin.pdf',bbox_inches='tight')
