@@ -21,6 +21,13 @@ outc  = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_new/
 outHc = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_new/Lens_Mbin_zH_cM.out').T
 outLc = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_new/Lens_Mbin_zL_cM.out').T
 
+simu  = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/results_simu/puntos-cociente.txt').T
+
+all_simu = simu[0] == 0
+lMH_simu = simu[3][all_simu]
+ratio_simu = simu[4][all_simu]
+eratio_simu = simu[5][all_simu]
+
 lMH  = np.log10(out[6]*1.e14)
 lMHH = np.log10(outH[6]*1.e14)
 lMHL = np.log10(outL[6]*1.e14)
@@ -156,11 +163,12 @@ plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newzbin/ratioc
 # '''
 # -----------------------
 plt.figure()
-plt.scatter(lM200,ratio_LH,facecolor='none',edgecolors='k', label = 'Total sample')
-plt.scatter(lM200c,ratio_LHc,facecolor='none',edgecolors='C9', label = u'$C-$sample')
+plt.scatter(lMH,ratio_LH,facecolor='none',edgecolors='k', label = 'Total sample')
+plt.scatter(lMH_simu,ratio_LH,facecolor='none',edgecolors='C1', label = 'Sample from simulation')
 
-plt.errorbar(lM200,ratio_LH,xerr=elM200,yerr=eratio_LH,fmt = 'none',ecolor='k')
-plt.errorbar(lM200c,ratio_LHc,xerr=elM200c,yerr=eratio_LHc,fmt = 'none',ecolor='C9')
+plt.errorbar(lMH,ratio_LH,yerr=eratio_LH,fmt = 'none',ecolor='k')
+plt.errorbar(lMH,ratio_simu,yerr=eratio_simu,fmt = 'none',ecolor='C1')
+
 
 # plt.yscale('log')
 plt.legend(frameon = False)
