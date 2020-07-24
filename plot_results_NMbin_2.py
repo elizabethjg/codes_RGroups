@@ -23,13 +23,19 @@ def ratio(x,ex,y,ey):
     er = np.sqrt((ex/y)**2 + ((x*ey)/(y**2))**2)
     return r, er
 
+pcc_s   = (np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/results_simu/pcc.txt').T)
+
 out_T   = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_new/Lens_Mbin.out').T
 outc_T  = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_new/Lens_Mbin_cM.out').T
 
 out    = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_new/Lens_Nbin.out').T
 outc    = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_new/Lens_Nbin_cM.out').T
+
 lMdyn,sdisp     = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_new/median_dyn').T
 lMdyn_c,sdisp_c = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_new/median_dyn_c').T
+
+lMH_simu = pcc_s[2]
+pcc_simu = 1-(pcc_s[-1]/100.)
 
 MH   = out[6]
 MH_T = out_T[6]
@@ -176,15 +182,15 @@ plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newzbin/Mhalo_
 # -----------------------
 plt.figure()
 
-plt.scatter(lM200_T  ,ratio_cT,facecolor='none',edgecolors='k',label='Total sample')
-plt.scatter(lM200[mN1]  ,ratio_c[mN1],facecolor='none',edgecolors='C6',label='$N_{GAL} = 1$')
-plt.scatter(lM200[mN23] ,ratio_c[mN23],facecolor='none',edgecolors='C7',label='$ 2 \leq N_{GAL} \leq 3$')
-plt.scatter(lM200[mN4M],ratio_c[mN4M],facecolor='none',edgecolors='C8',label='$  N_{GAL} \geq 4$')
+plt.scatter(lMH_T  ,ratio_cT,facecolor='none',edgecolors='k',label='Total sample')
+plt.scatter(lMH[mN1]  ,ratio_c[mN1],facecolor='none',edgecolors='C6',label='$N_{GAL} = 1$')
+plt.scatter(lMH[mN23] ,ratio_c[mN23],facecolor='none',edgecolors='C7',label='$ 2 \leq N_{GAL} \leq 3$')
+plt.scatter(lMH[mN4M],ratio_c[mN4M],facecolor='none',edgecolors='C8',label='$  N_{GAL} \geq 4$')
 
-plt.errorbar(lM200_T  ,ratio_cT,xerr=elM200_T,yerr=eratio_cT,fmt = 'none',ecolor='k')
-plt.errorbar(lM200[mN1]  ,ratio_c[mN1],xerr=elM200[:,mN1],yerr=eratio_c[:,mN1],fmt = 'none',ecolor='C6')
-plt.errorbar(lM200[mN23] ,ratio_c[mN23],xerr=elM200[:,mN23],yerr=eratio_c[:,mN23],fmt = 'none',ecolor='C7')
-plt.errorbar(lM200[mN4M],ratio_c[mN4M],xerr=elM200[:,mN4M],yerr=eratio_c[:,mN4M],fmt = 'none',ecolor='C8')
+plt.errorbar(lMH_T  ,ratio_cT,yerr=eratio_cT,fmt = 'none',ecolor='k')
+plt.errorbar(lMH[mN1]  ,ratio_c[mN1],yerr=eratio_c[:,mN1],fmt = 'none',ecolor='C6')
+plt.errorbar(lMH[mN23] ,ratio_c[mN23],yerr=eratio_c[:,mN23],fmt = 'none',ecolor='C7')
+plt.errorbar(lMH[mN4M],ratio_c[mN4M],yerr=eratio_c[:,mN4M],fmt = 'none',ecolor='C8')
 plt.legend(frameon = False,fontsize = 14)
 # j = np.argsort(lM200c_t)
 # plt.plot(lM200c_t[j],ratio_c_t[j],'C4')
@@ -227,8 +233,39 @@ plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newzbin/ratio_
 
 # -----------------------
 
-
+# -----------------------
 plt.figure()
+
+plt.scatter(out_T[9]  ,M200_T/MH_T,facecolor='none',edgecolors='k',label='Total sample')
+plt.scatter(out[9][mN1]  ,(M200/MH)[mN1],facecolor='none',edgecolors='C6',label='$N_{GAL} = 1$')
+plt.scatter(out[9][mN23] ,(M200/MH)[mN23],facecolor='none',edgecolors='C7',label='$ 2 \leq N_{GAL} \leq 3$')
+plt.scatter(out[9][mN4M],(M200/MH)[mN4M],facecolor='none',edgecolors='C8',label='$  N_{GAL} \geq 4$')
+
+plt.plot(out_T[9][lMH_T > 14.]  ,(M200_T/MH_T)[lMH_T > 14.],'C3o')
+plt.plot(out[9][lMH > 14.]  ,(M200/MH)[lMH > 14.],'C3o')
+
+plt.errorbar(out_T[9]  ,M200_T/MH_T,yerr=eM200_T/MH_T,fmt = 'none',ecolor='k')
+plt.errorbar(out[9][mN1]  ,(M200/MH)[mN1],yerr=eM200[:,mN1]/MH[mN1],fmt = 'none',ecolor='C6')
+plt.errorbar(out[9][mN23] ,(M200/MH)[mN23],yerr=eM200[:,mN23]/MH[mN23],fmt = 'none',ecolor='C7')
+plt.errorbar(out[9][mN4M],(M200/MH)[mN4M],yerr=eM200[:,mN4M]/MH[mN4M],fmt = 'none',ecolor='C8')
+plt.legend(frameon = False,fontsize = 14)
+# j = np.argsort(lM200c_t)
+# plt.plot(lM200c_t[j],ratio_c_t[j],'C4')
+# plt.fill_between(lM200c_t[j],ratio_c_t[j]+eratio_c_t[1][j],ratio_c_t[j]-eratio_c_t[0][j],color='C4',alpha=0.5)
+
+
+# plt.yscale('log')
+
+# plt.legend(frameon = False)
+plt.plot([0.06,0.175],[1.,1.],'C7--')
+plt.xlabel(r'$z$')
+plt.ylabel(r'$M_{200}/\langle M_{AM} \rangle$')
+plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newzbin/ratio_MH_z.pdf',bbox_inches='tight')
+
+# -----------------------
+plt.figure()
+
+
 
 plt.scatter(lM200_T,pcc_T,facecolor='none',edgecolors='k',label='Total sample')
 plt.scatter(lM200[mN1],pcc[mN1],facecolor='none',edgecolors='C6',label='$N_{GAL} = 1$')
@@ -239,6 +276,8 @@ plt.errorbar(lM200_T,pcc_T,xerr=elM200_T,yerr=epcc_T,fmt = 'none',ecolor='k')
 plt.errorbar(lM200[mN1],pcc[mN1],xerr=elM200[:,mN1],yerr=epcc[:,mN1],fmt = 'none',ecolor='C6')
 plt.errorbar(lM200[mN23],pcc[mN23],xerr=elM200[:,mN23],yerr=epcc[:,mN23],fmt = 'none',ecolor='C7')
 plt.errorbar(lM200[mN4M],pcc[mN4M],xerr=elM200[:,mN4M],yerr=epcc[:,mN4M],fmt = 'none',ecolor='C8')
+
+plt.plot(lMH_simu,pcc_simu,'C3')
 
 # plt.plot(lM200c[mN1] ,pcc_c[mN1]  ,'C6^',label='$N_{GAL} = 1$')
 # plt.plot(lM200c[mN23],pcc_c[mN23],'C7^',label='$ 2 \leq N_{GAL} \leq 3$')

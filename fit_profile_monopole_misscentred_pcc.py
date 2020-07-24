@@ -36,9 +36,11 @@ ncores    = int(ncores)
 if 'True' in args.yan:
     ymiss      = True
     outfile = 'monopole_pcconly_ymiss_'+file_name[:-4]+'out'
+    tau = 0.3
 elif 'False' in args.yan:
     ymiss     = False
     outfile = 'monopole_pcconly_'+file_name[:-4]+'out'
+    tau = 0.4
 
 
 
@@ -53,7 +55,7 @@ zmean   = h['Z_MEAN']
 Mhalo   = 10**h['lMASS_HALO_mean']
 Rmean   = h['RADIUS_HALO_mean']
 ROUT = (2.5*(2.*(Mhalo/2.21e14)**0.75)**(1./3.))/0.7
-soff = 0.4*Rmean
+soff = tau*Rmean
 
 # Compute cosmological parameters
 cosmo = LambdaCDM(H0=0.7*100, Om0=0.3, Ode0=0.7)

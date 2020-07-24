@@ -31,6 +31,7 @@ mN4M = (N>3)
 mc = c > 3.0
 mz = z < 0.2
 
+m = mid*(lMH > 12.5)*mz
 ######################################
 f, ax = plt.subplots(1, 3, figsize=(11,5),sharex=True,sharey=True)
 f.subplots_adjust(hspace=0,wspace=0)
@@ -38,9 +39,9 @@ ax[0].plot(z,lMH,',',color='0.7')
 ax[1].plot(z,lMH,',',color='0.7')
 ax[2].plot(z,lMH,',',color='0.7')
 m = mid*(lMH > 12.5)*mz
-ax[0].plot(z[m*mN1],lMH[m*mN1],'C6.')
-ax[1].plot(z[m*mN23],lMH[m*mN23],'C7.')
-ax[2].plot(z[m*mN4M],lMH[m*mN4M],'C8.')
+ax[0].plot(z[m*mN1],lMH[m*mN1],'C6.',label='$N_{GAL} = 1$')
+ax[1].plot(z[m*mN23],lMH[m*mN23],'C7.',label='$ 2 \leq N_{GAL} \leq 3$')
+ax[2].plot(z[m*mN4M],lMH[m*mN4M],'C8.',label='$  N_{GAL} \geq 4$')
 ax[0].axhline(12.5,color='C5',ls='--')
 ax[0].axhline(12.8,color='C5',ls='--')
 ax[0].axhline(12.9,color='C5',ls='--')
@@ -59,6 +60,10 @@ ax[0].set_ylabel('$\log{M_{AM}}$')
 ax[0].set_xlabel('$z$')
 ax[1].set_xlabel('$z$')
 ax[2].set_xlabel('$z$')
+
+ax[0].legend(loc=4,frameon = False,fontsize = 14)
+ax[1].legend(loc=4,frameon = False,fontsize = 14)
+ax[2].legend(loc=4,frameon = False,fontsize = 14)
 
 # plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots/z_Mhalo.pdf',bbox_inches='tight')
 

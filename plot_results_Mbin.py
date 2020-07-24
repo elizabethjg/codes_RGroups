@@ -163,11 +163,12 @@ plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newzbin/ratioc
 # '''
 # -----------------------
 plt.figure()
+plt.scatter(lMH_simu,ratio_simu,facecolor='none',edgecolors='C1', label = 'Sample from simulation')
 plt.scatter(lMH,ratio_LH,facecolor='none',edgecolors='k', label = 'Total sample')
-plt.scatter(lMH_simu,ratio_LH,facecolor='none',edgecolors='C1', label = 'Sample from simulation')
+
 
 plt.errorbar(lMH,ratio_LH,yerr=eratio_LH,fmt = 'none',ecolor='k')
-plt.errorbar(lMH,ratio_simu,yerr=eratio_simu,fmt = 'none',ecolor='C1')
+plt.errorbar(lMH_simu,ratio_simu,yerr=eratio_simu,fmt = 'none',ecolor='C1')
 
 
 # plt.yscale('log')
@@ -175,8 +176,8 @@ plt.legend(frameon = False)
 # plt.legend(frameon = False)
 plt.plot([12.3,14.6],[1.,1.],'C7--')
 plt.plot([12.3,14.6],[ratio_LH.mean(),ratio_LH.mean()],'k--')
-plt.plot([12.3,14.6],[ratio_LHc.mean(),ratio_LHc.mean()],'C9--')
-plt.xlabel('$\log (M_{200})$')
+plt.plot([12.3,14.6],[ratio_simu.mean(),ratio_simu.mean()],'C1--')
+plt.xlabel(r'$\log (\langle M_{AM} \rangle)$')
 plt.ylabel('$M^H_{200}/M^L_{200}$')
 plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newzbin/ratioLH_Mbin.pdf',bbox_inches='tight')
 
