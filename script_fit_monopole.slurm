@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=Mbin1_zL
+#SBATCH --job-name=N1_zL12
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=8
 #SBATCH --time=12:00:00
@@ -19,4 +19,4 @@ export MKL_NUM_THREADS=10
 conda activate py2env
 
 srun -u python fit_profile_monopole_misscentred_pcc.py -folder '/mnt/clemente/lensing/RodriguezGroups/N_all/' \
--file 'profile_N1_'$SLURM_JOB_NAME'.fits' -ncores 15                                    
+-file 'profile_'$SLURM_JOB_NAME'.fits' -ncores 15                                    
