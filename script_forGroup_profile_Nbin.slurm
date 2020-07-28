@@ -18,12 +18,17 @@ export MKL_NUM_THREADS=$SLURM_CPUS_PER_TASK
 
 conda activate py2env
 
-srun python -u forGroup_profile.py -sample 'N1_Mbin1_zL'   -N_min 1 -N_max 2 -lMH_min 12.5 -lMH_max 12.9 -C_BG_min 0.  -z_max 0.13 -ncores 56
-srun python -u forGroup_profile.py -sample 'N1_Mbin2_zL'   -N_min 1 -N_max 2 -lMH_min 12.9 -lMH_max 13.1 -C_BG_min 0.  -z_max 0.13 -ncores 56
-srun python -u forGroup_profile.py -sample 'N1_Mbin3_zL'   -N_min 1 -N_max 2 -lMH_min 13.1 -lMH_max 13.5 -C_BG_min 0.  -z_max 0.13 -ncores 56
-srun python -u forGroup_profile.py -sample 'N1_Mbin1_zH'   -N_min 1 -N_max 2 -lMH_min 12.5 -lMH_max 12.9 -C_BG_min 0.  -z_min 0.13 -z_max 0.2 -ncores 56
-srun python -u forGroup_profile.py -sample 'N1_Mbin2_zH'   -N_min 1 -N_max 2 -lMH_min 12.9 -lMH_max 13.1 -C_BG_min 0.  -z_min 0.13 -z_max 0.2 -ncores 56
-srun python -u forGroup_profile.py -sample 'N1_Mbin3_zH'   -N_min 1 -N_max 2 -lMH_min 13.1 -lMH_max 13.5 -C_BG_min 0.  -z_min 0.13 -z_max 0.2 -ncores 56
+srun python -u forGroup_profile.py -sample 'N1_zL12'  -N_max 2 -z_max 0.12 -ncores 56
+srun python -u forGroup_profile.py -sample 'N1_zL10'  -N_max 2 -z_max 0.10 -ncores 56
+srun python -u forGroup_profile.py -sample 'N23_zL10' -N_min 2 -N_max 4 -z_max 0.10 -ncores 56
+srun python -u forGroup_profile.py -sample 'N23_zL12' -N_min 2 -N_max 4 -z_max 0.12 -ncores 56
+
+##srun python -u forGroup_profile.py -sample 'N1_Mbin1_zL'   -N_min 1 -N_max 2 -lMH_min 12.5 -lMH_max 12.9 -C_BG_min 0.  -z_max 0.13 -ncores 56
+##srun python -u forGroup_profile.py -sample 'N1_Mbin2_zL'   -N_min 1 -N_max 2 -lMH_min 12.9 -lMH_max 13.1 -C_BG_min 0.  -z_max 0.13 -ncores 56
+##srun python -u forGroup_profile.py -sample 'N1_Mbin3_zL'   -N_min 1 -N_max 2 -lMH_min 13.1 -lMH_max 13.5 -C_BG_min 0.  -z_max 0.13 -ncores 56
+##srun python -u forGroup_profile.py -sample 'N1_Mbin1_zH'   -N_min 1 -N_max 2 -lMH_min 12.5 -lMH_max 12.9 -C_BG_min 0.  -z_min 0.13 -z_max 0.2 -ncores 56
+##srun python -u forGroup_profile.py -sample 'N1_Mbin2_zH'   -N_min 1 -N_max 2 -lMH_min 12.9 -lMH_max 13.1 -C_BG_min 0.  -z_min 0.13 -z_max 0.2 -ncores 56
+##srun python -u forGroup_profile.py -sample 'N1_Mbin3_zH'   -N_min 1 -N_max 2 -lMH_min 13.1 -lMH_max 13.5 -C_BG_min 0.  -z_min 0.13 -z_max 0.2 -ncores 56
 
 ##srun python -u forGroup_profile.py -sample 'N1_Mbin1_cM'   -N_min 1 -N_max 2 -lMH_min 12.5 -lMH_max 12.8 -C_BG_min 3.  -z_max 0.2 -ncores 56
 ##srun python -u forGroup_profile.py -sample 'N1_Mbin2_cM'   -N_min 1 -N_max 2 -lMH_min 12.8 -lMH_max 12.9 -C_BG_min 3.  -z_max 0.2 -ncores 56
