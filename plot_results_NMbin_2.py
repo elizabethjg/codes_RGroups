@@ -26,6 +26,7 @@ def ratio(x,ex,y,ey):
 pcc_s   = (np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/results_simu/pcc.txt').T)
 
 out_T   = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_new/Lens_Mbin.out').T
+out4M   = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_new/Lens_4MzH.out').T
 outc_T  = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_new/Lens_Mbin_cM.out').T
 
 out    = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_new/Lens_Nbin.out').T
@@ -38,6 +39,7 @@ lMH_simu = pcc_s[2]
 pcc_simu = 1-(pcc_s[-1]/100.)
 
 MH   = out[6]
+MH4M = out4M[6]
 MH_T = out_T[6]
 
 lMH  = np.log10(out[6]*1.e14)
@@ -46,12 +48,14 @@ lMHc  = np.log10(outc[6]*1.e14)
 lMH_T  = np.log10(out_T[6]*1.e14)
 lMHc_T  = np.log10(outc_T[6]*1.e14)
 
+M2004M  = out4M[11] 
 M200  = out[11] 
 M200c  = outc[11] 
 
 M200_T  = out_T[11] 
 M200c_T  = outc_T[11] 
 
+eM2004M   = np.array([out4M[12],out4M[13]])
 eM200   = np.array([out[12],out[13]])
 eM200c   = np.array([outc[12],outc[13]])
 
@@ -240,10 +244,12 @@ plt.scatter(out_T[9]  ,M200_T/MH_T,facecolor='none',edgecolors='k',label='Total 
 plt.scatter(out[9][mN1]  ,(M200/MH)[mN1],facecolor='none',edgecolors='C6',label='$N_{GAL} = 1$')
 plt.scatter(out[9][mN23] ,(M200/MH)[mN23],facecolor='none',edgecolors='C7',label='$ 2 \leq N_{GAL} \leq 3$')
 plt.scatter(out[9][mN4M],(M200/MH)[mN4M],facecolor='none',edgecolors='C8',label='$  N_{GAL} \geq 4$')
+plt.scatter(out4M[9],(M2004M/MH4M),facecolor='none',edgecolors='C8')
 
-plt.plot(out_T[9][lMH_T > 14.]  ,(M200_T/MH_T)[lMH_T > 14.],'C3o')
-plt.plot(out[9][lMH > 14.]  ,(M200/MH)[lMH > 14.],'C3o')
+# plt.plot(out_T[9][lMH_T > 14.]  ,(M200_T/MH_T)[lMH_T > 14.],'C3o')
+# plt.plot(out[9][lMH > 14.]  ,(M200/MH)[lMH > 14.],'C3o')
 
+plt.errorbar(out4M[9]  ,M2004M/MH4M,yerr=eM2004M/MH4M,fmt = 'none',ecolor='C8')
 plt.errorbar(out_T[9]  ,M200_T/MH_T,yerr=eM200_T/MH_T,fmt = 'none',ecolor='k')
 plt.errorbar(out[9][mN1]  ,(M200/MH)[mN1],yerr=eM200[:,mN1]/MH[mN1],fmt = 'none',ecolor='C6')
 plt.errorbar(out[9][mN23] ,(M200/MH)[mN23],yerr=eM200[:,mN23]/MH[mN23],fmt = 'none',ecolor='C7')

@@ -281,7 +281,7 @@ def make_plot_misscentred_monopole(file_name,folder,samples,plot = False,ymiss =
 
 
 folder    = '/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_new/'
-samples   = 'N1_z'
+samples   = '4MzH'
 ymiss     = False
 makeplots = True
 
