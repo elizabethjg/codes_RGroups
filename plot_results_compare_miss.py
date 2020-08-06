@@ -71,9 +71,9 @@ plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newzbin/epcc_c
 
 # -----------------------
 plt.figure()
-plt.plot(elM200[0]/lM200,elM200y[0]/lM200y,'o')
-plt.plot(elM200[1]/lM200,elM200y[1]/lM200y,'o')
-plt.plot([0.0,0.01],[0.0,0.01],'k--')
+plt.plot(elM200[0],elM200y[0],'o')
+plt.plot(elM200[1],elM200y[1],'o')
+plt.plot([0.,0.14],[0.,0.14],'k--')
 plt.ylabel('$\epsilon_{Y}$')
 plt.xlabel('$\epsilon$')
 plt.axis([0.055,0.12,0.07,0.135])

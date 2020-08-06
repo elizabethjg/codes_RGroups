@@ -137,7 +137,7 @@ plt.hist(z[mc*mz*mid*(lMH > 12.5)*mN1],np.linspace(0.05,0.2,70),histtype='step',
 plt.hist(z[mc*mz*mid*(lMH > 12.5)*mN23],np.linspace(0.05,0.2,70),histtype='step',density=False,label='$ 2 \leq N_{GAL} \leq 3$',color='C7',ls='--')
 plt.hist(z[mc*mz*mid*(lMH > 12.5)*mN4M],np.linspace(0.05,0.2,70),histtype='step',density=False,label='$ N_{GAL} \geq 4$',color='C8',ls='--')
 
-plt.axvline(0.13,color='k',ls=':')
+# plt.axvline(0.13,color='k',ls=':')
 
 plt.yscale('log')
 plt.axis([0.05,0.2,0.5,600.])
