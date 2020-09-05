@@ -17,7 +17,7 @@ IDused = fits.open(folder+'ID_FINALcat_used.fits')[1].data.ID
 
 mid = np.in1d(Lcat[1].data.ID,IDused)
 
-lMdyn = np.log10(Lcat[1].data.MASS_DYN)
+Mdyn = Lcat[1].data.MASS_DYN
 lMH = np.log10(Lcat[1].data.MASS_HALO)
 sdisp = Lcat[1].data.VDISP_DYN
 
@@ -139,7 +139,7 @@ plt.hist(z[mc*mz*mid*(lMH > 12.5)*mN4M],np.linspace(0.05,0.2,70),histtype='step'
 
 # plt.axvline(0.13,color='k',ls=':')
 
-plt.yscale('log')
+# plt.yscale('log')
 plt.axis([0.05,0.2,0.5,600.])
 plt.xticks([0.05,0.1,0.15,0.2])
 plt.xlabel('$z$')

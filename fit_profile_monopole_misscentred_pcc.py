@@ -28,6 +28,8 @@ parser.add_argument('-ncores', action='store', dest='ncores', default=4)
 parser.add_argument('-Yanmiss', action='store', dest='yan', default='False')
 args = parser.parse_args()
 
+h_cosmo = 1.0
+
 folder    = args.folder
 file_name = args.file_name
 ncores    = args.ncores
@@ -54,21 +56,16 @@ p       = profile[1].data
 zmean   = h['Z_MEAN']    
 Mhalo   = 10**h['lMASS_HALO_mean']
 Rmean   = h['RADIUS_HALO_mean']
-ROUT = (2.5*(2.*(Mhalo/2.21e14)**0.75)**(1./3.))/0.7
+ROUT = (2.5*(2.*(Mhalo/2.21e14)**0.75)**(1./3.))/h_cosmo
 soff = tau*Rmean
 
-# Compute cosmological parameters
-cosmo = LambdaCDM(H0=0.7*100, Om0=0.3, Ode0=0.7)
-H        = cosmo.H(zmean).value/(1.0e3*pc) #H at z_pair s-1 
-roc      = (3.0*(H**2.0))/(8.0*np.pi*G) #critical density at z_pair (kg.m-3)
-roc_mpc  = roc*((pc*1.0e6)**3.0)
 
 
 def log_likelihood(data_model, r, Gamma, e_Gamma):
     log_M200,pcc = data_model
     M200 = 10**log_M200
     multipoles = multipole_shear_parallel(r,M200=M200,
-                                misscentred = True,s_off = soff,
+                                misscentred = True,s_off = soff,h = h_cosmo,
                                 ellip=0,z=zmean,components = ['t'],
                                 verbose=False,ncores=ncores,Yanmiss=ymiss)
     model = model_Gamma(multipoles,'t', misscentred = True, pcc = pcc)

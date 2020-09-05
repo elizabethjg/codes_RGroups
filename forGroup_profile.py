@@ -45,9 +45,9 @@ def partial_profile(backcat_ids,RA0,DEC0,Z,
 
 
         dl, ds, dls = gentools.compute_lensing_distances(np.array([Z]), catdata.Z_B, precomputed=True)
-        dl  = (dl/0.7)*h
-        ds  = (ds/0.7)*h
-        dls = (dls/0.7)*h
+        dl  = (dl*0.7)/h
+        ds  = (ds*0.7)/h
+        dls = (dls*0.7)/h
         
         KPCSCALE   = dl*(((1.0/3600.0)*np.pi)/180.0)*1000.0
         BETA_array = dls/ds
