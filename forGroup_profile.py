@@ -1,5 +1,6 @@
 import sys
 sys.path.append('/mnt/clemente/lensing')
+sys.path.append('/mnt/clemente/lensing/python_codes')
 import time
 import numpy as np
 from lensing import LensCat 
