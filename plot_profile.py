@@ -11,6 +11,7 @@ from astropy.io import fits
 from profiles_fit import *
 import os
 import argparse
+import corner
 
 def make_plot_centred_monopole(file_name,folder,samples,ncores):
           
@@ -206,10 +207,15 @@ def make_plot_misscentred_monopole(file_name,folder,samples,plot = False,ymiss =
      if plot:
 
           print 'PLOTTING...'
+          
           if ymiss:
                folder_plot = 'plots_ymiss_'+samples+'/'
           else:
                folder_plot = 'plots_'+samples+'/'
+
+          print folder+folder_plot
+          print '------------'
+
           
           r  = np.logspace(np.log10(0.05),np.log10(5.5),20)
           
@@ -285,10 +291,10 @@ parser = argparse.ArgumentParser()
 parser.add_argument('-sample', action='store', dest='sample',default='Mbin')
 parser.add_argument('-ymiss', action='store', dest='ymiss', default='False')
 parser.add_argument('-plot', action='store', dest='plot', default='True')
-parser.add_argument('-ncores', action='store', dest='ncores', default=32)
+parser.add_argument('-ncores', action='store', dest='ncores', default=2)
 args = parser.parse_args()
 
-# folder    = '/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_new/'
+# folder    = '/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_correch/'
 folder    = '/mnt/clemente/lensing/RodriguezGroups/N_all/'
 samples   = args.sample
 ncores    = args.ncores
