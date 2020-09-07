@@ -114,7 +114,7 @@ def make_plot_centred_monopole(file_name,folder,samples,ncores):
 
 
 
-def make_plot_misscentred_monopole(file_name,folder,samples,plot = False,ymiss = False,ncores):
+def make_plot_misscentred_monopole(file_name,folder,samples,plot = False,ymiss = False,ncores = 32):
           
 
      profile = fits.open(folder+file_name)
