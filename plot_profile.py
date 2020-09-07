@@ -7,7 +7,6 @@ import numpy as np
 from matplotlib import *
 from multipoles_shear import *
 from astropy.io import fits
-import corner
 from profiles_fit import *
 import os
 import argparse
