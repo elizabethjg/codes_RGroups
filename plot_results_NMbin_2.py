@@ -50,14 +50,14 @@ pcc_s   = (np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/results_si
 masa_s   = (np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/results_simu/puntos-masamockmasaab_mass.txt').T)
 z_s   = (np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/results_simu/puntos-masamockmasaab_z.txt').T)
 
-out_T   = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_new/Lens_Mbin.out').T
-out4M   = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_new/Lens_4MzH.out').T
-outN1   = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_new/Lens_N1_zL.out').T
-outN23  = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_new/Lens_N23_zL.out').T
-outc_T  = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_new/Lens_Mbin_cM.out').T
+out_T   = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_correch/Lens_Mbin.out').T
+out4M   = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_correch/Lens_4MzH.out').T
+outN1   = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_correch/Lens_N1_zL.out').T
+outN23  = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_correch/Lens_N23_zL.out').T
+outc_T  = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_correch/Lens_Mbin_cM.out').T
 
-out    = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_new/Lens_Nbin.out').T
-outc    = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_new/Lens_Nbin_cM.out').T
+out    = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_correch/Lens_Nbin.out').T
+outc    = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_correch/Lens_Nbin_cM.out').T
 
 lMdyn,slMdyn, sdisp     = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_new/median_dyn').T
 

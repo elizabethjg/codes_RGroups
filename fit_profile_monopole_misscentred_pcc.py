@@ -25,7 +25,7 @@ Msun = 1.989e30 # Solar mass (kg)
 parser = argparse.ArgumentParser()
 parser.add_argument('-folder', action='store', dest='folder',default='./')
 parser.add_argument('-file', action='store', dest='file_name', default='profile.cat')
-parser.add_argument('-ncores', action='store', dest='ncores', default=4)
+parser.add_argument('-ncores', action='store', dest='ncores', default=15)
 parser.add_argument('-Yanmiss', action='store', dest='yan', default='False')
 args = parser.parse_args()
 
