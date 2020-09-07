@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=Nbin1_z
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=50
+#SBATCH --cpus-per-task=40
 #SBATCH --time=6:00:00
 ## An email is sent when the job is canceled or finished
 ## Change "root" for your e-mail address
@@ -34,5 +34,5 @@ conda activate py2env
 ##srun python -u forGroup_profile.py -sample 'N4M_zH15'  -N_min 4 -N_max 100  -C_BG_min 0. -z_min 0.15 -ncores 50
 ##srun python -u forGroup_profile.py -sample 'N1_zL10'   -N_min 1 -N_max 2  -C_BG_min 0. -z_max 0.10 -ncores 50
 ##srun python -u forGroup_profile.py -sample 'N1_zL12'   -N_min 1 -N_max 2  -C_BG_min 0. -z_max 0.12 -ncores 50
-srun python -u forGroup_profile.py -sample 'N23_zL10'   -N_min 2 -N_max 4  -C_BG_min 0. -z_max 0.10 -ncores 50
-srun python -u forGroup_profile.py -sample 'N23_zL12'   -N_min 2 -N_max 4  -C_BG_min 0. -z_max 0.12 -ncores 50
+srun python -u forGroup_profile.py -sample 'N23_zL10'   -N_min 2 -N_max 4  -C_BG_min 0. -z_max 0.10 -ncores 40
+srun python -u forGroup_profile.py -sample 'N23_zL12'   -N_min 2 -N_max 4  -C_BG_min 0. -z_max 0.12 -ncores 40
