@@ -68,7 +68,7 @@ def make_plot_centred_monopole(file_name,folder,samples):
      
      out = multipole_shear_parallel(r,M200=M200,z=zmean,
                                    ellip=0.,misscentred=False,
-                                   ncores=2)
+                                   ncores=32)
      
      Gt    = model_Gamma(out,'t',misscentred=False)     
      
@@ -197,7 +197,7 @@ def make_plot_misscentred_monopole(file_name,folder,samples,plot = False,ymiss =
      
      modelt_t = model_Gamma(multipoles,'t', misscentred = True, pcc = pcc_out[1])
      
-     chi_t = chi_red(modelt_t,p.DSigma_T[mr],p.error_DSigma_T[mr],2)
+     chi_t = chi_red(modelt_t,p.DSigma_T[mr],p.error_DSigma_T[mr],32)
 
      print chi_t
      print '####################'
@@ -215,7 +215,7 @@ def make_plot_misscentred_monopole(file_name,folder,samples,plot = False,ymiss =
           multipoles = multipole_shear_parallel(r,M200=10**mout[1],
                                    misscentred = True,s_off = soff,
                                    ellip=0,z=zmean,components = ['t'],
-                                   verbose=False,ncores=2,Yanmiss=ymiss)
+                                   verbose=False,ncores=32,Yanmiss=ymiss)
           
           Gt    = model_Gamma(multipoles,'t',misscentred=True,pcc=pcc_out[1])     
           
@@ -280,10 +280,11 @@ def make_plot_misscentred_monopole(file_name,folder,samples,plot = False,ymiss =
             Mmin, Mmax, zmin, zmax, zmean, chi_t, Vdisp]
 
 
-folder    = '/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_new/'
-samples   = 'Nbin'
+# folder    = '/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_new/'
+folder    = '/mnt/clemente/lensing/RodriguezGroups/N_all/'
+samples   = 'Mbin'
 ymiss     = False
-makeplots = False
+makeplots = True
 
 f = open(folder+'list_'+samples,'r')
 # f = open(folder+'list_m1','r')
@@ -294,6 +295,7 @@ if ymiss:
      os.system('mkdir '+folder+'plots_ymiss_'+samples)
 else:
      os.system('mkdir '+folder+'plots_'+samples)
+
 
 MNFW  = np.array([])
 eMNFW = np.array([])
