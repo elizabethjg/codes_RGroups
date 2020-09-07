@@ -29,10 +29,10 @@ conda activate py2env
 ##srun python -u forGroup_profile.py -sample 'N4M_Mbin2_cM'  -N_min 4 -N_max 100 -lMH_min 13.3 -lMH_max 13.7 -C_BG_min 3. -z_max 0.2 -ncores 50
 ##srun python -u forGroup_profile.py -sample 'N4M_Mbin3_cM'  -N_min 4 -N_max 100 -lMH_min 13.7 -lMH_max 15.5 -C_BG_min 3. -z_max 0.2 -ncores 50
 
-srun python -u forGroup_profile.py -sample 'N4M_zH12'  -N_min 4 -N_max 100  -C_BG_min 0. -z_min 0.12 -ncores 50
-srun python -u forGroup_profile.py -sample 'N4M_zH14'  -N_min 4 -N_max 100  -C_BG_min 0. -z_min 0.14 -ncores 50
-srun python -u forGroup_profile.py -sample 'N4M_zH15'  -N_min 4 -N_max 100  -C_BG_min 0. -z_min 0.15 -ncores 50
-srun python -u forGroup_profile.py -sample 'N1_zL10'   -N_min 1 -N_max 2  -C_BG_min 0. -z_max 0.10 -ncores 50
-srun python -u forGroup_profile.py -sample 'N1_zL12'   -N_min 1 -N_max 2  -C_BG_min 0. -z_max 0.12 -ncores 50
+##srun python -u forGroup_profile.py -sample 'N4M_zH12'  -N_min 4 -N_max 100  -C_BG_min 0. -z_min 0.12 -ncores 50
+##srun python -u forGroup_profile.py -sample 'N4M_zH14'  -N_min 4 -N_max 100  -C_BG_min 0. -z_min 0.14 -ncores 50
+##srun python -u forGroup_profile.py -sample 'N4M_zH15'  -N_min 4 -N_max 100  -C_BG_min 0. -z_min 0.15 -ncores 50
+##srun python -u forGroup_profile.py -sample 'N1_zL10'   -N_min 1 -N_max 2  -C_BG_min 0. -z_max 0.10 -ncores 50
+##srun python -u forGroup_profile.py -sample 'N1_zL12'   -N_min 1 -N_max 2  -C_BG_min 0. -z_max 0.12 -ncores 50
 srun python -u forGroup_profile.py -sample 'N23_zL10'   -N_min 2 -N_max 4  -C_BG_min 0. -z_max 0.10 -ncores 50
 srun python -u forGroup_profile.py -sample 'N23_zL12'   -N_min 2 -N_max 4  -C_BG_min 0. -z_max 0.12 -ncores 50
