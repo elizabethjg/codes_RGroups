@@ -65,10 +65,10 @@ soff = tau*Rmean
 def log_likelihood(data_model, r, Gamma, e_Gamma):
     log_M200,pcc = data_model
     M200 = 10**log_M200
-    multipoles = multipole_shear_parallel(r,M200=M200,
+    multipoles = multipole_shear(r,M200=M200,
                                 misscentred = True,s_off = soff,h = h_cosmo,
                                 ellip=0,z=zmean,components = ['t'],
-                                verbose=False,ncores=ncores,Yanmiss=ymiss)
+                                verbose=False,Yanmiss=ymiss) #,ncores=ncores)
     model = model_Gamma(multipoles,'t', misscentred = True, pcc = pcc)
     sigma2 = e_Gamma**2
     return -0.5 * np.sum((Gamma - model)**2 / sigma2 + np.log(2.*np.pi*sigma2))
@@ -91,19 +91,20 @@ nwalkers, ndim = pos.shape
 #-------------------
 # running emcee
 
-#pool = Pool(processes=(ncores))
+pool = Pool(processes=(ncores))
 
 maskr = (p.Rp < ROUT)
 
 t1 = time.time()
 sampler = emcee.EnsembleSampler(nwalkers, ndim, log_probability, 
-                                args=(p.Rp[maskr],p.DSigma_T[maskr],p.error_DSigma_T[maskr]))
+                                args=(p.Rp[maskr],p.DSigma_T[maskr],p.error_DSigma_T[maskr]),
+                                pool = pool)
 sampler.run_mcmc(pos, 100, progress=True)
 print '//////////////////////'
 print '         TIME         '
 print '----------------------'
 print (time.time()-t1)/60.
-#pool.terminate()
+pool.terminate()
 #-------------------
 
 #flat_samples = sampler.get_chain(discard=100, flat=True)
