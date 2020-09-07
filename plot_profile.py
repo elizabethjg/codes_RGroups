@@ -289,7 +289,7 @@ args = parser.parse_args()
 
 # folder    = '/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_new/'
 folder    = '/mnt/clemente/lensing/RodriguezGroups/N_all/'
-samples   = args.Mbin
+samples   = args.sample
 ncores    = args.ncores
 if 'True' in args.ymiss:
      ymiss = True
