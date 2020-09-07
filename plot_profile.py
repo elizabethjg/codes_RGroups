@@ -3,6 +3,7 @@ sys.path.append('/home/eli/Documentos/PostDoc/halo-elongation/multipole_density_
 sys.path.append('/home/eli/Documentos/Astronomia/posdoc/halo-elongation/multipole_density_profile')
 sys.path.append('/mnt/clemente/lensing/multipole_density_profile')
 sys.path.append('/home/eli/python_codes')
+sys.path.append('/mnt/clemente/lensing/python_codes')
 import numpy as np
 from matplotlib import *
 from multipoles_shear import *
@@ -11,7 +12,7 @@ from profiles_fit import *
 import os
 import argparse
 
-def make_plot_centred_monopole(file_name,folder,samples):
+def make_plot_centred_monopole(file_name,folder,samples,ncores):
           
 
      profile = fits.open(folder+file_name)
@@ -67,7 +68,7 @@ def make_plot_centred_monopole(file_name,folder,samples):
      
      out = multipole_shear_parallel(r,M200=M200,z=zmean,
                                    ellip=0.,misscentred=False,
-                                   ncores=32)
+                                   ncores=ncores)
      
      Gt    = model_Gamma(out,'t',misscentred=False)     
      
@@ -113,7 +114,7 @@ def make_plot_centred_monopole(file_name,folder,samples):
 
 
 
-def make_plot_misscentred_monopole(file_name,folder,samples,plot = False,ymiss = False):
+def make_plot_misscentred_monopole(file_name,folder,samples,plot = False,ymiss = False,ncores):
           
 
      profile = fits.open(folder+file_name)
@@ -192,7 +193,7 @@ def make_plot_misscentred_monopole(file_name,folder,samples,plot = False,ymiss =
      multipoles = multipole_shear_parallel(p.Rp[mr],M200=10**mout[1],
                                    misscentred = True,s_off = soff,
                                    ellip=0,z=zmean,components = ['t'],
-                                   verbose=False,ncores=2,Yanmiss=ymiss)
+                                   verbose=False,ncores=ncores,Yanmiss=ymiss)
      
      modelt_t = model_Gamma(multipoles,'t', misscentred = True, pcc = pcc_out[1])
      
@@ -214,7 +215,7 @@ def make_plot_misscentred_monopole(file_name,folder,samples,plot = False,ymiss =
           multipoles = multipole_shear_parallel(r,M200=10**mout[1],
                                    misscentred = True,s_off = soff,
                                    ellip=0,z=zmean,components = ['t'],
-                                   verbose=False,ncores=32,Yanmiss=ymiss)
+                                   verbose=False,ncores=ncores,Yanmiss=ymiss)
           
           Gt    = model_Gamma(multipoles,'t',misscentred=True,pcc=pcc_out[1])     
           
@@ -279,11 +280,29 @@ def make_plot_misscentred_monopole(file_name,folder,samples,plot = False,ymiss =
             Mmin, Mmax, zmin, zmax, zmean, chi_t, Vdisp]
 
 
+parser = argparse.ArgumentParser()
+parser.add_argument('-sample', action='store', dest='sample',default='Mbin')
+parser.add_argument('-ymiss', action='store', dest='ymiss', default='False')
+parser.add_argument('-plot', action='store', dest='plot', default='True')
+parser.add_argument('-ncores', action='store', dest='ncores', default=32)
+args = parser.parse_args()
+
 # folder    = '/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_new/'
 folder    = '/mnt/clemente/lensing/RodriguezGroups/N_all/'
-samples   = 'Mbin'
-ymiss     = False
-makeplots = True
+samples   = args.Mbin
+ncores    = args.ncores
+if 'True' in args.ymiss:
+     ymiss = True
+elif 'False' in args.ymiss:
+     ymiss = False
+
+if 'True' in args.plot:
+     makeplots = True
+elif 'False' in args.plot:
+     makeplots = False
+
+
+
 
 f = open(folder+'list_'+samples,'r')
 # f = open(folder+'list_m1','r')
@@ -327,8 +346,8 @@ for line in lines:
      
      
      try:
-          out = make_plot_misscentred_monopole(line[:-1],folder,samples,makeplots,ymiss)
-          # out = make_plot_centred_monopole(line[:-1],folder,samples)
+          out = make_plot_misscentred_monopole(line[:-1],folder,samples,makeplots,ymiss,ncores)
+          # out = make_plot_centred_monopole(line[:-1],folder,samples,ncores)
      except:
           continue
     
