@@ -204,7 +204,8 @@ def make_plot_misscentred_monopole(file_name,folder,samples,plot = False,ymiss =
 	#--------------------
     
      if plot:
-          
+
+          print 'PLOTTING...'
           if ymiss:
                folder_plot = 'plots_ymiss_'+samples+'/'
           else:
@@ -301,7 +302,11 @@ if 'True' in args.plot:
 elif 'False' in args.plot:
      makeplots = False
 
-
+print folder
+print 'sample', samples
+print 'ncores',ncores
+print 'ymiss', ymiss
+print 'plot', makeplots
 
 
 f = open(folder+'list_'+samples,'r')
