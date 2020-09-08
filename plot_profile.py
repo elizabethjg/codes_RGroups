@@ -294,8 +294,8 @@ parser.add_argument('-plot', action='store', dest='plot', default='True')
 parser.add_argument('-ncores', action='store', dest='ncores', default=2)
 args = parser.parse_args()
 
-# folder    = '/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_correch/'
-folder    = '/mnt/clemente/lensing/RodriguezGroups/N_all/'
+folder    = '/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_newanalysis/'
+# folder    = '/mnt/clemente/lensing/RodriguezGroups/N_all/'
 samples   = args.sample
 ncores    = args.ncores
 if 'True' in args.ymiss:
@@ -357,8 +357,8 @@ for line in lines:
      
      
      try:
-          out = make_plot_misscentred_monopole(line[:-1],folder,samples,makeplots,ymiss,ncores)
-          # out = make_plot_centred_monopole(line[:-1],folder,samples,ncores)
+          # out = make_plot_misscentred_monopole(line[:-1],folder,samples,makeplots,ymiss,ncores)
+          out = make_plot_centred_monopole(line[:-1],folder,samples,ncores)
      except:
           continue
     
