@@ -104,10 +104,10 @@ def make_plot_misscentred_monopole(file_name,folder,ax,lab):
 # folder    = '/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_newanalysis/'
 folder    = '/mnt/clemente/lensing/RodriguezGroups/N_all/'
 
-f = open(folder+'list_Nbin_cM','r')
+f = open(folder+'list_Nbin','r')
 lines = f.readlines()
 
-f = open(folder+'list_Mbin_cM','r')
+f = open(folder+'list_Mbin','r')
 lines = np.append(f.readlines(),lines)
 
 ft, axt = plt.subplots(4,4, figsize=(12,12), sharex=True,sharey=True)
@@ -132,4 +132,4 @@ for j in range(len(lines)):
 axt[3,2].axis('off')
 axt[3,3].axis('off')
     
-plt.savefig(folder+'profiles_cM.pdf',bbox_inches='tight')
+plt.savefig(folder+'profiles.pdf',bbox_inches='tight')
