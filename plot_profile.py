@@ -192,13 +192,13 @@ def make_plot_misscentred_monopole(file_name,folder,samples,plot = False,ymiss =
 
      mr = p.Rp < ROUT
      multipoles = multipole_shear_parallel(p.Rp[mr],M200=10**mout[1],
-                                   misscentred = True,s_off = soff,
+                                   misscentred = True,s_off = soff,h = 1.0,
                                    ellip=0,z=zmean,components = ['t'],
                                    verbose=False,ncores=ncores,Yanmiss=ymiss)
      
      modelt_t = model_Gamma(multipoles,'t', misscentred = True, pcc = pcc_out[1])
      
-     chi_t = chi_red(modelt_t,p.DSigma_T[mr],p.error_DSigma_T[mr],32)
+     chi_t = chi_red(modelt_t,p.DSigma_T[mr],p.error_DSigma_T[mr],2)
 
      print chi_t
      print '####################'
@@ -220,7 +220,7 @@ def make_plot_misscentred_monopole(file_name,folder,samples,plot = False,ymiss =
           r  = np.logspace(np.log10(0.05),np.log10(5.5),20)
           
           multipoles = multipole_shear_parallel(r,M200=10**mout[1],
-                                   misscentred = True,s_off = soff,
+                                   misscentred = True,s_off = soff,h = 1.0,
                                    ellip=0,z=zmean,components = ['t'],
                                    verbose=False,ncores=ncores,Yanmiss=ymiss)
           
