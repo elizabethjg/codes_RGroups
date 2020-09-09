@@ -101,32 +101,35 @@ def make_plot_misscentred_monopole(file_name,folder,ax,lab):
           
 
 
-# folder    = '/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_new/'
+# folder    = '/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_newanalysis/'
 folder    = '/mnt/clemente/lensing/RodriguezGroups/N_all/'
 
-f = open(folder+'list_Nbin','r')
+f = open(folder+'list_Nbin_cM','r')
 lines = f.readlines()
 
-f = open(folder+'list_Mbin','r')
+f = open(folder+'list_Mbin_cM','r')
 lines = np.append(f.readlines(),lines)
 
-ft, axt = plt.subplots(5,4, figsize=(12,12), sharex=True,sharey=True)
+ft, axt = plt.subplots(4,4, figsize=(12,12), sharex=True,sharey=True)
 ft.subplots_adjust(hspace=0,wspace=0)
 
 axt[0,0].set_ylabel('$\Delta \Sigma$ [$h M_\odot$ /pc$^{2}$]')
 axt[1,0].set_ylabel('$\Delta \Sigma$ [$h M_\odot$ /pc$^{2}$]')
 axt[2,0].set_ylabel('$\Delta \Sigma$ [$h M_\odot$ /pc$^{2}$]')
 axt[3,0].set_ylabel('$\Delta \Sigma$ [$h M_\odot$ /pc$^{2}$]')
-axt[4,0].set_ylabel('$\Delta \Sigma$ [$h M_\odot$ /pc$^{2}$]')
 
-ax2 = np.reshape(np.array(axt),(20,1))
+
+ax2 = np.reshape(np.array(axt),(16,1))
 
 
 
 # lines = lines[:3]+lines[4:]
 
-for j in range(20):
+for j in range(len(lines)):
      line = lines[j]
      out = make_plot_misscentred_monopole(line[:-1],folder,ax2[j][0],j+1)
+
+axt[3,2].axis('off')
+axt[3,3].axis('off')
     
-plt.savefig(folder+'profiles.pdf',bbox_inches='tight')
+plt.savefig(folder+'profiles_cM.pdf',bbox_inches='tight')
