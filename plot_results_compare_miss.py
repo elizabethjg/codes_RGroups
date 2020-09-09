@@ -12,7 +12,7 @@ out    = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_new
 outy    = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_newanalysis/Lens_Mbin_ymiss.out').T
 
 
-chi2 = out[-1]
+chi2 = out[-2]
 chi2y = outy[-2]
 
 

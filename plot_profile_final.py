@@ -3,6 +3,7 @@ sys.path.append('/home/eli/Documentos/PostDoc/halo-elongation/multipole_density_
 sys.path.append('/home/eli/Documentos/Astronomia/posdoc/halo-elongation/multipole_density_profile')
 sys.path.append('/mnt/clemente/lensing/multipole_density_profile')
 sys.path.append('/home/eli/python_codes')
+sys.path.append('/mnt/clemente/lensing/python_codes')
 import numpy as np
 from matplotlib import *
 from multipoles_shear import *
@@ -100,7 +101,8 @@ def make_plot_misscentred_monopole(file_name,folder,ax,lab):
           
 
 
-folder    = '/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_new/'
+# folder    = '/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_new/'
+folder    = '/mnt/clemente/lensing/RodriguezGroups/N_all/'
 
 f = open(folder+'list_Nbin','r')
 lines = f.readlines()

@@ -119,6 +119,7 @@ M200_SIS  = ((2.*(sdisp*1.e3)**3)/((50**0.5)*G*H))/(Msun)
 
 lMdyn2  = np.log10(M200_SIS)
 
+# sdisp = out[-1][mN4M]
 
 def y(x,alpha):
     return np.log10(1.e14*((x/500.)**(alpha)))
