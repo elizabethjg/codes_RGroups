@@ -28,7 +28,7 @@ def make_plot_misscentred_monopole(file_name,folder,ax,lab):
      Nmean   = h['N_GAL_mean']
      Nlens   = h['N_LENSES']
      Rmean   = h['RADIUS_HALO_mean']
-     ROUT = (2.5*(2.*(Mhalo/2.21e14)**0.75)**(1./3.))/0.7
+     ROUT = (2.5*(2.*(Mhalo/2.21e14)**0.75)**(1./3.))
      soff = 0.4*Rmean
      Vdisp   = h['VDISP_DYN_mean']
      
@@ -72,9 +72,9 @@ def make_plot_misscentred_monopole(file_name,folder,ax,lab):
      r  = np.logspace(np.log10(0.05),np.log10(5.5),20)
           
      multipoles = multipole_shear_parallel(r,M200=10**mout[1],
-                                   misscentred = True,s_off = soff,
+                                   misscentred = True,s_off = soff,h=1,
                                    ellip=0,z=zmean,components = ['t'],
-                                   verbose=False,ncores=2)
+                                   verbose=False,ncores=30)
           
      Gt    = model_Gamma(multipoles,'t',misscentred=True,pcc=pcc_out[1])     
           
