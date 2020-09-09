@@ -124,15 +124,17 @@ def make_plot_misscentred_monopole(file_name,folder,samples,plot = False,ymiss =
 
      if ymiss:
           file_mcmc = 'monopole_pcconly_ymiss_'+file_name[:-4]+'out'
+          tau       = 0.3
      else:
           file_mcmc = 'monopole_pcconly_'+file_name[:-4]+'out'
+          tau       = 0.4
           
      Mhalo   = 10**h['lMASS_HALO_mean']
      Nmean   = h['N_GAL_mean']
      Nlens   = h['N_LENSES']
      Rmean   = h['RADIUS_HALO_mean']
-     ROUT = (2.5*(2.*(Mhalo/2.21e14)**0.75)**(1./3.))/0.7
-     soff = 0.4*Rmean
+     ROUT = (2.5*(2.*(Mhalo/2.21e14)**0.75)**(1./3.))
+     soff = tau*Rmean
      Vdisp   = h['VDISP_DYN_mean']
      
      try:
