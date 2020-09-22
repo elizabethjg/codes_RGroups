@@ -86,9 +86,9 @@ def make_plot_misscentred_monopole(file_name,folder,ax,lab):
      ax.plot(r,Gtcen,'C3')
      ax.plot(r,Gtmiss,'C3--')
      if lab < 8:
-          ax.scatter(p.Rp,p.DSigma_T,facecolor='none',edgecolors='0.4')
+          ax.scatter(p.Rp,p.DSigma_T,facecolor='none',edgecolors='C7')
      else:
-          ax.plot(p.Rp,p.DSigma_T,'0.4o')
+          ax.plot(p.Rp,p.DSigma_T,'C7o')
      ax.errorbar(p.Rp,p.DSigma_T,yerr=p.error_DSigma_T,fmt = 'none',ecolor='0.4')
      ax.set_xscale('log')
      ax.set_yscale('log')
