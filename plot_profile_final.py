@@ -81,7 +81,7 @@ def make_plot_misscentred_monopole(file_name,folder,ax,lab):
      Gtcen = pcc_out[1]*multipoles['Gt0'] 
      Gtmiss = (1-pcc_out[1])*multipoles['Gt_off']
      plt.rc('font', family='serif', size='13.0')
-     ax.text(1,110,'['+str('%.1f' % Mmin)+','+str('%.1f' % Mmax+')',fontsize = '12')
+     ax.text(1,110,'['+str('%.1f' % Mmin)+','+str('%.1f' % Mmax)+')',fontsize = '12')
      ax.plot(r,Gt,'C1--')
      ax.plot(r,Gtcen,'C3')
      ax.plot(r,Gtmiss,'C3--')
