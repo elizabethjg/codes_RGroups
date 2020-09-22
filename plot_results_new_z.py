@@ -24,6 +24,9 @@ def ratio(x,ex,y,ey):
     return r, er
 
 
+masa_s   = (np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/results_simu/puntos-masamockmasaab_mass.txt').T)
+
+
 pcc_s   = (np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/results_simu/pcc.txt').T)
 masa_s   = (np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/results_simu/puntos-masamockmasaab_mass.txt').T)
 z_s   = (np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/results_simu/puntos-masamockmasaab_z.txt').T)
@@ -31,9 +34,9 @@ z_s   = (np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/results_simu
 lMH_simu = pcc_s[2]
 pcc_simu = 1-(pcc_s[-1]/100.)
 
-out_T   = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_newanalysis/Lens_Mbin.out').T
-out_H    = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_newanalysis/Lens_zH.out').T
-out_L    = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_newanalysis/Lens_zL.out').T
+out_T   = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_newanalysis/Lens_Mbinb.out').T
+out_H    = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_newanalysis/Lens_zHb.out').T
+out_L    = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_newanalysis/Lens_zLb.out').T
 
 MH_H   = out_H[6]
 MH_L   = out_L[6]
@@ -71,9 +74,9 @@ epcc_L     = np.array([out_L[15],out_L[16]])
 ########## CON SAMPLES ###########
 
 
-out_TcM   = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_newanalysis/Lens_Mbin_cM.out').T
-out_HcM    = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_newanalysis/Lens_zH_cM.out').T
-out_LcM    = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_newanalysis/Lens_zL_cM.out').T
+out_TcM   = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_newanalysis/Lens_Mbinb_cM.out').T
+out_HcM    = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_newanalysis/Lens_zHb_cM.out').T
+out_LcM    = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_newanalysis/Lens_zLb_cM.out').T
 
 MH_HcM   = out_HcM[6]
 MH_LcM   = out_LcM[6]
@@ -266,6 +269,11 @@ plt.savefig(r'/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newanalysis/M
 ratioz,eratioz     = ratio(M200_H,eM200_H,M200_L,eM200_L)
 ratiozc,eratiozc     = ratio(M200_HcM,eM200_HcM,M200_LcM,eM200_LcM)
 
+lMH_simu2 = masa_s[3]
+ratio_simu = masa_s[4]
+
+j = np.argsort(lMH_simu2)
+
 plt.figure()
 
 plt.scatter(lMH_T  ,ratioz,facecolor='none',edgecolors='k',label='Total sample')
@@ -273,6 +281,8 @@ plt.scatter(lMH_TcM  ,ratiozc,facecolor='none',edgecolors='C9',label='C-sample')
 
 plt.errorbar(lMH_T  ,ratioz,yerr=eratioz,fmt = 'none',ecolor='k')
 plt.errorbar(lMH_TcM  ,ratiozc,yerr=eratiozc,fmt = 'none',ecolor='C9')
+
+plt.plot(lMH_simu2[j],ratio_simu[j],'C1')
 
 plt.legend(loc=2,frameon = False,fontsize = 14)
 # j = np.argsort(lM200c_t)

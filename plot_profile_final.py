@@ -81,11 +81,14 @@ def make_plot_misscentred_monopole(file_name,folder,ax,lab):
      Gtcen = pcc_out[1]*multipoles['Gt0'] 
      Gtmiss = (1-pcc_out[1])*multipoles['Gt_off']
      plt.rc('font', family='serif', size='13.0')
-     ax.text(1,110,'('+str(lab)+')',fontsize = '12')
+     ax.text(1,110,'['+str('%.1f' % Mmin)+','+str('%.1f' % Mmax+')',fontsize = '12')
      ax.plot(r,Gt,'C1--')
      ax.plot(r,Gtcen,'C3')
      ax.plot(r,Gtmiss,'C3--')
-     ax.scatter(p.Rp,p.DSigma_T,facecolor='none',edgecolors='0.4')
+     if lab < 8:
+          ax.scatter(p.Rp,p.DSigma_T,facecolor='none',edgecolors='0.4')
+     else:
+          ax.plot(p.Rp,p.DSigma_T,'0.4o')
      ax.errorbar(p.Rp,p.DSigma_T,yerr=p.error_DSigma_T,fmt = 'none',ecolor='0.4')
      ax.set_xscale('log')
      ax.set_yscale('log')
@@ -104,7 +107,7 @@ def make_plot_misscentred_monopole(file_name,folder,ax,lab):
 # folder    = '/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_newanalysis/'
 folder    = '/mnt/clemente/lensing/RodriguezGroups/N_all/'
 
-f = open(folder+'list_Nbin_cM','r')
+f = open(folder+'list_Mbin','r')
 lines = f.readlines()
 
 f = open(folder+'list_Mbin_cM','r')
@@ -132,4 +135,4 @@ for j in range(len(lines)):
 axt[3,2].axis('off')
 axt[3,3].axis('off')
     
-plt.savefig(folder+'profiles_cM.pdf',bbox_inches='tight')
+plt.savefig(folder+'profiles.pdf',bbox_inches='tight')

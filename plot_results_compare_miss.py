@@ -8,9 +8,19 @@ def ratio(x,ex,y,ey):
     er = np.sqrt((ex/y)**2 + ((x*ey)/(y**2))**2)
     return r, er
 
-out    = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_newanalysis/Lens_Mbin.out').T
-outy    = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_newanalysis/Lens_Mbin_ymiss.out').T
+out    = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_newanalysis/Lens_Mbinb.out')
+out    = np.vstack((out,np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_newanalysis/Lens_Nbin.out')))
+out    = np.vstack((out,np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_newanalysis/Lens_zHb.out')))
+out    = np.vstack((out,np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_newanalysis/Lens_zLb.out')))
 
+out = out.T
+
+outy   = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_newanalysis/Lens_Mbinb_ymiss.out')
+outy   = np.vstack((outy,np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_newanalysis/Lens_Nbin_ymiss.out')))
+outy   = np.vstack((outy,np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_newanalysis/Lens_zHb_ymiss.out')))
+outy   = np.vstack((outy,np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_newanalysis/Lens_zLb_ymiss.out')))
+
+outy = outy.T
 
 chi2 = out[-2]
 chi2y = outy[-2]
