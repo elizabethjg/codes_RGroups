@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=N1_zL12
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=7
+#SBATCH --cpus-per-task=8
 #SBATCH --time=2-00:00:00
 ## An email is sent when the job is canceled or finished
 ## Change "root" for your e-mail address
