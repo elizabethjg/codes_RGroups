@@ -337,7 +337,7 @@ f.subplots_adjust(hspace=0,wspace=0)
 
 ax[0,0].scatter(lMH_T,lM200_T,facecolor='none',edgecolors='k',label='$N_{GAL} \geq 1$')
 ax[0,0].scatter(lMH_L,lM200_L,facecolor='none',edgecolors='C0',label='$ z < 0.13$')
-ax[0,0].scatter(lMH_H,lM200_H,facecolor='none',edgecolors='C3'  ,label='$z \geq 0.13 0.$')
+ax[0,0].scatter(lMH_H,lM200_H,facecolor='none',edgecolors='C3'  ,label='$z \geq 0.13$')
 
 ax[0,0].errorbar(lMH_T,lM200_T,yerr=elM200_T,fmt = 'none',ecolor='k')
 ax[0,0].errorbar(lMH_L,lM200_L,yerr=elM200_L,fmt = 'none',ecolor='C0')

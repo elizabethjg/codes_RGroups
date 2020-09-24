@@ -95,7 +95,7 @@ def make_plot_misscentred_monopole(file_name,folder,ax,lab):
      ax.set_xlabel('r [$h^{-1}$ Mpc]')
      ax.set_ylim(1,200)
      ax.set_xlim(0.3,5)
-     ax.axvline(ROUT,ls='--',c='C7')
+     ax.axvline(ROUT,ls='--',c='C7',ymax=100)
      ax.xaxis.set_ticks([0.3,1,3])
      ax.set_xticklabels([0.3,1,3])
      ax.yaxis.set_ticks([0.3,10,100])
