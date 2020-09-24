@@ -95,7 +95,7 @@ def make_plot_misscentred_monopole(file_name,folder,ax,lab):
      ax.set_xlabel('r [$h^{-1}$ Mpc]')
      ax.set_ylim(1,200)
      ax.set_xlim(0.3,5)
-     ax.axvline(ROUT,ls='--',c='C7',ymax=100)
+     ax.plot([ROUT,ROUT],[0.1,100],,'C7--')
      ax.xaxis.set_ticks([0.3,1,3])
      ax.set_xticklabels([0.3,1,3])
      ax.yaxis.set_ticks([0.3,10,100])
@@ -134,5 +134,8 @@ for j in range(len(lines)):
 
 axt[3,2].axis('off')
 axt[3,3].axis('off')
+
+ax[2,2].yaxis.set_ticks([0.3,1,3])
+ax[2,3].yaxis.set_ticks([0.3,1,3])
     
 plt.savefig(folder+'profiles.pdf',bbox_inches='tight')
