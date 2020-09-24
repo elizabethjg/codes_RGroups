@@ -69,7 +69,7 @@ def make_plot_misscentred_monopole(file_name,folder,ax,lab):
      
      #--------------------
           
-     r  = np.logspace(np.log10(0.05),np.log10(5.5),20)
+     r  = np.logspace(np.log10(0.05),np.log10(5.5),30)
           
      multipoles = multipole_shear_parallel(r,M200=10**mout[1],
                                    misscentred = True,s_off = soff,h=1,
@@ -90,7 +90,7 @@ def make_plot_misscentred_monopole(file_name,folder,ax,lab):
      else:
           ax.plot(p.Rp,p.DSigma_T,'C7o')
      ax.errorbar(p.Rp,p.DSigma_T,yerr=p.error_DSigma_T,fmt = 'none',ecolor='0.4')
-     ax.plot([ROUT,ROUT],[0.1,100],'C7--')
+     ax.plot([ROUT,ROUT],[0.1,80],'C7--')
      ax.set_xscale('log')
      ax.set_yscale('log')
      ax.set_xlabel('r [$h^{-1}$ Mpc]')
@@ -113,7 +113,7 @@ lines = f.readlines()
 f = open(folder+'list_Mbinb_cM','r')
 lines = np.append(lines,f.readlines())
 
-ft, axt = plt.subplots(4,4, figsize=(12,12), sharex=True,sharey=True)
+ft, axt = plt.subplots(4,4, figsize=(12,12), sharey=True)
 ft.subplots_adjust(hspace=0,wspace=0)
 
 axt[0,0].set_ylabel('$\Delta \Sigma$ [$h M_\odot$ /pc$^{2}$]')
@@ -135,9 +135,9 @@ for j in range(len(lines)):
 axt[3,2].axis('off')
 axt[3,3].axis('off')
 
-axt[2,2].yaxis.set_ticks([0.3,1,3])
+axt[2,2].xaxis.set_ticks([0.3,1,3])
 axt[2,2].set_xticklabels([0.3,1,3])
-axt[2,3].yaxis.set_ticks([0.3,1,3])
+axt[2,3].xaxis.set_ticks([0.3,1,3])
 axt[2,3].set_xticklabels([0.3,1,3])
     
 plt.savefig(folder+'profiles.pdf',bbox_inches='tight')
