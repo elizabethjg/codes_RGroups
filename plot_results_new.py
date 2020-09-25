@@ -169,7 +169,20 @@ epcc_Lc = np.array([out_LcM[15],out_LcM[16]])
 ratio_cH, eratio_cH = ratio(M200_HcM,eM200_HcM,M200_H,eM200_H)
 ratio_cL, eratio_cL = ratio(M200_LcM,eM200_LcM,M200_L,eM200_L)
 #---------------------------------------------------
+# EXTRAS
+out_e    = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_newanalysis/Lens_extras.out').T
 
+MH_e   = out_e[6]
+M200_e  = out_e[11] 
+eM200_e   = np.array([out_e[12],out_e[13]])
+
+lMH_e  = np.log10(out_e[6]*1.e14)
+lM200_e  = np.log10(out_e[11]*1.e14)
+elM200_e = np.array([out_e[12]/(out_e[11]*np.log(10.)),out_e[13]/(out_e[11]*np.log(10.))])
+
+
+
+#---------------------------------------------------
 lMH2 = np.append(lMH,lMH_T)
 
 N = out[3]
