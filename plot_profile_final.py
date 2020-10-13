@@ -117,7 +117,7 @@ ft.subplots_adjust(hspace=0,wspace=0)
 axt[0,0].set_ylabel('$\Delta \Sigma$ [$h M_\odot$ /pc$^{2}$]')
 axt[1,0].set_ylabel('$\Delta \Sigma$ [$h M_\odot$ /pc$^{2}$]')
 
-ax2 = np.reshape(np.array(axt),(16,1))
+ax2 = np.reshape(np.array(axt),(8,1))
 
 # lines = lines[:3]+lines[4:]
 
