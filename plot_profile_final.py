@@ -102,29 +102,22 @@ def make_plot_misscentred_monopole(file_name,folder,ax,lab):
      ax.set_yticklabels([0.3,10,100])
 
           
-
-
 # folder    = '/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_newanalysis/'
 folder    = '/mnt/clemente/lensing/RodriguezGroups/N_all/'
 
 f = open(folder+'list_Mbinb','r')
 lines = f.readlines()
 
-f = open(folder+'list_Mbinb_cM','r')
-lines = np.append(lines,f.readlines())
+# f = open(folder+'list_Mbinb_cM','r')
+# lines = f.readlines()
 
-ft, axt = plt.subplots(4,4, figsize=(12,12), sharey=True)
+ft, axt = plt.subplots(2,4, figsize=(12,6), sharey=True)
 ft.subplots_adjust(hspace=0,wspace=0)
 
 axt[0,0].set_ylabel('$\Delta \Sigma$ [$h M_\odot$ /pc$^{2}$]')
 axt[1,0].set_ylabel('$\Delta \Sigma$ [$h M_\odot$ /pc$^{2}$]')
-axt[2,0].set_ylabel('$\Delta \Sigma$ [$h M_\odot$ /pc$^{2}$]')
-axt[3,0].set_ylabel('$\Delta \Sigma$ [$h M_\odot$ /pc$^{2}$]')
-
 
 ax2 = np.reshape(np.array(axt),(16,1))
-
-
 
 # lines = lines[:3]+lines[4:]
 
@@ -132,12 +125,8 @@ for j in range(len(lines)):
      line = lines[j]
      out = make_plot_misscentred_monopole(line[:-1],folder,ax2[j][0],j+1)
 
-axt[3,2].axis('off')
-axt[3,3].axis('off')
-
-axt[2,2].xaxis.set_ticks([0.4,1,3])
-axt[2,2].set_xticklabels([0.4,1,3])
-axt[2,3].xaxis.set_ticks([0.4,1,3])
-axt[2,3].set_xticklabels([0.4,1,3])
+axt[1,3].axis('off')
+axt[1,3].xaxis.set_ticks([0.4,1,3])
+axt[1,3].set_xticklabels([0.4,1,3])
     
-plt.savefig(folder+'profiles.pdf',bbox_inches='tight')
+plt.savefig(folder+'profiles_total.pdf',bbox_inches='tight')

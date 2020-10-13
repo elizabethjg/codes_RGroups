@@ -355,7 +355,21 @@ ax[0,0].scatter(lMH_H,lM200_H,facecolor='none',edgecolors='C3'  ,label='$z \geq 
 ax[0,0].errorbar(lMH_T,lM200_T,yerr=elM200_T,fmt = 'none',ecolor='k')
 ax[0,0].errorbar(lMH_L,lM200_L,yerr=elM200_L,fmt = 'none',ecolor='C0')
 ax[0,0].errorbar(lMH_H,lM200_H,yerr=elM200_H,fmt = 'none',ecolor='C3')
-    
+
+# extras
+
+ax[0,0].plot(lMH_e[0],lM200_e[0],'rv')
+ax[0,0].plot(lMH_e[1],lM200_e[1],'bv')
+ax[0,0].plot(lMH_e[2],lM200_e[2],'r^')
+ax[0,0].plot(lMH_e[3],lM200_e[3],'b^')
+
+ax[0,0].errorbar(lMH_e[0],lM200_e[0],yerr=(elM200_e[0,0]),fmt = 'none',ecolor='r')
+ax[0,0].errorbar(lMH_e[1],lM200_e[1],yerr=(elM200_e[0,1]),fmt = 'none',ecolor='b')
+ax[0,0].errorbar(lMH_e[2],lM200_e[2],yerr=(elM200_e[0,2]),fmt = 'none',ecolor='r')
+ax[0,0].errorbar(lMH_e[3],lM200_e[3],yerr=(elM200_e[0,3]),fmt = 'none',ecolor='b')
+
+#-----------------
+
 ax[0,0].plot([12.3,16],[12.3,16],'C7--')
 ax[0,0].legend(fontsize = 13)
     
@@ -372,6 +386,21 @@ ax[1,0].scatter(lMH_H  ,M200_H/MH_H,facecolor='none',edgecolors='C3',label='$z \
 ax[1,0].errorbar(lMH_T  ,M200_T/MH_T,yerr=eM200_T/MH_T,fmt = 'none',ecolor='k')
 ax[1,0].errorbar(lMH_L  ,M200_L/MH_L,yerr=eM200_L/MH_L,fmt = 'none',ecolor='C0')
 ax[1,0].errorbar(lMH_H  ,M200_H/MH_H,yerr=eM200_H/MH_H,fmt = 'none',ecolor='C3')
+
+# extras
+
+ax[1,0].plot(lMH_e[0],(M200_e/MH_e)[0],'rv')
+ax[1,0].plot(lMH_e[1],(M200_e/MH_e)[1],'bv')
+ax[1,0].plot(lMH_e[2],(M200_e/MH_e)[2],'r^')
+ax[1,0].plot(lMH_e[3],(M200_e/MH_e)[3],'b^')
+   
+ax[1,0].errorbar(lMH_e[0],(M200_e/MH_e)[0],yerr=(eM200_e/MH_e).T[0,0],fmt = 'none',ecolor='r')
+ax[1,0].errorbar(lMH_e[1],(M200_e/MH_e)[1],yerr=(eM200_e/MH_e).T[1,0],fmt = 'none',ecolor='b')
+ax[1,0].errorbar(lMH_e[2],(M200_e/MH_e)[2],yerr=(eM200_e/MH_e).T[2,0],fmt = 'none',ecolor='r')
+ax[1,0].errorbar(lMH_e[3],(M200_e/MH_e)[3],yerr=(eM200_e/MH_e).T[3,0],fmt = 'none',ecolor='b')
+
+#-----------------
+
 
 ax[1,0].axis([12.5,14.9,0.2,1.6])
     
