@@ -10,7 +10,12 @@ matplotlib.rcParams.update({'font.size': 16})
 plt.rc('font', family='serif', size='16.0')
 
 cosmo = LambdaCDM(H0=100, Om0=0.3, Ode0=0.7)
-        
+
+'''
+Este es el codigo con el que se generaron los plots finales del 
+draft
+'''
+
 #parameters
 cvel = 299792458;   # Speed of light (m.s-1)
 G    = 6.670e-11;   # Gravitational constant (m3.kg-1.s-2)
@@ -211,7 +216,7 @@ ax[0].errorbar(lMHc_T,lM200c_T,yerr=elM200c_T,fmt = 'none',ecolor='C9')
 ax[0].plot([12.3,15],[12.3,15],'C7--')
 ax[0].legend(frameon = False,fontsize = 13)
 
-ax[0].set_ylabel('$\log (M_{200})$')
+ax[0].set_ylabel('$\log (M_{WL})$')
 ax[0].axis([12.5,14.9,12.3,14.9])
 
 ax[1].scatter(lMH_T  ,M200_T/MH_T,facecolor='none',edgecolors='k',label='Total sample')
@@ -223,7 +228,7 @@ ax[1].errorbar(lMHc_T  ,M200c_T/MHc_T,yerr=eM200c_T/MHc_T,fmt = 'none',ecolor='C
 
 ax[1].plot([12.3,15],[1.,1.],'C7--')
 ax[1].set_xlabel(r'$\log (\langle M_{AM} \rangle)$')
-ax[1].set_ylabel(r'$M_{200}/\langle M_{AM} \rangle$')
+ax[1].set_ylabel(r'$M_{WL}/\langle M_{AM} \rangle$')
 
 plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newanalysis/Mhalo_M200_Mbin_cM.pdf',bbox_inches='tight')
 
@@ -255,7 +260,7 @@ plt.legend(frameon = False,fontsize = 14)
 # plt.legend(frameon = False)
 plt.plot([12.5,14.8],[1.,1.],'C7--')
 plt.xlabel(r'$\log (\langle M_{AM} \rangle)$')
-plt.ylabel('$M^c_{200}/M_{200}$')
+plt.ylabel('$M^c_{WL}/M_{WL}$')
 plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newanalysis/ratioc.pdf',bbox_inches='tight')
 
 
@@ -276,7 +281,7 @@ ax[0,0].errorbar(lMH[mN4M],lM200[mN4M],yerr=elM200[:,mN4M],fmt = 'none',ecolor='
 ax[0,0].plot([12.3,16],[12.3,16],'C7--')
 ax[0,0].legend(loc =2,fontsize = 13)
     
-ax[0,0].set_ylabel('$\log (M_{200})$')
+ax[0,0].set_ylabel('$\log (M_{WL})$')
 ax[0,0].axis([12.5,14.9,12.3,14.9])
 
 ax[1,0].scatter(100.,100.,facecolor='none',edgecolors='k',label='Total sample')
@@ -296,7 +301,7 @@ ax[1,0].axis([12.5,14.9,0.2,1.6])
     
 ax[1,0].plot([12.3,15.5],[1.,1.],'C7--')
 ax[1,0].set_xlabel(r'$\log (\langle M_{AM} \rangle)$')
-ax[1,0].set_ylabel(r'$M_{200}/\langle M_{AM} \rangle$')
+ax[1,0].set_ylabel(r'$M_{WL}/\langle M_{AM} \rangle$')
 
 
 ax[0,1].plot(lMHc_T,lM200c_T        ,'ko'  ,label='Total sample')
@@ -330,7 +335,7 @@ ax[1,1].errorbar(lMHc[mN4M],(M200c/MHc)[mN4M],yerr=eM200[:,mN4M]/MH[mN4M],fmt = 
 ax[1,1].axis([12.5,14.9,0.2,1.6])   
 ax[1,1].plot([12.3,15.5],[1.,1.],'C7--')
 ax[1,1].set_xlabel(r'$\log (\langle M_{AM} \rangle)$')
-# ax[1,1].set_ylabel(r'$M_{200}/\langle M_{AM} \rangle$')
+# ax[1,1].set_ylabel(r'$M_{WL}/\langle M_{AM} \rangle$')
 ax[1,1].set_yticks([])
 
 ax[0,0].axvline(13.3,alpha=0.3,c='k')
@@ -358,22 +363,22 @@ ax[0,0].errorbar(lMH_H,lM200_H,yerr=elM200_H,fmt = 'none',ecolor='C3')
 
 # extras
 
-ax[0,0].plot(lMH_e[0],lM200_e[0],'rv')
-ax[0,0].plot(lMH_e[1],lM200_e[1],'bv')
-ax[0,0].plot(lMH_e[2],lM200_e[2],'r^')
-ax[0,0].plot(lMH_e[3],lM200_e[3],'b^')
+# ax[0,0].plot(lMH_e[0],lM200_e[0],'rv')
+# ax[0,0].plot(lMH_e[1],lM200_e[1],'bv')
+# ax[0,0].plot(lMH_e[2],lM200_e[2],'r^')
+# ax[0,0].plot(lMH_e[3],lM200_e[3],'b^')
 
-ax[0,0].errorbar(lMH_e[0],lM200_e[0],yerr=(elM200_e[0,0]),fmt = 'none',ecolor='r')
-ax[0,0].errorbar(lMH_e[1],lM200_e[1],yerr=(elM200_e[0,1]),fmt = 'none',ecolor='b')
-ax[0,0].errorbar(lMH_e[2],lM200_e[2],yerr=(elM200_e[0,2]),fmt = 'none',ecolor='r')
-ax[0,0].errorbar(lMH_e[3],lM200_e[3],yerr=(elM200_e[0,3]),fmt = 'none',ecolor='b')
+# ax[0,0].errorbar(lMH_e[0],lM200_e[0],yerr=(elM200_e[0,0]),fmt = 'none',ecolor='r')
+# ax[0,0].errorbar(lMH_e[1],lM200_e[1],yerr=(elM200_e[0,1]),fmt = 'none',ecolor='b')
+# ax[0,0].errorbar(lMH_e[2],lM200_e[2],yerr=(elM200_e[0,2]),fmt = 'none',ecolor='r')
+# ax[0,0].errorbar(lMH_e[3],lM200_e[3],yerr=(elM200_e[0,3]),fmt = 'none',ecolor='b')
 
 #-----------------
 
 ax[0,0].plot([12.3,16],[12.3,16],'C7--')
 ax[0,0].legend(fontsize = 13)
     
-ax[0,0].set_ylabel('$\log (M_{200})$')
+ax[0,0].set_ylabel('$\log (M_{WL})$')
 ax[0,0].axis([12.5,14.9,12.3,14.9])
 
 ax[1,0].scatter(100.,100.,facecolor='none',edgecolors='k',label='Total sample')
@@ -389,15 +394,15 @@ ax[1,0].errorbar(lMH_H  ,M200_H/MH_H,yerr=eM200_H/MH_H,fmt = 'none',ecolor='C3')
 
 # extras
 
-ax[1,0].plot(lMH_e[0],(M200_e/MH_e)[0],'rv')
-ax[1,0].plot(lMH_e[1],(M200_e/MH_e)[1],'bv')
-ax[1,0].plot(lMH_e[2],(M200_e/MH_e)[2],'r^')
-ax[1,0].plot(lMH_e[3],(M200_e/MH_e)[3],'b^')
+# ax[1,0].plot(lMH_e[0],(M200_e/MH_e)[0],'rv')
+# ax[1,0].plot(lMH_e[1],(M200_e/MH_e)[1],'bv')
+# ax[1,0].plot(lMH_e[2],(M200_e/MH_e)[2],'r^')
+# ax[1,0].plot(lMH_e[3],(M200_e/MH_e)[3],'b^')
    
-ax[1,0].errorbar(lMH_e[0],(M200_e/MH_e)[0],yerr=(eM200_e/MH_e).T[0,0],fmt = 'none',ecolor='r')
-ax[1,0].errorbar(lMH_e[1],(M200_e/MH_e)[1],yerr=(eM200_e/MH_e).T[1,0],fmt = 'none',ecolor='b')
-ax[1,0].errorbar(lMH_e[2],(M200_e/MH_e)[2],yerr=(eM200_e/MH_e).T[2,0],fmt = 'none',ecolor='r')
-ax[1,0].errorbar(lMH_e[3],(M200_e/MH_e)[3],yerr=(eM200_e/MH_e).T[3,0],fmt = 'none',ecolor='b')
+# ax[1,0].errorbar(lMH_e[0],(M200_e/MH_e)[0],yerr=(eM200_e/MH_e).T[0,0],fmt = 'none',ecolor='r')
+# ax[1,0].errorbar(lMH_e[1],(M200_e/MH_e)[1],yerr=(eM200_e/MH_e).T[1,0],fmt = 'none',ecolor='b')
+# ax[1,0].errorbar(lMH_e[2],(M200_e/MH_e)[2],yerr=(eM200_e/MH_e).T[2,0],fmt = 'none',ecolor='r')
+# ax[1,0].errorbar(lMH_e[3],(M200_e/MH_e)[3],yerr=(eM200_e/MH_e).T[3,0],fmt = 'none',ecolor='b')
 
 #-----------------
 
@@ -406,7 +411,7 @@ ax[1,0].axis([12.5,14.9,0.2,1.6])
     
 ax[1,0].plot([12.3,15.5],[1.,1.],'C7--')
 ax[1,0].set_xlabel(r'$\log (\langle M_{AM} \rangle)$')
-ax[1,0].set_ylabel(r'$M_{200}/\langle M_{AM} \rangle$')
+ax[1,0].set_ylabel(r'$M_{WL}/\langle M_{AM} \rangle$')
 
 
 ax[0,1].plot(lMHc_T,lM200c_T,'ko')
@@ -420,7 +425,7 @@ ax[0,1].errorbar(lMH_Hc,lM200_HcM,yerr=elM200_H,fmt = 'none',ecolor='C3')
 ax[0,1].plot([12.3,16],[12.3,16],'C7--')
 # ax[0,1].legend(frameon = False,fontsize = 13)
     
-# ax[0,1].set_ylabel('$\log (M_{200})$')
+# ax[0,1].set_ylabel('$\log (M_{WL})$')
 ax[0,1].axis([12.5,14.9,12.3,14.9])
 ax[0,1].set_yticks([])
    
@@ -439,7 +444,7 @@ ax[1,1].errorbar(lMH_Hc  ,M200_HcM/MH_HcM,yerr=eM200_H/MH_H,fmt = 'none',ecolor=
 ax[1,1].axis([12.5,14.9,0.2,1.6])   
 ax[1,1].plot([12.3,15.5],[1.,1.],'C7--')
 ax[1,1].set_xlabel(r'$\log (\langle M_{AM} \rangle)$')
-# ax[1,1].set_ylabel(r'$M_{200}/\langle M_{AM} \rangle$')
+# ax[1,1].set_ylabel(r'$M_{WL}/\langle M_{AM} \rangle$')
 ax[1,1].set_yticks([])
 
 ax[0,0].axvline(13.3,alpha=0.3,c='k')
@@ -458,6 +463,30 @@ plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newanalysis/Mh
 
 def y(x,alpha):
     return np.log10(1.e14*((x/500.)**(alpha)))
+    
+def y_more(x):
+    
+    Mh = np.array([])
+    
+    for disp in x:
+        a = 2.11 - (disp/200.)
+        b = 0.19
+        c = 0.20
+        # a = 1.99 - (disp/200.)
+        # b = 0.49
+        # c = -0.20
+        
+        f0 = 0.45
+        alpha_f = 0.61
+        
+        lMlumM = (-b + np.sqrt(b**2 - 4.*a*c))/(2.*c)
+        lMlumm = (-b - np.sqrt(b**2 - 4.*a*c))/(2.*c)
+        lMlum  = np.log10(10**(max(lMlumM,lMlumm))* 1e10)
+        
+        Mh = np.append(Mh,(((lMlum - 10.63)/0.29) + 11.94))
+        # Mh = np.append(Mh,(((lMlum -  9.42)/0.98) + 11.29))
+        
+    return Mh
 
 x = np.arange(250,800,20)
 fig = plt.figure()
@@ -472,9 +501,10 @@ ax1.set_xlim(250, 700)
 # ax2.set_xticks(sdisp)
 # ax2.set_xticklabels(['13.56', '13.96', '14.22'])
 # ax2.set_xlabel('$\log (M_{vir}/(h^{-1}M_\odot))$')
-ax1.set_ylabel('$\log (M_{200}/(h^{-1}M_\odot))$')
+ax1.set_ylabel('$\log (M_{WL}/(h^{-1}M_\odot))$')
 ax1.set_xlabel('$\sigma_V$ [km s$^{-1}]$')
-ax1.plot(x,y(x,1.89),'C0--')
+ax1.plot(x,y(x,2.09),'C0--')
+# ax1.plot(x,y_more(x),'C2--')
 ax1.fill_between(x,y(x,1.89)+0.2,y(x,1.89)-0.2,alpha=0.3,color='C0')
 ax1.plot(x,y(x,3.),'C1')
 plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newanalysis/Mdyn_M200.pdf',bbox_inches='tight')
@@ -493,7 +523,7 @@ plt.errorbar(lMdyn,lM200[mN4M],yerr=elM200[:,mN4M],fmt = 'none',ecolor='C8',labe
 plt.plot([12.3,14.6],[12.3,14.6],'C7--')
 
 plt.xlabel('$\log (M_{dyn})$')
-plt.ylabel('$\log (M_{200})$')
+plt.ylabel('$\log (M_{WL})$')
 plt.axis([13.5,14.35,12.8,14.4])
 plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newanalysis/Mdyn_M200_NMbin.pdf',bbox_inches='tight')
 
@@ -588,7 +618,7 @@ plt.legend(loc= 2,frameon = False,fontsize = 13,ncol=2)
 
 plt.plot([0.06,0.175],[1.,1.],'C7--')
 plt.xlabel(r'$\langle z \rangle$')
-plt.ylabel(r'$M_{200}/\langle M_{AM} \rangle$')
+plt.ylabel(r'$M_{WL}/\langle M_{AM} \rangle$')
 plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newanalysis/ratio_MH_z.pdf',bbox_inches='tight')
 
 
@@ -615,7 +645,7 @@ plt.legend(loc= 2,frameon = False,fontsize = 13,ncol=2)
 
 plt.plot([0.06,0.175],[1.,1.],'C7--')
 plt.xlabel(r'$\langle z \rangle$')
-plt.ylabel(r'$M_{200}/\langle M_{AM} \rangle$')
+plt.ylabel(r'$M_{WL}/\langle M_{AM} \rangle$')
 plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newanalysis/ratio_MH_z_cM.pdf',bbox_inches='tight')
 
 
@@ -649,7 +679,7 @@ ax[0].errorbar(lMHc[mN4M],lM200c[mN4M],yerr=elM200c[:,mN4M],fmt = 'none',ecolor=
 ax[0].plot([12.3,16],[12.3,16],'C7--')
 
 
-ax[0].set_ylabel('$\log (M_{200})$')
+ax[0].set_ylabel('$\log (M_{WL})$')
 ax[0].axis([12.3,15.0,12.3,15.])
 
 
@@ -672,7 +702,7 @@ ax[1].errorbar(lMHc[mN4M],(M200c/MHc)[mN4M],yerr=eM200c[:,mN4M]/MHc[mN4M],fmt = 
 
 ax[1].plot([12.3,15.5],[1.,1.],'C7--')
 ax[1].set_xlabel(r'$\log (\langle M_{AM} \rangle)$')
-ax[1].set_ylabel(r'$M_{200}/\langle M_{AM} \rangle$')
+ax[1].set_ylabel(r'$M_{WL}/\langle M_{AM} \rangle$')
 
 plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newanalysis/Mhalo_M200_NMbin_cM.pdf',bbox_inches='tight')
 
@@ -703,7 +733,7 @@ plt.errorbar(10.*out[6][mN4M],10.*out[11][mN4M],yerr=10.*eM200[:,mN4M],fmt = 'no
 plt.plot([0,40.],[0,40],'C7--')
 plt.legend(frameon = False,fontsize = 14)
 plt.xlabel(r'$\langle M_{AM} \rangle [10^{13}M_\odot h^{-1}]$')
-plt.ylabel('$M_{200} [10^{13}M_\odot h^{-1}]$')
+plt.ylabel('$M_{WL} [10^{13}M_\odot h^{-1}]$')
 plt.axis([0,35,0,40])
 plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newanalysis/Mhalo_M200_NMbin_lin.pdf',bbox_inches='tight')
 
@@ -734,7 +764,7 @@ plt.legend(frameon = False,ncol = 2)
 
 
 # plt.legend(frameon = False)
-plt.xlabel('$\log (M_{200})$')
+plt.xlabel('$\log (M_{WL})$')
 plt.ylabel('$p_{cc}$')
 plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newanalysis/M200_pcc_NMbin.pdf',bbox_inches='tight')
 
@@ -763,7 +793,7 @@ plt.errorbar(lM200[mN4M],ratio_pcc[mN4M],xerr=elM200[:,mN4M],yerr=eratio_pcc[:,m
 
 # plt.legend(frameon = False)
 plt.plot([12.3,14.3],[1.,1.],'C7--')
-plt.xlabel('$\log (M_{200})$')
+plt.xlabel('$\log (M_{WL})$')
 plt.ylabel('$p^c_{cc}/p_{cc}$')
 plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newanalysis/ratiopcc_NMbin.pdf',bbox_inches='tight')
 
@@ -789,7 +819,7 @@ plt.errorbar(lMHc[mN4M],lM200c[mN4M],yerr=elM200c[:,mN4M],fmt = 'none',ecolor='C
 plt.plot([12.3,14.6],[12.3,14.6],'C7--')
 plt.legend(frameon = False)
 plt.xlabel('$\log (M_{AM})$')
-plt.ylabel('$\log (M_{200})$')
+plt.ylabel('$\log (M_{WL})$')
 plt.axis([12.3,14.2,12.3,14.2])
 plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newanalysis/Mhalo_M200_NMbin_conM.pdf',bbox_inches='tight')
 # -----------------------
@@ -825,7 +855,7 @@ plt.yscale('log')
 
 # plt.legend(frameon = False)
 plt.plot([12.3,14.3],[1.,1.],'C7--')
-plt.xlabel('$\log (M_{200})$')
+plt.xlabel('$\log (M_{WL})$')
 plt.ylabel('$M^H_{200}/M^L_{200}$')
 plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newanalysis/ratioLH_NMbin.pdf',bbox_inches='tight')
 
@@ -843,7 +873,7 @@ plt.errorbar(lMdyn_c,lM200c[mN4M],yerr=elM200c[:,mN4M],fmt = 'none',ecolor='C8')
 plt.plot([12.3,14.6],[12.3,14.6],'C7--')
 
 plt.xlabel('$\log (M_{dyn})$')
-plt.ylabel('$\log (M_{200})$')
+plt.ylabel('$\log (M_{WL})$')
 plt.axis([13.,14.5,12.7,14.5])
 plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newanalysis/Mdyn_M200_NMbin.pdf',bbox_inches='tight')
 
