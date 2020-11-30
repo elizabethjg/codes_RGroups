@@ -24,8 +24,11 @@ G    = 6.670e-11;   # Gravitational constant (m3.kg-1.s-2)
 pc   = 3.085678e16; # 1 pc (m)
 Msun = 1.989e30 # Solar mass (kg)
 
+ncat = 'CS82'
+
 folder = '/mnt/clemente/lensing/RodriguezGroups/N_all/'
-S=LensCat.Catalog.read_catalog(folder+'gx_S_RM_FINAL.fits')
+# S=LensCat.Catalog.read_catalog(folder+'gx_S_RM_FINAL.fits')
+S=LensCat.Catalog.read_catalog(folder+'gx_'+ncat+'_S_RM.fits')
 # folder = '/mnt/clemente/lensing/RodriguezGroups/N_all_FOF/'
 # S=LensCat.Catalog.read_catalog(folder+'gx_S_RM_FOF.fits')
 S.data.set_index('CATID', inplace=True)
@@ -179,7 +182,7 @@ def main(sample='pru',N_min=0,N_max=1000.,
         
         #reading cats
         
-        L=LensCat.Catalog.read_catalog(folder+'gx_L_RM_FINAL.fits')        
+        L=LensCat.Catalog.read_catalog(folder+'gx_'+ncat+'_L_RM.fits')        
         # L=LensCat.Catalog.read_catalog(folder+'gx_L_RM_FOF.fits')        
         mrich = (L.data.N_GAL >= N_min)*(L.data.N_GAL < N_max)
         mz    = (L.data.Z >= z_min)*(L.data.Z < z_max)
