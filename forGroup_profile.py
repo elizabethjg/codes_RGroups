@@ -312,8 +312,8 @@ def main(sample='pru',N_min=0,N_max=1000.,
                 fits.Column(name='DSigma_T', format='D', array=DSigma_T),
                 fits.Column(name='error_DSigma_T', format='D', array=eDSigma_T),
                 fits.Column(name='DSigma_X', format='D', array=DSigma_X),
-                fits.Column(name='error_DSigma_X', format='D', array=eDSigma_X)],
-                fits.Column(name='NGAL', format='D', array=NGALsum)],
+                fits.Column(name='error_DSigma_X', format='D', array=eDSigma_X),
+                fits.Column(name='NGAL', format='D', array=NGALsum),
                 fits.Column(name='NGAL_w', format='D', array=WEIGHTsum)])
         
         h = tbhdu.header
