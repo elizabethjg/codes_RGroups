@@ -24,7 +24,7 @@ G    = 6.670e-11;   # Gravitational constant (m3.kg-1.s-2)
 pc   = 3.085678e16; # 1 pc (m)
 Msun = 1.989e30 # Solar mass (kg)
 
-ncat = 'CS82'
+ncat = 'CFHT'
 
 folder = '/mnt/clemente/lensing/RodriguezGroups/N_all/'
 # S=LensCat.Catalog.read_catalog(folder+'gx_S_RM_FINAL.fits')
