@@ -27,8 +27,8 @@ Msun = 1.989e30 # Solar mass (kg)
 ncat = 'KiDS'
 
 folder = '/mnt/clemente/lensing/RodriguezGroups/N_all/'
-# S=LensCat.Catalog.read_catalog(folder+'gx_S_RM_FINAL.fits')
-S=LensCat.Catalog.read_catalog(folder+'gx_'+ncat+'_S_RM.fits')
+S=LensCat.Catalog.read_catalog(folder+'gx_S_RM_FINAL.fits')
+# S=LensCat.Catalog.read_catalog(folder+'gx_'+ncat+'_S_RM.fits')
 # folder = '/mnt/clemente/lensing/RodriguezGroups/N_all_FOF/'
 # S=LensCat.Catalog.read_catalog(folder+'gx_S_RM_FOF.fits')
 S.data.set_index('CATID', inplace=True)
@@ -102,6 +102,8 @@ def partial_profile(backcat_ids,RA0,DEC0,Z,
         BOOTwsum_T   = np.zeros((nboot,ndots))
         BOOTwsum_X   = np.zeros((nboot,ndots))
         BOOTwsum     = np.zeros((nboot,ndots))
+        NGAL         = []
+        
         
         for nbin in range(ndots):
                 mbin = dig == nbin+1              
@@ -110,6 +112,7 @@ def partial_profile(backcat_ids,RA0,DEC0,Z,
                 DSIGMAwsum_X = np.append(DSIGMAwsum_X,(ex[mbin]*peso[mbin]).sum())
                 WEIGHTsum    = np.append(WEIGHTsum,(peso[mbin]).sum())
                 Mwsum        = np.append(Mwsum,(m[mbin]*peso[mbin]).sum())
+                NGAL         = np.append(NGAL,mbin.sum())
                 
                 index = np.arange(mbin.sum())
                 if mbin.sum() == 0:
@@ -125,7 +128,7 @@ def partial_profile(backcat_ids,RA0,DEC0,Z,
         output = {'DSIGMAwsum_T':DSIGMAwsum_T,'DSIGMAwsum_X':DSIGMAwsum_X,
                    'WEIGHTsum':WEIGHTsum, 'Mwsum':Mwsum, 
                    'BOOTwsum_T':BOOTwsum_T, 'BOOTwsum_X':BOOTwsum_X, 'BOOTwsum':BOOTwsum, 
-                   'Ntot':Ntot}
+                   'Ntot':Ntot,'NGAL':NGAL}
         
         return output
 
@@ -164,7 +167,7 @@ def main(sample='pru',N_min=0,N_max=1000.,
         cosmo = LambdaCDM(H0=100*h, Om0=0.3, Ode0=0.7)
         tini = time.time()
         
-        print 'Using catalog gx_'+ncat+'_L_RM.fits'
+        # print 'Using catalog gx_'+ncat+'_L_RM.fits'
         print 'Sample ',sample
         print 'Selecting groups with:'
         print N_min,' <= N_GAL < ',N_max
@@ -183,7 +186,8 @@ def main(sample='pru',N_min=0,N_max=1000.,
         
         #reading cats
         
-        L=LensCat.Catalog.read_catalog(folder+'gx_'+ncat+'_L_RM.fits')        
+        # L=LensCat.Catalog.read_catalog(folder+'gx_'+ncat+'_L_RM.fits')        
+        L=LensCat.Catalog.read_catalog(folder+'gx_L_RM_FINAL.fits')
         # L=LensCat.Catalog.read_catalog(folder+'gx_L_RM_FOF.fits')        
         mrich = (L.data.N_GAL >= N_min)*(L.data.N_GAL < N_max)
         mz    = (L.data.Z >= z_min)*(L.data.Z < z_max)
@@ -213,6 +217,7 @@ def main(sample='pru',N_min=0,N_max=1000.,
         DSIGMAwsum_T = np.zeros(ndots) 
         DSIGMAwsum_X = np.zeros(ndots)
         WEIGHTsum    = np.zeros(ndots)
+        NGALsum      = np.zeros(ndots)
         Mwsum        = np.zeros(ndots)
         BOOTwsum_T   = np.zeros((100,ndots))
         BOOTwsum_X   = np.zeros((100,ndots))
@@ -251,6 +256,7 @@ def main(sample='pru',N_min=0,N_max=1000.,
                         DSIGMAwsum_T += profilesums['DSIGMAwsum_T']
                         DSIGMAwsum_X += profilesums['DSIGMAwsum_X']
                         WEIGHTsum    += profilesums['WEIGHTsum']
+                        NGALsum      += profilesums['NGAL']
                         Mwsum        += profilesums['Mwsum']
                         BOOTwsum_T   += profilesums['BOOTwsum_T']
                         BOOTwsum_X   += profilesums['BOOTwsum_X']
@@ -306,7 +312,9 @@ def main(sample='pru',N_min=0,N_max=1000.,
                 fits.Column(name='DSigma_T', format='D', array=DSigma_T),
                 fits.Column(name='error_DSigma_T', format='D', array=eDSigma_T),
                 fits.Column(name='DSigma_X', format='D', array=DSigma_X),
-                fits.Column(name='error_DSigma_X', format='D', array=eDSigma_X)])
+                fits.Column(name='error_DSigma_X', format='D', array=eDSigma_X)],
+                fits.Column(name='NGAL', format='D', array=NGALsum)],
+                fits.Column(name='NGAL_w', format='D', array=WEIGHTsum)])
         
         h = tbhdu.header
         h.append(('N_LENSES',np.int(Nlenses)))
