@@ -164,6 +164,7 @@ def main(sample='pru',N_min=0,N_max=1000.,
         cosmo = LambdaCDM(H0=100*h, Om0=0.3, Ode0=0.7)
         tini = time.time()
         
+        print 'Using catalog gx_'+ncat+'_L_RM.fits'
         print 'Sample ',sample
         print 'Selecting groups with:'
         print N_min,' <= N_GAL < ',N_max
