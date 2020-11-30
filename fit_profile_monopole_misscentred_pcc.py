@@ -13,7 +13,6 @@ from multiprocessing import Pool
 import argparse
 from astropy.io import fits
 from astropy.cosmology import LambdaCDM
-from profiles_fit import *
 #parameters
 
 cvel = 299792458;   # Speed of light (m.s-1)

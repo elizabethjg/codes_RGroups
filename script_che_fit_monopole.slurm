@@ -16,11 +16,13 @@ export OMP_NUM_THREADS=10
 module load softwares/anaconda2/5.0-intel-2018.0
 source activate py2env
 
-srun -u python fit_profile_monopole_misscentred_pcc.py -folder '/home/elizabeth/profiles_newanalysis/' \
+srun -u python fit_profile_monopole_misscentred_pcc.py -folder '/home/elizabeth/profiles_indcat/' \
 -file 'profile_'$SLURM_JOB_NAME'.fits' -ncores 15                                    
+##srun -u python fit_profile_monopole_misscentred_pcc.py -folder '/home/elizabeth/profiles_newanalysis/' \
+##-file 'profile_'$SLURM_JOB_NAME'.fits' -ncores 15                                    
 ##srun -u python fit_profile_monopole_misscentred_pcc.py -folder '/home/elizabeth/profiles_new/' \
 ##-file 'profile_'$SLURM_JOB_NAME'_cM.fits' -ncores 15                                    
-srun -u python fit_profile_monopole_misscentred_pcc.py -folder '/home/elizabeth/profiles_newanalysis/' \
--file 'profile_'$SLURM_JOB_NAME'.fits' -Yanmiss 'True' -ncores 15                                    
+##srun -u python fit_profile_monopole_misscentred_pcc.py -folder '/home/elizabeth/profiles_newanalysis/' \
+##-file 'profile_'$SLURM_JOB_NAME'.fits' -Yanmiss 'True' -ncores 15                                    
 ##srun -u python fit_profile_monopole_misscentred_pcc.py -folder '/home/elizabeth/profiles_new/' \
 ##-file 'profile_'$SLURM_JOB_NAME'_cM.fits' -Yanmiss 'True' -ncores 15                                    
