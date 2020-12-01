@@ -26,6 +26,7 @@ parser.add_argument('-folder', action='store', dest='folder',default='./')
 parser.add_argument('-file', action='store', dest='file_name', default='profile.cat')
 parser.add_argument('-ncores', action='store', dest='ncores', default=15)
 parser.add_argument('-Yanmiss', action='store', dest='yan', default='False')
+parser.add_argument('-corrboost', action='store', dest='boost', default='False')
 args = parser.parse_args()
 
 h_cosmo = 1.0
@@ -35,14 +36,26 @@ file_name = args.file_name
 ncores    = args.ncores
 ncores    = int(ncores)
 
-if 'True' in args.yan:
-    ymiss      = True
-    outfile = 'monopole_pcconly_ymiss_'+file_name[:-4]+'out'
-    tau = 0.3
-elif 'False' in args.yan:
-    ymiss     = False
-    outfile = 'monopole_pcconly_'+file_name[:-4]+'out'
-    tau = 0.4
+if 'True' in args.boost:
+    boost = True
+    if 'True' in args.yan:
+        ymiss      = True
+        outfile = 'monopole_pcconly_ymiss_boost_'+file_name[:-4]+'out'
+        tau = 0.3
+    elif 'False' in args.yan:
+        ymiss     = False
+        outfile = 'monopole_pcconly_boost_'+file_name[:-4]+'out'
+        tau = 0.4
+elif 'False' in args.boost:
+    boost = False
+    if 'True' in args.yan:
+        ymiss      = True
+        outfile = 'monopole_pcconly_ymiss_'+file_name[:-4]+'out'
+        tau = 0.3
+    elif 'False' in args.yan:
+        ymiss     = False
+        outfile = 'monopole_pcconly_'+file_name[:-4]+'out'
+        tau = 0.4
 
 
 
@@ -59,19 +72,27 @@ Rmean   = h['RADIUS_HALO_mean']
 ROUT = (2.5*(2.*(Mhalo/2.21e14)**0.75)**(1./3.))/h_cosmo
 soff = tau*Rmean
 
-bines = np.logspace(np.log10(300.),np.log10(5000.),num=len(p)+1)
+if boost:
 
-area = np.pi*np.diff(bines**2)
-ngal = p.NGAL_w
-
-d = ngal/area
-
-fcl = ((d - d[-1])*area)/ngal
-
-bcorr = 1./(1.-fcl)
-
-print 'Correcting for boost'
-print bcorr
+    bines = np.logspace(np.log10(300.),np.log10(5000.),num=len(p)+1)
+    
+    area = np.pi*np.diff(bines**2)
+    ngal = p.NGAL_w
+    
+    d = ngal/area
+    
+    fcl = ((d - d[-1])*area)/ngal
+    
+    bcorr = 1./(1.-fcl)
+    
+    print 'Correcting for boost'
+    print bcorr
+else:
+    bcorr = np.ones(len(p))
+    
+    print 'NON correcting for boost'
+    print bcorr
+    
 
 def log_likelihood(data_model, r, Gamma, e_Gamma):
     log_M200,pcc = data_model
