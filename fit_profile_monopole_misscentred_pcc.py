@@ -59,7 +59,19 @@ Rmean   = h['RADIUS_HALO_mean']
 ROUT = (2.5*(2.*(Mhalo/2.21e14)**0.75)**(1./3.))/h_cosmo
 soff = tau*Rmean
 
+bines = np.logspace(np.log10(300.),np.log10(5000.),num=len(p)+1)
 
+area = np.pi*np.diff(bines**2)
+ngal = p.NGAL_w
+
+d = ngal/area
+
+fcl = ((d - d[-1])*area)/ngal
+
+bcorr = 1./(1.-fcl)
+
+print 'Correcting for boost'
+print bcorr
 
 def log_likelihood(data_model, r, Gamma, e_Gamma):
     log_M200,pcc = data_model
@@ -96,7 +108,7 @@ maskr = (p.Rp < ROUT)
 
 t1 = time.time()
 sampler = emcee.EnsembleSampler(nwalkers, ndim, log_probability, 
-                                args=(p.Rp[maskr],p.DSigma_T[maskr],p.error_DSigma_T[maskr]))
+                                args=(p.Rp[maskr],p.DSigma_T[maskr]*bcorr[maskr],p.error_DSigma_T[maskr]*bcorr[maskr]))
 sampler.run_mcmc(pos, 500, progress=True)
 print '//////////////////////'
 print '         TIME         '

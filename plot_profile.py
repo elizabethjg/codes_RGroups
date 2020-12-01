@@ -1,8 +1,10 @@
 import sys
 sys.path.append('/home/eli/Documentos/PostDoc/halo-elongation/multipole_density_profile')
 sys.path.append('/home/eli/Documentos/Astronomia/posdoc/halo-elongation/multipole_density_profile')
+sys.path.append('/home/elizabeth/Documentos/posdoc/halo-elongation/multipole_density_profile')
 sys.path.append('/mnt/clemente/lensing/multipole_density_profile')
 sys.path.append('/home/eli/python_codes')
+sys.path.append('/home/elizabeth/python_codes')
 sys.path.append('/mnt/clemente/lensing/python_codes')
 import numpy as np
 from matplotlib import *
@@ -294,11 +296,12 @@ parser.add_argument('-sample', action='store', dest='sample',default='Mbin')
 parser.add_argument('-ymiss', action='store', dest='ymiss', default='False')
 parser.add_argument('-plot', action='store', dest='plot', default='True')
 parser.add_argument('-only_central', action='store', dest='cen', default='False')
-parser.add_argument('-ncores', action='store', dest='ncores', default=2)
+parser.add_argument('-ncores', action='store', dest='ncores', default=3)
 args = parser.parse_args()
 
 # folder    = '/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_newanalysis/'
-folder    = '/mnt/clemente/lensing/RodriguezGroups/N_all/'
+folder    = '/home/elizabeth/Documentos/posdoc/Rgroups/profiles_indcat/'
+# folder    = '/mnt/clemente/lensing/RodriguezGroups/N_all/'
 samples   = args.sample
 ncores    = args.ncores
 if 'True' in args.ymiss:

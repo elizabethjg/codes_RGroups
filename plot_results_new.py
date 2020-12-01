@@ -113,6 +113,68 @@ ratio_pcc_T,eratio_pcc_T = ratio(pcc_cT,epcc_cT,pcc_T,epcc_T)
 ratio_pcc  = np.append(ratio_pcc,ratio_pcc_T)
 eratio_pcc = np.append(eratio_pcc,eratio_pcc_T)
 
+#------------ IND CATS ------------
+
+out_cs82    = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_indcat/Lens_CS82.out').T
+out_cfht    = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_indcat/Lens_CFHT.out').T
+out_rcsl    = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_indcat/Lens_RCSL.out').T
+out_kids    = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_indcat/Lens_KiDS.out').T
+
+
+lMH_cs82  = np.log10(out_cs82[6]*1.e14)
+lMH_cfht  = np.log10(out_cfht[6]*1.e14)
+lMH_rcsl  = np.log10(out_rcsl[6]*1.e14)
+lMH_kids  = np.log10(out_kids[6]*1.e14)
+
+
+MH_cs82   = out_cs82[6]
+MH_cfht   = out_cfht[6]
+MH_rcsl   = out_rcsl[6]
+MH_kids   = out_kids[6]
+
+M200_cs82 = out_cs82[11] 
+M200_cfht = out_cfht[11] 
+M200_rcsl = out_rcsl[11] 
+M200_kids = out_kids[11] 
+
+eM200_cs82 = np.array([out_cs82[12],out_cs82[13]])
+eM200_cfht = np.array([out_cfht[12],out_cfht[13]])
+eM200_rcsl = np.array([out_rcsl[12],out_rcsl[13]])
+eM200_kids = np.array([out_kids[12],out_kids[13]])
+
+ratio_cs82, eratio_cs82 = ratio(M200_cs82,eM200_cs82,M200_T,eM200_T)
+ratio_cfht, eratio_cfht = ratio(M200_cfht,eM200_cfht,M200_T,eM200_T)
+ratio_rcsl, eratio_rcsl = ratio(M200_rcsl,eM200_rcsl,M200_T,eM200_T)
+ratio_kids, eratio_kids = ratio(M200_kids,eM200_kids,M200_T,eM200_T)
+
+lM200_cs82 = np.log10(out_cs82[11]*1.e14)
+lM200_cfht = np.log10(out_cfht[11]*1.e14)
+lM200_kids = np.log10(out_kids[11]*1.e14)
+lM200_rcsl = np.log10(out_rcsl[11]*1.e14)
+
+elM200_cs82 = np.array([out_cs82[12]/(out_cs82[11]*np.log(10.)),out_cs82[13]/(out_cs82[11]*np.log(10.))])
+elM200_cfht = np.array([out_cfht[12]/(out_cfht[11]*np.log(10.)),out_cfht[13]/(out_cfht[11]*np.log(10.))])
+elM200_kids = np.array([out_kids[12]/(out_kids[11]*np.log(10.)),out_kids[13]/(out_kids[11]*np.log(10.))])
+elM200_rcsl = np.array([out_rcsl[12]/(out_rcsl[11]*np.log(10.)),out_rcsl[13]/(out_rcsl[11]*np.log(10.))])
+
+pcc_cs82 = out_cs82[14]
+pcc_cfht = out_cfht[14]
+pcc_kids = out_kids[14]
+pcc_rcsl = out_rcsl[14]
+
+epcc_cs82 = np.array([out_cs82[15],out_cs82[16]])
+epcc_cfht = np.array([out_cfht[15],out_cfht[16]])
+epcc_kids = np.array([out_kids[15],out_kids[16]])
+epcc_rcsl = np.array([out_rcsl[15],out_rcsl[16]])
+
+
+ratio_pcc,eratio_pcc     = ratio(pcc_c,epcc_c,pcc,epcc)
+ratio_pcc_T,eratio_pcc_T = ratio(pcc_cT,epcc_cT,pcc_T,epcc_T)
+
+ratio_pcc  = np.append(ratio_pcc,ratio_pcc_T)
+eratio_pcc = np.append(eratio_pcc,eratio_pcc_T)
+
+
 ############ Z samples
 
 out_H    = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_newanalysis/Lens_zHb.out').T
