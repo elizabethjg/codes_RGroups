@@ -43,7 +43,10 @@ def partial_profile(backcat_ids,RA0,DEC0,Z,
         
         ndots = int(ndots)
                
-        mask = backcat.Z_B > (Z + 0.1)
+        if 'KiDS' in np.array(backcat.CATNAME)[0]:
+                mask = (backcat.Z_B > (Z + 0.1))*(backcat.ODDS >= 0.5)*(backcat.Z_B < 0.9)*(backcat.Z_B > 0.2)
+        else:
+                mask = (backcat.Z_B > (Z + 0.1))*(backcat.ODDS >= 0.5)*(backcat.Z_B > 0.2)
         
         catdata = backcat[mask]
 

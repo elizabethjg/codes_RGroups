@@ -28,16 +28,17 @@ def ratio(x,ex,y,ey):
     er = np.sqrt((ex/y)**2 + ((x*ey)/(y**2))**2)
     return r, er
 
+path = '/home/elizabeth/Documentos/posdoc/'
 
-pcc_s   = (np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/results_simu/pcc.txt').T)
-masa_s   = (np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/results_simu/puntos-masamockmasaab_mass.txt').T)
-z_s   = (np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/results_simu/puntos-masamockmasaab_z.txt').T)
+pcc_s   = (np.loadtxt(path+'Rgroups/results_simu/pcc.txt').T)
+masa_s   = (np.loadtxt(path+'Rgroups/results_simu/puntos-masamockmasaab_mass.txt').T)
+z_s   = (np.loadtxt(path+'Rgroups/results_simu/puntos-masamockmasaab_z.txt').T)
 
-out_T   = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_newanalysis/Lens_Mbinb.out').T
-out    = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_newanalysis/Lens_Nbin.out').T
+out_T   = np.loadtxt(path+'Rgroups/profiles_indcat/Lens_boost.out').T
+out    = np.loadtxt(path+'Rgroups/profiles_newanalysis/Lens_Nbin.out').T
 
-# lMdyn,slMdyn, sdisp     = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_new/median_dyn_cM').T
-lMdyn,slMdyn, sdisp     = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_new/median_dyn').T
+# lMdyn,slMdyn, sdisp     = np.loadtxt(path+'Rgroups/profiles_new/median_dyn_cM').T
+lMdyn,slMdyn, sdisp     = np.loadtxt(path+'Rgroups/profiles_new/median_dyn').T
 
 lMH_simu2 = masa_s[3]
 ratio_simu = masa_s[4]
@@ -72,8 +73,8 @@ epcc_T     = np.array([out_T[15],out_T[16]])
 
 #------------ CON SAMPLES ------------
 
-outc    = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_newanalysis/Lens_Nbin_cM.out').T
-outc_T  = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_newanalysis/Lens_Mbinb_cM.out').T
+outc    = np.loadtxt(path+'Rgroups/profiles_newanalysis/Lens_Nbin_cM.out').T
+outc_T  = np.loadtxt(path+'Rgroups/profiles_newanalysis/Lens_Mbinb_cM.out').T
 
 lMHc  = np.log10(outc[6]*1.e14)
 lMHc_T  = np.log10(outc_T[6]*1.e14)
@@ -115,10 +116,10 @@ eratio_pcc = np.append(eratio_pcc,eratio_pcc_T)
 
 #------------ IND CATS ------------
 
-out_cs82    = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_indcat/Lens_CS82.out').T
-out_cfht    = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_indcat/Lens_CFHT.out').T
-out_rcsl    = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_indcat/Lens_RCSL.out').T
-out_kids    = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_indcat/Lens_KiDS.out').T
+out_cs82    = np.loadtxt(path+'Rgroups/profiles_indcat/Lens_CS82.out').T
+out_cfht    = np.loadtxt(path+'Rgroups/profiles_indcat/Lens_CFHT.out').T
+out_rcsl    = np.loadtxt(path+'Rgroups/profiles_indcat/Lens_RCSL.out').T
+out_kids    = np.loadtxt(path+'Rgroups/profiles_indcat/Lens_KiDS.out').T
 
 
 lMH_cs82  = np.log10(out_cs82[6]*1.e14)
@@ -177,8 +178,8 @@ eratio_pcc = np.append(eratio_pcc,eratio_pcc_T)
 
 ############ Z samples
 
-out_H    = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_newanalysis/Lens_zHb.out').T
-out_L    = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_newanalysis/Lens_zLb.out').T
+out_H    = np.loadtxt(path+'Rgroups/profiles_newanalysis/Lens_zHb.out').T
+out_L    = np.loadtxt(path+'Rgroups/profiles_newanalysis/Lens_zLb.out').T
 
 lMH_H  = np.log10(out_H[6]*1.e14)
 lMH_L  = np.log10(out_L[6]*1.e14)
@@ -205,8 +206,8 @@ epcc_H = np.array([out_H[15],out_H[16]])
 epcc_L = np.array([out_L[15],out_L[16]])
 
 
-out_HcM    = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_newanalysis/Lens_zHb_cM.out').T
-out_LcM    = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_newanalysis/Lens_zLb_cM.out').T
+out_HcM    = np.loadtxt(path+'Rgroups/profiles_newanalysis/Lens_zHb_cM.out').T
+out_LcM    = np.loadtxt(path+'Rgroups/profiles_newanalysis/Lens_zLb_cM.out').T
 
 lMH_Hc  = np.log10(out_HcM[6]*1.e14)
 lMH_Lc  = np.log10(out_LcM[6]*1.e14)
@@ -237,7 +238,7 @@ ratio_cH, eratio_cH = ratio(M200_HcM,eM200_HcM,M200_H,eM200_H)
 ratio_cL, eratio_cL = ratio(M200_LcM,eM200_LcM,M200_L,eM200_L)
 #---------------------------------------------------
 # EXTRAS
-out_e    = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_newanalysis/Lens_extras.out').T
+out_e    = np.loadtxt(path+'Rgroups/profiles_newanalysis/Lens_extras.out').T
 
 MH_e   = out_e[6]
 M200_e  = out_e[11] 
@@ -263,6 +264,76 @@ M200_SIS  = ((2.*(sdisp*1.e3)**3)/((50**0.5)*G*H))/(Msun)
 lMdyn2  = np.log10(M200_SIS)
 
 # sdisp = out[-1][mN4M]
+
+# -----------------------
+# INDCATS
+
+f, ax = plt.subplots(2, 1, figsize=(6.2,10),sharex=True)
+f.subplots_adjust(hspace=0,wspace=0)
+
+ax[0].scatter(lM200_T,lM200_cs82,facecolor='none',edgecolors='C0'  ,label='CS82')
+ax[0].scatter(lM200_T,lM200_cfht,facecolor='none',edgecolors='C1'  ,label='CFHT')
+ax[0].scatter(lM200_T,lM200_rcsl,facecolor='none',edgecolors='C2'  ,label='RCSL')
+ax[0].scatter(lM200_T,lM200_kids,facecolor='none',edgecolors='C3'  ,label='KiDS')
+
+
+ax[0].errorbar(lM200_T,lM200_cs82,xerr=elM200_T,yerr=elM200_cs82,facecolor='none',ecolor='C0'  ,fmt = 'none')
+ax[0].errorbar(lM200_T,lM200_cfht,xerr=elM200_T,yerr=elM200_cfht,facecolor='none',ecolor='C1'  ,fmt = 'none')
+ax[0].errorbar(lM200_T,lM200_rcsl,xerr=elM200_T,yerr=elM200_rcsl,facecolor='none',ecolor='C2'  ,fmt = 'none')
+ax[0].errorbar(lM200_T,lM200_kids,xerr=elM200_T,yerr=elM200_kids,facecolor='none',ecolor='C3'  ,fmt = 'none')
+
+
+ax[0].plot([12.3,15],[12.3,15],'C7--')
+ax[0].legend(frameon = False,fontsize = 13)
+
+ax[0].set_ylabel('$\log (M^{ind}_{WL})$')
+ax[0].axis([12.3,14.9,12.3,14.9])
+
+ax[1].scatter(lM200_T  ,(M200_cs82 - M200_T)/np.mean(eM200_cs82,axis=0),facecolor='none',edgecolors='C0')
+ax[1].scatter(lM200_T  ,(M200_cfht - M200_T)/np.mean(eM200_cfht,axis=0),facecolor='none',edgecolors='C1')
+ax[1].scatter(lM200_T  ,(M200_rcsl - M200_T)/np.mean(eM200_rcsl,axis=0),facecolor='none',edgecolors='C2')
+ax[1].scatter(lM200_T  ,(M200_kids - M200_T)/np.mean(eM200_kids,axis=0),facecolor='none',edgecolors='C3')
+
+
+
+
+ax[1].plot([12.3,15],[0.,0.],'C7--')
+ax[1].axis([12.3,14.9,-2.5,2.5])
+
+ax[1].set_xlabel(r'$\log (\langle M_{WL} \rangle)$')
+ax[1].set_ylabel(r'$(M^{ind}_{WL} - M_{WL})/ \epsilon(M^{ind}_{WL})$')
+
+plt.savefig(path+'Rgroups/plots_newanalysis/M200_indcomp.pdf',bbox_inches='tight')
+
+# -----------------------
+# -----------------------
+# INDCATS
+
+f, ax = plt.subplots(figsize=(6.2,5))
+
+
+ax.scatter(pcc_T,pcc_cs82,facecolor='none',edgecolors='C0'  ,label='CS82')
+ax.scatter(pcc_T,pcc_cfht,facecolor='none',edgecolors='C1'  ,label='CFHT')
+ax.scatter(pcc_T,pcc_rcsl,facecolor='none',edgecolors='C2'  ,label='RCSL')
+ax.scatter(pcc_T,pcc_kids,facecolor='none',edgecolors='C3'  ,label='KiDS')
+
+
+ax.errorbar(pcc_T,pcc_cs82,xerr=epcc_T,yerr=epcc_cs82,facecolor='none',ecolor='C0'  ,fmt = 'none')
+ax.errorbar(pcc_T,pcc_cfht,xerr=epcc_T,yerr=epcc_cfht,facecolor='none',ecolor='C1'  ,fmt = 'none')
+ax.errorbar(pcc_T,pcc_rcsl,xerr=epcc_T,yerr=epcc_rcsl,facecolor='none',ecolor='C2'  ,fmt = 'none')
+ax.errorbar(pcc_T,pcc_kids,xerr=epcc_T,yerr=epcc_kids,facecolor='none',ecolor='C3'  ,fmt = 'none')
+
+
+ax.plot([0.2,1.0],[0.2,1.0],'C7--')
+ax.legend(frameon = False,fontsize = 13)
+
+ax[0].set_ylabel('$p^{ind}_{cc}$')
+ax[0].set_xlabel('$p_{cc}$')
+
+plt.savefig(path+'Rgroups/plots_newanalysis/pcc_indcomp.pdf',bbox_inches='tight')
+
+# -----------------------
+
 
 # -----------------------
 f, ax = plt.subplots(2, 1, figsize=(6.2,10),sharex=True)
@@ -292,7 +363,7 @@ ax[1].plot([12.3,15],[1.,1.],'C7--')
 ax[1].set_xlabel(r'$\log (\langle M_{AM} \rangle)$')
 ax[1].set_ylabel(r'$M_{WL}/\langle M_{AM} \rangle$')
 
-plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newanalysis/Mhalo_M200_Mbin_cM.pdf',bbox_inches='tight')
+plt.savefig(path+'Rgroups/plots_newanalysis/Mhalo_M200_Mbin_cM.pdf',bbox_inches='tight')
 
 # -----------------------
 plt.figure()
@@ -323,7 +394,7 @@ plt.legend(frameon = False,fontsize = 14)
 plt.plot([12.5,14.8],[1.,1.],'C7--')
 plt.xlabel(r'$\log (\langle M_{AM} \rangle)$')
 plt.ylabel('$M^c_{WL}/M_{WL}$')
-plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newanalysis/ratioc.pdf',bbox_inches='tight')
+plt.savefig(path+'Rgroups/plots_newanalysis/ratioc.pdf',bbox_inches='tight')
 
 
 # -----------------------
@@ -409,7 +480,7 @@ ax[1,0].axvline(14.2,alpha=0.3,c='k')
 ax[1,1].axvline(13.3,alpha=0.3,c='k')
 ax[1,1].axvline(14.2,alpha=0.3,c='k')
 
-plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newanalysis/Mhalo_M200_Nbin.pdf',bbox_inches='tight')
+plt.savefig(path+'Rgroups/plots_newanalysis/Mhalo_M200_Nbin.pdf',bbox_inches='tight')
 
 # -----------------------
 f, ax = plt.subplots(2, 2, figsize=(10,8),sharex=True)
@@ -519,7 +590,7 @@ ax[1,1].axvline(13.3,alpha=0.3,c='k')
 ax[1,1].axvline(14.2,alpha=0.3,c='k')
 
 
-plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newanalysis/Mhalo_M200_zHL.pdf',bbox_inches='tight')
+plt.savefig(path+'Rgroups/plots_newanalysis/Mhalo_M200_zHL.pdf',bbox_inches='tight')
 
 #----------------------------
 
@@ -569,7 +640,7 @@ ax1.plot(x,y(x,2.09),'C0--')
 # ax1.plot(x,y_more(x),'C2--')
 ax1.fill_between(x,y(x,1.89)+0.2,y(x,1.89)-0.2,alpha=0.3,color='C0')
 ax1.plot(x,y(x,3.),'C1')
-plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newanalysis/Mdyn_M200.pdf',bbox_inches='tight')
+plt.savefig(path+'Rgroups/plots_newanalysis/Mdyn_M200.pdf',bbox_inches='tight')
 # -----------------------
 
 plt.figure()
@@ -587,7 +658,7 @@ plt.plot([12.3,14.6],[12.3,14.6],'C7--')
 plt.xlabel('$\log (M_{dyn})$')
 plt.ylabel('$\log (M_{WL})$')
 plt.axis([13.5,14.35,12.8,14.4])
-plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newanalysis/Mdyn_M200_NMbin.pdf',bbox_inches='tight')
+plt.savefig(path+'Rgroups/plots_newanalysis/Mdyn_M200_NMbin.pdf',bbox_inches='tight')
 
 
 
@@ -610,7 +681,7 @@ plt.legend(frameon = False,ncol = 2)
 
 plt.xlabel(r'$\log (\langle M_{AM} \rangle)$')
 plt.ylabel('$p_{cc}$')
-plt.savefig(r'/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newanalysis/Mhalo_pcc.pdf',bbox_inches='tight')
+plt.savefig(path+'Rgroups/plots_newanalysis/Mhalo_pcc.pdf',bbox_inches='tight')
 
 # -----------------------
 
@@ -644,7 +715,7 @@ plt.legend(frameon = False,ncol = 2)
 
 plt.xlabel(r'$\log (\langle M_{AM} \rangle)$')
 plt.ylabel('$p_{cc}$')
-plt.savefig(r'/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newanalysis/Mhalo_pcc_cM.pdf',bbox_inches='tight')
+plt.savefig(path+'Rgroups/plots_newanalysis/Mhalo_pcc_cM.pdf',bbox_inches='tight')
 
 # -----------------------
 
@@ -655,7 +726,7 @@ plt.hist(np.append(outc[14],outc_T[14]),7,color='C9',histtype='step',label='$C-$
 plt.legend(fontsize=14,loc=2,frameon=False)
 plt.ylabel('N')
 plt.xlabel('$p_{cc}$')
-plt.savefig(r'/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newanalysis/pcc_dist.pdf',bbox_inches='tight')
+plt.savefig(path+'Rgroups/plots_newanalysis/pcc_dist.pdf',bbox_inches='tight')
 
 
 # -----------------------
@@ -681,7 +752,7 @@ plt.legend(loc= 2,frameon = False,fontsize = 13,ncol=2)
 plt.plot([0.06,0.175],[1.,1.],'C7--')
 plt.xlabel(r'$\langle z \rangle$')
 plt.ylabel(r'$M_{WL}/\langle M_{AM} \rangle$')
-plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newanalysis/ratio_MH_z.pdf',bbox_inches='tight')
+plt.savefig(path+'Rgroups/plots_newanalysis/ratio_MH_z.pdf',bbox_inches='tight')
 
 
 # -----------------------
@@ -708,7 +779,7 @@ plt.legend(loc= 2,frameon = False,fontsize = 13,ncol=2)
 plt.plot([0.06,0.175],[1.,1.],'C7--')
 plt.xlabel(r'$\langle z \rangle$')
 plt.ylabel(r'$M_{WL}/\langle M_{AM} \rangle$')
-plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newanalysis/ratio_MH_z_cM.pdf',bbox_inches='tight')
+plt.savefig(path+'Rgroups/plots_newanalysis/ratio_MH_z_cM.pdf',bbox_inches='tight')
 
 
 '''
@@ -766,7 +837,7 @@ ax[1].plot([12.3,15.5],[1.,1.],'C7--')
 ax[1].set_xlabel(r'$\log (\langle M_{AM} \rangle)$')
 ax[1].set_ylabel(r'$M_{WL}/\langle M_{AM} \rangle$')
 
-plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newanalysis/Mhalo_M200_NMbin_cM.pdf',bbox_inches='tight')
+plt.savefig(path+'Rgroups/plots_newanalysis/Mhalo_M200_NMbin_cM.pdf',bbox_inches='tight')
 
 
 plt.figure()
@@ -797,7 +868,7 @@ plt.legend(frameon = False,fontsize = 14)
 plt.xlabel(r'$\langle M_{AM} \rangle [10^{13}M_\odot h^{-1}]$')
 plt.ylabel('$M_{WL} [10^{13}M_\odot h^{-1}]$')
 plt.axis([0,35,0,40])
-plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newanalysis/Mhalo_M200_NMbin_lin.pdf',bbox_inches='tight')
+plt.savefig(path+'Rgroups/plots_newanalysis/Mhalo_M200_NMbin_lin.pdf',bbox_inches='tight')
 
 # -----------------------
 # -----------------------
@@ -828,7 +899,7 @@ plt.legend(frameon = False,ncol = 2)
 # plt.legend(frameon = False)
 plt.xlabel('$\log (M_{WL})$')
 plt.ylabel('$p_{cc}$')
-plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newanalysis/M200_pcc_NMbin.pdf',bbox_inches='tight')
+plt.savefig(path+'Rgroups/plots_newanalysis/M200_pcc_NMbin.pdf',bbox_inches='tight')
 
 # -----------------------
 
@@ -857,7 +928,7 @@ plt.errorbar(lM200[mN4M],ratio_pcc[mN4M],xerr=elM200[:,mN4M],yerr=eratio_pcc[:,m
 plt.plot([12.3,14.3],[1.,1.],'C7--')
 plt.xlabel('$\log (M_{WL})$')
 plt.ylabel('$p^c_{cc}/p_{cc}$')
-plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newanalysis/ratiopcc_NMbin.pdf',bbox_inches='tight')
+plt.savefig(path+'Rgroups/plots_newanalysis/ratiopcc_NMbin.pdf',bbox_inches='tight')
 
 # -----------------------
 
@@ -883,7 +954,7 @@ plt.legend(frameon = False)
 plt.xlabel('$\log (M_{AM})$')
 plt.ylabel('$\log (M_{WL})$')
 plt.axis([12.3,14.2,12.3,14.2])
-plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newanalysis/Mhalo_M200_NMbin_conM.pdf',bbox_inches='tight')
+plt.savefig(path+'Rgroups/plots_newanalysis/Mhalo_M200_NMbin_conM.pdf',bbox_inches='tight')
 # -----------------------
 
 # -----------------------
@@ -919,7 +990,7 @@ plt.yscale('log')
 plt.plot([12.3,14.3],[1.,1.],'C7--')
 plt.xlabel('$\log (M_{WL})$')
 plt.ylabel('$M^H_{200}/M^L_{200}$')
-plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newanalysis/ratioLH_NMbin.pdf',bbox_inches='tight')
+plt.savefig(path+'Rgroups/plots_newanalysis/ratioLH_NMbin.pdf',bbox_inches='tight')
 
 # -----------------------
 # -----------------------
@@ -937,7 +1008,7 @@ plt.plot([12.3,14.6],[12.3,14.6],'C7--')
 plt.xlabel('$\log (M_{dyn})$')
 plt.ylabel('$\log (M_{WL})$')
 plt.axis([13.,14.5,12.7,14.5])
-plt.savefig('/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newanalysis/Mdyn_M200_NMbin.pdf',bbox_inches='tight')
+plt.savefig(path+'Rgroups/plots_newanalysis/Mdyn_M200_NMbin.pdf',bbox_inches='tight')
 
 
 
@@ -953,5 +1024,5 @@ plt.errorbar(lMH_L,pcc_L,yerr=epcc_L,fmt = 'none',ecolor='C0')
 
 plt.xlabel(r'$\log (\langle M_{AM} \rangle)$')
 plt.ylabel('$p_{cc}$')
-plt.savefig(r'/home/eli/Documentos/Astronomia/posdoc/Rgroups/plots_newanalysis/Mhalo_pcc_zbin.pdf',bbox_inches='tight')
+plt.savefig(path+'Rgroups/plots_newanalysis/Mhalo_pcc_zbin.pdf',bbox_inches='tight')
 '''

@@ -128,7 +128,7 @@ def make_plot_misscentred_monopole(file_name,folder,samples,plot = False,ymiss =
           file_mcmc = 'monopole_pcconly_ymiss_'+file_name[:-4]+'out'
           tau       = 0.3
      else:
-          file_mcmc = 'monopole_pcconly_'+file_name[:-4]+'out'
+          file_mcmc = 'monopole_pcconly_boost_'+file_name[:-4]+'out'
           tau       = 0.4
           
      Mhalo   = 10**h['lMASS_HALO_mean']
