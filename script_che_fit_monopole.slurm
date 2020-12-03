@@ -18,8 +18,8 @@ source activate py2env
 
 srun -u python fit_profile_monopole_misscentred_pcc.py -folder '/home/elizabeth/profiles_indcat/' \
 -file 'profile_'$SLURM_JOB_NAME'.fits' -ncores 15                                    
-##srun -u python fit_profile_monopole_misscentred_pcc.py -folder '/home/elizabeth/profiles_newanalysis/' \
-##-file 'profile_'$SLURM_JOB_NAME'.fits' -ncores 15                                    
+srun -u python fit_profile_monopole_misscentred_pcc.py -folder '/home/elizabeth/profiles_indcat/' \
+-file 'profile_'$SLURM_JOB_NAME'_cM.fits' -ncores 15                                    
 ##srun -u python fit_profile_monopole_misscentred_pcc.py -folder '/home/elizabeth/profiles_new/' \
 ##-file 'profile_'$SLURM_JOB_NAME'_cM.fits' -ncores 15                                    
 ##srun -u python fit_profile_monopole_misscentred_pcc.py -folder '/home/elizabeth/profiles_newanalysis/' \
