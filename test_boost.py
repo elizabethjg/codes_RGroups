@@ -40,7 +40,7 @@ area = np.pi*np.diff(bines**2)
 plt.figure()
 for j in range(7):
 
-    p = fits.open(path+'Rgroups/profiles_indcat/profile_Mbin'+str(j+1)+'.fits')[1].data
+    p = fits.open(path+'Rgroups/profiles_indcat/profile_Mbin'+str(j+1)+'_zL.fits')[1].data
 
     ngal = p.NGAL_w
 
@@ -55,7 +55,7 @@ plt.legend()
 plt.xlabel('R [Mpc]')
 plt.ylabel('$1/(1-f_{cl})$')
 
-plt.savefig(path+'Rgroups/plots_newanalysis/fcl.pdf',bbox_inches='tight')
+plt.savefig(path+'Rgroups/plots_newanalysis/fcl_zL.pdf',bbox_inches='tight')
 
 
 out_T   = np.loadtxt(path+'Rgroups/profiles_newanalysis/Lens_Mbinb.out').T
