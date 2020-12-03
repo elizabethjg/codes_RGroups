@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=CS82
+#SBATCH --job-name=KiDS
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=56
 #SBATCH --time=12:00:00
@@ -18,13 +18,13 @@ export MKL_NUM_THREADS=$SLURM_CPUS_PER_TASK
 
 conda activate py2env
 
-srun python -u forGroup_profile_CS82.py -sample 'Mbin1_CS82'  -lMH_min 12.5 -lMH_max 13.0 -C_BG_min 0. -z_max 0.2 -ncores 56
-srun python -u forGroup_profile_CS82.py -sample 'Mbin2_CS82'  -lMH_min 13.0 -lMH_max 13.3 -C_BG_min 0. -z_max 0.2 -ncores 56
-srun python -u forGroup_profile_CS82.py -sample 'Mbin3_CS82'  -lMH_min 13.3 -lMH_max 13.6 -C_BG_min 0. -z_max 0.2 -ncores 56
-srun python -u forGroup_profile_CS82.py -sample 'Mbin4_CS82'  -lMH_min 13.6 -lMH_max 13.9 -C_BG_min 0. -z_max 0.2 -ncores 56
-srun python -u forGroup_profile_CS82.py -sample 'Mbin5_CS82'  -lMH_min 13.9 -lMH_max 14.2 -C_BG_min 0. -z_max 0.2 -ncores 56
-srun python -u forGroup_profile_CS82.py -sample 'Mbin6_CS82'  -lMH_min 14.2 -lMH_max 14.5 -C_BG_min 0. -z_max 0.2 -ncores 56
-srun python -u forGroup_profile_CS82.py -sample 'Mbin7_CS82'  -lMH_min 14.5 -lMH_max 15.0 -C_BG_min 0. -z_max 0.2 -ncores 56
+srun python -u forGroup_profile_KiDS.py -sample 'Mbin1_KiDS'  -lMH_min 12.5 -lMH_max 13.0 -C_BG_min 0. -z_max 0.2 -ncores 56
+srun python -u forGroup_profile_KiDS.py -sample 'Mbin2_KiDS'  -lMH_min 13.0 -lMH_max 13.3 -C_BG_min 0. -z_max 0.2 -ncores 56
+srun python -u forGroup_profile_KiDS.py -sample 'Mbin3_KiDS'  -lMH_min 13.3 -lMH_max 13.6 -C_BG_min 0. -z_max 0.2 -ncores 56
+srun python -u forGroup_profile_KiDS.py -sample 'Mbin4_KiDS'  -lMH_min 13.6 -lMH_max 13.9 -C_BG_min 0. -z_max 0.2 -ncores 56
+srun python -u forGroup_profile_KiDS.py -sample 'Mbin5_KiDS'  -lMH_min 13.9 -lMH_max 14.2 -C_BG_min 0. -z_max 0.2 -ncores 56
+srun python -u forGroup_profile_KiDS.py -sample 'Mbin6_KiDS'  -lMH_min 14.2 -lMH_max 14.5 -C_BG_min 0. -z_max 0.2 -ncores 56
+srun python -u forGroup_profile_KiDS.py -sample 'Mbin7_KiDS'  -lMH_min 14.5 -lMH_max 15.0 -C_BG_min 0. -z_max 0.2 -ncores 56
 
 ##srun python -u forGroup_profile.py -sample 'Mbin1_zL_cM'  -lMH_min 12.5 -lMH_max 13.0 -C_BG_min 3. -z_max 0.13 -ncores 45
 ##srun python -u forGroup_profile.py -sample 'Mbin2_zL_cM'  -lMH_min 13.0 -lMH_max 13.3 -C_BG_min 3. -z_max 0.13 -ncores 45
