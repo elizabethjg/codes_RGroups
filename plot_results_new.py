@@ -327,8 +327,8 @@ ax.errorbar(pcc_T,pcc_kids,xerr=epcc_T,yerr=epcc_kids,facecolor='none',ecolor='C
 ax.plot([0.2,1.0],[0.2,1.0],'C7--')
 ax.legend(frameon = False,fontsize = 13)
 
-ax[0].set_ylabel('$p^{ind}_{cc}$')
-ax[0].set_xlabel('$p_{cc}$')
+ax.set_ylabel('$p^{ind}_{cc}$')
+ax.set_xlabel('$p_{cc}$')
 
 plt.savefig(path+'Rgroups/plots_newanalysis/pcc_indcomp.pdf',bbox_inches='tight')
 

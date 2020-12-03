@@ -22,11 +22,11 @@ Msun = 1.989e30 # Solar mass (kg)
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-folder', action='store', dest='folder',default='./')
+parser.add_argument('-folder', action='store', dest='folder',default='../N_all/')
 parser.add_argument('-file', action='store', dest='file_name', default='profile.cat')
 parser.add_argument('-ncores', action='store', dest='ncores', default=15)
 parser.add_argument('-Yanmiss', action='store', dest='yan', default='False')
-parser.add_argument('-corrboost', action='store', dest='boost', default='False')
+parser.add_argument('-corrboost', action='store', dest='boost', default='True')
 args = parser.parse_args()
 
 h_cosmo = 1.0
@@ -84,6 +84,8 @@ if boost:
     fcl = ((d - d[-1])*area)/ngal
     
     bcorr = 1./(1.-fcl)
+    
+    bcorr[bcorr < 1.] = 1.
     
     print 'Correcting for boost'
     print bcorr

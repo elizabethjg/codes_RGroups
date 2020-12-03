@@ -52,10 +52,11 @@ for j in range(7):
     
 plt.legend()
 
+plt.xlabel('R [Mpc]')
+plt.ylabel('$1/(1-f_{cl})$')
+
 plt.savefig(path+'Rgroups/plots_newanalysis/fcl.pdf',bbox_inches='tight')
 
-outc   = np.loadtxt(path+'/Rgroups/profiles_newanalysis/Lens_Mbinb.out').T
-outc_T  = np.loadtxt(path+'Rgroups/profiles_indcat/Lens_boost.out').T
 
 out_T   = np.loadtxt(path+'Rgroups/profiles_newanalysis/Lens_Mbinb.out').T
 out    = np.loadtxt(path+'Rgroups/profiles_indcat/Lens_boost.out').T
@@ -90,7 +91,7 @@ f, ax = plt.subplots(2, 1, figsize=(6.2,10),sharex=True)
 f.subplots_adjust(hspace=0,wspace=0)
 
 ax[0].scatter(lMH_T,lM200_T,facecolor='none',edgecolors='k'  ,label='Total sample')
-ax[0].scatter(lMH,lM200,facecolor='none',edgecolors='C9'  ,label='boost_correc')
+ax[0].scatter(lMH,lM200,facecolor='none',edgecolors='C9'  ,label='boost correc')
 
 ax[0].errorbar(lMH_T,lM200_T,yerr=elM200_T,fmt = 'none',ecolor='k')
 ax[0].errorbar(lMH,lM200,yerr=elM200,fmt = 'none',ecolor='C9')
