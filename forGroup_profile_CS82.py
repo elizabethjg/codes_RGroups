@@ -1,5 +1,6 @@
 import sys
 sys.path.append('/mnt/clemente/lensing')
+sys.path.append('/mnt/clemente/lensing/python_codes')
 import time
 import numpy as np
 from lensing import LensCat 
@@ -23,8 +24,11 @@ G    = 6.670e-11;   # Gravitational constant (m3.kg-1.s-2)
 pc   = 3.085678e16; # 1 pc (m)
 Msun = 1.989e30 # Solar mass (kg)
 
+ncat = 'CS82'
+
 folder = '/mnt/clemente/lensing/RodriguezGroups/N_all/'
-S=LensCat.Catalog.read_catalog(folder+'gx_CS82_S_RM_FINAL.fits')
+# S=LensCat.Catalog.read_catalog(folder+'gx_S_RM_FINAL.fits')
+S=LensCat.Catalog.read_catalog(folder+'gx_'+ncat+'_S_RM.fits')
 # folder = '/mnt/clemente/lensing/RodriguezGroups/N_all_FOF/'
 # S=LensCat.Catalog.read_catalog(folder+'gx_S_RM_FOF.fits')
 S.data.set_index('CATID', inplace=True)
@@ -39,15 +43,18 @@ def partial_profile(backcat_ids,RA0,DEC0,Z,
         
         ndots = int(ndots)
                
-        mask = backcat.Z_B > (Z + 0.1)
+        if 'KiDS' in np.array(backcat.CATNAME)[0]:
+                mask = (backcat.Z_B > (Z + 0.1))*(backcat.ODDS >= 0.5)*(backcat.Z_B < 0.9)*(backcat.Z_B > 0.2)
+        else:
+                mask = (backcat.Z_B > (Z + 0.1))*(backcat.ODDS >= 0.5)*(backcat.Z_B > 0.2)
         
         catdata = backcat[mask]
 
 
         dl, ds, dls = gentools.compute_lensing_distances(np.array([Z]), catdata.Z_B, precomputed=True)
-        dl  = (dl/0.7)*h
-        ds  = (ds/0.7)*h
-        dls = (dls/0.7)*h
+        dl  = (dl*0.7)/h
+        ds  = (ds*0.7)/h
+        dls = (dls*0.7)/h
         
         KPCSCALE   = dl*(((1.0/3600.0)*np.pi)/180.0)*1000.0
         BETA_array = dls/ds
@@ -98,6 +105,8 @@ def partial_profile(backcat_ids,RA0,DEC0,Z,
         BOOTwsum_T   = np.zeros((nboot,ndots))
         BOOTwsum_X   = np.zeros((nboot,ndots))
         BOOTwsum     = np.zeros((nboot,ndots))
+        NGAL         = []
+        
         
         for nbin in range(ndots):
                 mbin = dig == nbin+1              
@@ -106,6 +115,7 @@ def partial_profile(backcat_ids,RA0,DEC0,Z,
                 DSIGMAwsum_X = np.append(DSIGMAwsum_X,(ex[mbin]*peso[mbin]).sum())
                 WEIGHTsum    = np.append(WEIGHTsum,(peso[mbin]).sum())
                 Mwsum        = np.append(Mwsum,(m[mbin]*peso[mbin]).sum())
+                NGAL         = np.append(NGAL,mbin.sum())
                 
                 index = np.arange(mbin.sum())
                 if mbin.sum() == 0:
@@ -121,7 +131,7 @@ def partial_profile(backcat_ids,RA0,DEC0,Z,
         output = {'DSIGMAwsum_T':DSIGMAwsum_T,'DSIGMAwsum_X':DSIGMAwsum_X,
                    'WEIGHTsum':WEIGHTsum, 'Mwsum':Mwsum, 
                    'BOOTwsum_T':BOOTwsum_T, 'BOOTwsum_X':BOOTwsum_X, 'BOOTwsum':BOOTwsum, 
-                   'Ntot':Ntot}
+                   'Ntot':Ntot,'NGAL':NGAL}
         
         return output
 
@@ -157,9 +167,10 @@ def main(sample='pru',N_min=0,N_max=1000.,
         h              (float) H0 = 100.*h
         '''
 
-
+        cosmo = LambdaCDM(H0=100*h, Om0=0.3, Ode0=0.7)
         tini = time.time()
         
+        print 'Using catalog gx_'+ncat+'_L_RM.fits'
         print 'Sample ',sample
         print 'Selecting groups with:'
         print N_min,' <= N_GAL < ',N_max
@@ -178,7 +189,8 @@ def main(sample='pru',N_min=0,N_max=1000.,
         
         #reading cats
         
-        L=LensCat.Catalog.read_catalog(folder+'gx_CS82_L_RM_FINAL.fits')        
+        L=LensCat.Catalog.read_catalog(folder+'gx_'+ncat+'_L_RM.fits')        
+        # L=LensCat.Catalog.read_catalog(folder+'gx_L_RM_FINAL.fits')
         # L=LensCat.Catalog.read_catalog(folder+'gx_L_RM_FOF.fits')        
         mrich = (L.data.N_GAL >= N_min)*(L.data.N_GAL < N_max)
         mz    = (L.data.Z >= z_min)*(L.data.Z < z_max)
@@ -208,6 +220,7 @@ def main(sample='pru',N_min=0,N_max=1000.,
         DSIGMAwsum_T = np.zeros(ndots) 
         DSIGMAwsum_X = np.zeros(ndots)
         WEIGHTsum    = np.zeros(ndots)
+        NGALsum      = np.zeros(ndots)
         Mwsum        = np.zeros(ndots)
         BOOTwsum_T   = np.zeros((100,ndots))
         BOOTwsum_X   = np.zeros((100,ndots))
@@ -246,6 +259,7 @@ def main(sample='pru',N_min=0,N_max=1000.,
                         DSIGMAwsum_T += profilesums['DSIGMAwsum_T']
                         DSIGMAwsum_X += profilesums['DSIGMAwsum_X']
                         WEIGHTsum    += profilesums['WEIGHTsum']
+                        NGALsum      += profilesums['NGAL']
                         Mwsum        += profilesums['Mwsum']
                         BOOTwsum_T   += profilesums['BOOTwsum_T']
                         BOOTwsum_X   += profilesums['BOOTwsum_X']
@@ -301,7 +315,9 @@ def main(sample='pru',N_min=0,N_max=1000.,
                 fits.Column(name='DSigma_T', format='D', array=DSigma_T),
                 fits.Column(name='error_DSigma_T', format='D', array=eDSigma_T),
                 fits.Column(name='DSigma_X', format='D', array=DSigma_X),
-                fits.Column(name='error_DSigma_X', format='D', array=eDSigma_X)])
+                fits.Column(name='error_DSigma_X', format='D', array=eDSigma_X),
+                fits.Column(name='NGAL', format='D', array=NGALsum),
+                fits.Column(name='NGAL_w', format='D', array=WEIGHTsum)])
         
         h = tbhdu.header
         h.append(('N_LENSES',np.int(Nlenses)))
@@ -346,8 +362,8 @@ if __name__ == '__main__':
         parser.add_argument('-N_max', action='store', dest='N_max', default=1000)
         parser.add_argument('-z_min', action='store', dest='z_min', default=0.0)
         parser.add_argument('-z_max', action='store', dest='z_max', default=0.5)
-        parser.add_argument('-C_BG_min', action='store', dest='conmin', default=0.5)
-        parser.add_argument('-C_BG_max', action='store', dest='conmax', default=5.0)
+        parser.add_argument('-C_BG_min', action='store', dest='conmin', default=0.)
+        parser.add_argument('-C_BG_max', action='store', dest='conmax', default=10.0)
         parser.add_argument('-lMH_min', action='store', dest='lMHmin', default=11.)
         parser.add_argument('-lMH_max', action='store', dest='lMHmax', default=15.5)        
         parser.add_argument('-ODDS_min', action='store', dest='ODDS_min', default=0.5)
@@ -355,7 +371,7 @@ if __name__ == '__main__':
         parser.add_argument('-ROUT', action='store', dest='ROUT', default=5000.)
         parser.add_argument('-nbins', action='store', dest='nbins', default=15)
         parser.add_argument('-ncores', action='store', dest='ncores', default=10)
-        parser.add_argument('-h', action='store', dest='h', default=1.)
+        parser.add_argument('-h_cosmo', action='store', dest='h_cosmo', default=1.)
         args = parser.parse_args()
         
         sample     = args.sample
@@ -372,7 +388,7 @@ if __name__ == '__main__':
         ROUT       = float(args.ROUT)
         nbins      = int(args.nbins)
         ncores     = int(args.ncores)
-	h          = float(args.h)
+	h          = float(args.h_cosmo)
         
 	main(sample,N_min,N_max,z_min,z_max,
              conmin,conmax,lMHmin,lMHmax,
