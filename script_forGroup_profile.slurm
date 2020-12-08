@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=RCSL
+#SBATCH --job-name=odds4
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=56
 #SBATCH --time=12:00:00
