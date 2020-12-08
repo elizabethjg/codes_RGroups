@@ -40,7 +40,7 @@ area = np.pi*np.diff(bines**2)
 plt.figure()
 for j in range(7):
 
-    p = fits.open(path+'Rgroups/profiles_indcat/profile_Mbin'+str(j+1)+'_zL.fits')[1].data
+    p = fits.open(path+'Rgroups/profiles_indcat/profile_Mbin'+str(j+1)+'.fits')[1].data
 
     ngal = p.NGAL_w
 
@@ -55,11 +55,11 @@ plt.legend()
 plt.xlabel('R [Mpc]')
 plt.ylabel('$1/(1-f_{cl})$')
 
-plt.savefig(path+'Rgroups/plots_newanalysis/fcl_zL.pdf',bbox_inches='tight')
+plt.savefig(path+'Rgroups/plots_newanalysis/fcl.pdf',bbox_inches='tight')
 
 
-out_T   = np.loadtxt(path+'Rgroups/profiles_newanalysis/Lens_Mbinb.out').T
-out    = np.loadtxt(path+'Rgroups/profiles_indcat/Lens_boost.out').T
+out_T   = np.loadtxt(path+'Rgroups/profiles_indcat/Lens_Mbin.out').T
+out    = np.loadtxt(path+'Rgroups/profiles_indcat/Lens_nonboost.out').T
 
 MH   = out[6]
 MH_T = out_T[6]
@@ -91,7 +91,7 @@ f, ax = plt.subplots(2, 1, figsize=(6.2,10),sharex=True)
 f.subplots_adjust(hspace=0,wspace=0)
 
 ax[0].scatter(lMH_T,lM200_T,facecolor='none',edgecolors='k'  ,label='Total sample')
-ax[0].scatter(lMH,lM200,facecolor='none',edgecolors='C9'  ,label='boost correc')
+ax[0].scatter(lMH,lM200,facecolor='none',edgecolors='C9'  ,label='non boost correc')
 
 ax[0].errorbar(lMH_T,lM200_T,yerr=elM200_T,fmt = 'none',ecolor='k')
 ax[0].errorbar(lMH,lM200,yerr=elM200,fmt = 'none',ecolor='C9')
@@ -114,4 +114,35 @@ ax[1].plot([12.3,15],[1.,1.],'C7--')
 ax[1].set_xlabel(r'$\log (\langle M_{AM} \rangle)$')
 ax[1].set_ylabel(r'$M_{WL}/\langle M_{AM} \rangle$')
 
-# plt.savefig(path+'Rgroups/plots_newanalysis/Mhalo_M200_Mbin_boost.pdf',bbox_inches='tight')
+plt.savefig(path+'Rgroups/plots_newanalysis/boost_correc2.pdf',bbox_inches='tight')
+
+# -----------------------
+f, ax = plt.subplots(2, 1, figsize=(6.2,10),sharex=True)
+f.subplots_adjust(hspace=0,wspace=0)
+
+ax[0].scatter(lM200_T,lM200,facecolor='none',edgecolors='k' )
+
+
+ax[0].errorbar(lM200_T,lM200,xerr=elM200_T,yerr=elM200,fmt = 'none',ecolor='k')
+
+
+
+ax[0].plot([12.0,15],[12.0,15],'C7--')
+ax[0].legend(frameon = False,fontsize = 13)
+
+ax[0].set_xlabel(r'$\log (M_{WL})$')
+ax[0].set_ylabel(r'$\log (M^{wo}_{WL})$')
+ax[0].axis([12.0,14.9,12.3,14.9])
+
+ax[1].scatter(lM200_T  ,M200/M200_T,facecolor='none',edgecolors='k',label='Total sample')
+
+
+ax[1].errorbar(lM200_T  ,M200/M200_T,yerr=eM200/M200_T,fmt = 'none',ecolor='k')
+
+
+
+ax[1].plot([12.0,15],[1.,1.],'C7--')
+ax[1].set_xlabel(r'$\log (M_{WL})$')
+ax[1].set_ylabel(r'$M^{wo}_{WL}/M_{WL}$')
+
+plt.savefig(path+'Rgroups/plots_newanalysis/boost_correc.pdf',bbox_inches='tight')

@@ -35,7 +35,8 @@ S.data.set_index('CATID', inplace=True)
 
 
 def partial_profile(backcat_ids,RA0,DEC0,Z,
-                    RIN,ROUT,ndots,h,nboot=100):
+                    RIN,ROUT,ndots,h,
+                    odds_min,zcut,nboot=100):
 
         cosmo = LambdaCDM(H0=100*h, Om0=0.3, Ode0=0.7)
         
@@ -44,9 +45,9 @@ def partial_profile(backcat_ids,RA0,DEC0,Z,
         ndots = int(ndots)
                
         if 'KiDS' in np.array(backcat.CATNAME)[0]:
-                mask = (backcat.Z_B > (Z + 0.1))*(backcat.ODDS >= 0.5)*(backcat.Z_B < 0.9)*(backcat.Z_B > 0.2)
+                mask = (backcat.Z_B > (Z + zcut))*(backcat.ODDS >= odds_min)*(backcat.Z_B < 0.9)*(backcat.Z_B > 0.2)
         else:
-                mask = (backcat.Z_B > (Z + 0.1))*(backcat.ODDS >= 0.5)*(backcat.Z_B > 0.2)
+                mask = (backcat.Z_B > (Z + zcut))*(backcat.ODDS >= odds_min)*(backcat.Z_B > 0.2)
         
         catdata = backcat[mask]
 
@@ -143,7 +144,8 @@ def main(sample='pru',N_min=0,N_max=1000.,
                 z_min = 0.0, z_max = 0.5,
                 conmin = 0.5, conmax = 5.0,
                 lMHmin = 11., lMHmax = 15.5,
-                odds_min=0.5, RIN = 100., ROUT =5000.,
+                odds_min=0.5, zcut = 0.1,
+                RIN = 100., ROUT =5000.,
                 ndots= 15,ncores=10,h=1.):
 
         '''
@@ -160,6 +162,7 @@ def main(sample='pru',N_min=0,N_max=1000.,
         lMHmin         (float) lower limit for log(MHALO) - >=
         lMHmax         (float) higher limit for log(MHALO) - <        
         odds_min       (float) cut in odds
+        zcut           (float) delta z cut for background galaxies
         RIN            (float) Inner bin radius of profile
         ROUT           (float) Outer bin radius of profile
         ndots          (int) Number of bins of the profile
@@ -179,6 +182,7 @@ def main(sample='pru',N_min=0,N_max=1000.,
         print lMHmin,' <= log(MH) < ',lMHmax
         print 'Background galaxies with:'
         print 'ODDS > ',odds_min
+        print 'Zback > Z +',zcut
         print 'Profile has ',ndots,'bins'
         print 'from ',RIN,'kpc to ',ROUT,'kpc'
         print 'h = ',h
@@ -240,16 +244,19 @@ def main(sample='pru',N_min=0,N_max=1000.,
                 rout = ROUT*np.ones(num)
                 nd   = ndots*np.ones(num)
                 h_a  = h*np.ones(num)
+                odds = odds_min*np.ones(num)
+                zc   = zcut*np.ones(num)
+                h_a  = h*np.ones(num)
                 
                 if num == 1:
                         entrada = [Lsplit[l].CATID.iloc[0],Lsplit[l].RA_BG.iloc[0],
                                         Lsplit[l].DEC_BG.iloc[0],Lsplit[l].Z.iloc[0],
-                                        RIN,ROUT,ndots,h]
+                                        RIN,ROUT,ndots,h,odds_min,zcut]
                         
                         salida = [partial_profile_unpack(entrada)]
                 else:          
                         entrada = np.array([Lsplit[l].CATID.iloc[:],Lsplit[l].RA_BG,
-                                        Lsplit[l].DEC_BG,Lsplit[l].Z,rin,rout,nd,h_a]).T
+                                        Lsplit[l].DEC_BG,Lsplit[l].Z,rin,rout,nd,h_a,odds,zc]).T
                         
                         pool = Pool(processes=(num))
                         salida = np.array(pool.map(partial_profile_unpack, entrada))
@@ -367,6 +374,7 @@ if __name__ == '__main__':
         parser.add_argument('-lMH_min', action='store', dest='lMHmin', default=11.)
         parser.add_argument('-lMH_max', action='store', dest='lMHmax', default=15.5)        
         parser.add_argument('-ODDS_min', action='store', dest='ODDS_min', default=0.5)
+        parser.add_argument('-zcut', action='store', dest='zcut', default=0.5)
         parser.add_argument('-RIN', action='store', dest='RIN', default=300.)
         parser.add_argument('-ROUT', action='store', dest='ROUT', default=5000.)
         parser.add_argument('-nbins', action='store', dest='nbins', default=15)
@@ -384,13 +392,14 @@ if __name__ == '__main__':
         conmin     = float(args.conmin) 
         conmax     = float(args.conmax)         
         ODDS_min   = float(args.ODDS_min)
+        zcut       = float(args.zcut)
         RIN        = float(args.RIN)
         ROUT       = float(args.ROUT)
         nbins      = int(args.nbins)
         ncores     = int(args.ncores)
-	h          = float(args.h_cosmo)
+        h          = float(args.h_cosmo)
         
 	main(sample,N_min,N_max,z_min,z_max,
              conmin,conmax,lMHmin,lMHmax,
-             ODDS_min,RIN,ROUT,nbins,ncores,h)
+             ODDS_min,zcut,RIN,ROUT,nbins,ncores,h)
 

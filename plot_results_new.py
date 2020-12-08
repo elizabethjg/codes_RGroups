@@ -34,8 +34,8 @@ pcc_s   = (np.loadtxt(path+'Rgroups/results_simu/pcc.txt').T)
 masa_s   = (np.loadtxt(path+'Rgroups/results_simu/puntos-masamockmasaab_mass.txt').T)
 z_s   = (np.loadtxt(path+'Rgroups/results_simu/puntos-masamockmasaab_z.txt').T)
 
-out_T   = np.loadtxt(path+'Rgroups/profiles_indcat/Lens_boost.out').T
-out    = np.loadtxt(path+'Rgroups/profiles_newanalysis/Lens_Nbin.out').T
+out_T   = np.loadtxt(path+'Rgroups/profiles_indcat/Lens_Mbin.out').T
+out    = np.loadtxt(path+'Rgroups/profiles_indcat/Lens_Nbin.out').T
 
 # lMdyn,slMdyn, sdisp     = np.loadtxt(path+'Rgroups/profiles_new/median_dyn_cM').T
 lMdyn,slMdyn, sdisp     = np.loadtxt(path+'Rgroups/profiles_new/median_dyn').T
@@ -73,8 +73,8 @@ epcc_T     = np.array([out_T[15],out_T[16]])
 
 #------------ CON SAMPLES ------------
 
-outc    = np.loadtxt(path+'Rgroups/profiles_newanalysis/Lens_Nbin_cM.out').T
-outc_T  = np.loadtxt(path+'Rgroups/profiles_newanalysis/Lens_Mbinb_cM.out').T
+outc    = np.loadtxt(path+'Rgroups/profiles_indcat/Lens_Nbin_cM.out').T
+outc_T  = np.loadtxt(path+'Rgroups/profiles_indcat/Lens_Mbin_cM.out').T
 
 lMHc  = np.log10(outc[6]*1.e14)
 lMHc_T  = np.log10(outc_T[6]*1.e14)
@@ -143,11 +143,6 @@ eM200_cfht = np.array([out_cfht[12],out_cfht[13]])
 eM200_rcsl = np.array([out_rcsl[12],out_rcsl[13]])
 eM200_kids = np.array([out_kids[12],out_kids[13]])
 
-ratio_cs82, eratio_cs82 = ratio(M200_cs82,eM200_cs82,M200_T,eM200_T)
-ratio_cfht, eratio_cfht = ratio(M200_cfht,eM200_cfht,M200_T,eM200_T)
-ratio_rcsl, eratio_rcsl = ratio(M200_rcsl,eM200_rcsl,M200_T,eM200_T)
-ratio_kids, eratio_kids = ratio(M200_kids,eM200_kids,M200_T,eM200_T)
-
 lM200_cs82 = np.log10(out_cs82[11]*1.e14)
 lM200_cfht = np.log10(out_cfht[11]*1.e14)
 lM200_kids = np.log10(out_kids[11]*1.e14)
@@ -169,17 +164,11 @@ epcc_kids = np.array([out_kids[15],out_kids[16]])
 epcc_rcsl = np.array([out_rcsl[15],out_rcsl[16]])
 
 
-ratio_pcc,eratio_pcc     = ratio(pcc_c,epcc_c,pcc,epcc)
-ratio_pcc_T,eratio_pcc_T = ratio(pcc_cT,epcc_cT,pcc_T,epcc_T)
-
-ratio_pcc  = np.append(ratio_pcc,ratio_pcc_T)
-eratio_pcc = np.append(eratio_pcc,eratio_pcc_T)
-
 
 ############ Z samples
 
-out_H    = np.loadtxt(path+'Rgroups/profiles_newanalysis/Lens_zHb.out').T
-out_L    = np.loadtxt(path+'Rgroups/profiles_newanalysis/Lens_zLb.out').T
+out_H    = np.loadtxt(path+'Rgroups/profiles_indcat/Lens_zH.out').T
+out_L    = np.loadtxt(path+'Rgroups/profiles_indcat/Lens_zL.out').T
 
 lMH_H  = np.log10(out_H[6]*1.e14)
 lMH_L  = np.log10(out_L[6]*1.e14)
@@ -206,8 +195,8 @@ epcc_H = np.array([out_H[15],out_H[16]])
 epcc_L = np.array([out_L[15],out_L[16]])
 
 
-out_HcM    = np.loadtxt(path+'Rgroups/profiles_newanalysis/Lens_zHb_cM.out').T
-out_LcM    = np.loadtxt(path+'Rgroups/profiles_newanalysis/Lens_zLb_cM.out').T
+out_HcM    = np.loadtxt(path+'Rgroups/profiles_indcat/Lens_zH_cM.out').T
+out_LcM    = np.loadtxt(path+'Rgroups/profiles_indcat/Lens_zL_cM.out').T
 
 lMH_Hc  = np.log10(out_HcM[6]*1.e14)
 lMH_Lc  = np.log10(out_LcM[6]*1.e14)
@@ -236,17 +225,6 @@ epcc_Lc = np.array([out_LcM[15],out_LcM[16]])
 
 ratio_cH, eratio_cH = ratio(M200_HcM,eM200_HcM,M200_H,eM200_H)
 ratio_cL, eratio_cL = ratio(M200_LcM,eM200_LcM,M200_L,eM200_L)
-#---------------------------------------------------
-# EXTRAS
-out_e    = np.loadtxt(path+'Rgroups/profiles_newanalysis/Lens_extras.out').T
-
-MH_e   = out_e[6]
-M200_e  = out_e[11] 
-eM200_e   = np.array([out_e[12],out_e[13]])
-
-lMH_e  = np.log10(out_e[6]*1.e14)
-lM200_e  = np.log10(out_e[11]*1.e14)
-elM200_e = np.array([out_e[12]/(out_e[11]*np.log(10.)),out_e[13]/(out_e[11]*np.log(10.))])
 
 
 
@@ -271,25 +249,25 @@ lMdyn2  = np.log10(M200_SIS)
 f, ax = plt.subplots(2, 1, figsize=(6.2,10),sharex=True)
 f.subplots_adjust(hspace=0,wspace=0)
 
-ax[0].scatter(lM200_T,lM200_cs82,facecolor='none',edgecolors='C0'  ,label='CS82')
+ax[0].scatter(lM200_T[:-1],lM200_cs82,facecolor='none',edgecolors='C0'  ,label='CS82')
 ax[0].scatter(lM200_T,lM200_cfht,facecolor='none',edgecolors='C1'  ,label='CFHT')
 ax[0].scatter(lM200_T,lM200_rcsl,facecolor='none',edgecolors='C2'  ,label='RCSL')
 ax[0].scatter(lM200_T,lM200_kids,facecolor='none',edgecolors='C3'  ,label='KiDS')
 
 
-ax[0].errorbar(lM200_T,lM200_cs82,xerr=elM200_T,yerr=elM200_cs82,facecolor='none',ecolor='C0'  ,fmt = 'none')
+ax[0].errorbar(lM200_T[:-1],lM200_cs82,xerr=elM200_T[:,:-1],yerr=elM200_cs82,facecolor='none',ecolor='C0'  ,fmt = 'none')
 ax[0].errorbar(lM200_T,lM200_cfht,xerr=elM200_T,yerr=elM200_cfht,facecolor='none',ecolor='C1'  ,fmt = 'none')
 ax[0].errorbar(lM200_T,lM200_rcsl,xerr=elM200_T,yerr=elM200_rcsl,facecolor='none',ecolor='C2'  ,fmt = 'none')
 ax[0].errorbar(lM200_T,lM200_kids,xerr=elM200_T,yerr=elM200_kids,facecolor='none',ecolor='C3'  ,fmt = 'none')
 
 
-ax[0].plot([12.3,15],[12.3,15],'C7--')
+ax[0].plot([12.0,16],[12.0,16],'C7--')
 ax[0].legend(frameon = False,fontsize = 13)
 
 ax[0].set_ylabel('$\log (M^{ind}_{WL})$')
-ax[0].axis([12.3,14.9,12.3,14.9])
+ax[0].axis([12.0,16,12.0,16])
 
-ax[1].scatter(lM200_T  ,(M200_cs82 - M200_T)/np.mean(eM200_cs82,axis=0),facecolor='none',edgecolors='C0')
+ax[1].scatter(lM200_T[:-1]  ,(M200_cs82 - M200_T[:-1])/np.mean(eM200_cs82,axis=0),facecolor='none',edgecolors='C0')
 ax[1].scatter(lM200_T  ,(M200_cfht - M200_T)/np.mean(eM200_cfht,axis=0),facecolor='none',edgecolors='C1')
 ax[1].scatter(lM200_T  ,(M200_rcsl - M200_T)/np.mean(eM200_rcsl,axis=0),facecolor='none',edgecolors='C2')
 ax[1].scatter(lM200_T  ,(M200_kids - M200_T)/np.mean(eM200_kids,axis=0),facecolor='none',edgecolors='C3')
@@ -312,13 +290,13 @@ plt.savefig(path+'Rgroups/plots_newanalysis/M200_indcomp.pdf',bbox_inches='tight
 f, ax = plt.subplots(figsize=(6.2,5))
 
 
-ax.scatter(pcc_T,pcc_cs82,facecolor='none',edgecolors='C0'  ,label='CS82')
+ax.scatter(pcc_T[:-1],pcc_cs82,facecolor='none',edgecolors='C0'  ,label='CS82')
 ax.scatter(pcc_T,pcc_cfht,facecolor='none',edgecolors='C1'  ,label='CFHT')
 ax.scatter(pcc_T,pcc_rcsl,facecolor='none',edgecolors='C2'  ,label='RCSL')
 ax.scatter(pcc_T,pcc_kids,facecolor='none',edgecolors='C3'  ,label='KiDS')
 
 
-ax.errorbar(pcc_T,pcc_cs82,xerr=epcc_T,yerr=epcc_cs82,facecolor='none',ecolor='C0'  ,fmt = 'none')
+ax.errorbar(pcc_T[:-1],pcc_cs82,xerr=epcc_T[:,:-1],yerr=epcc_cs82,facecolor='none',ecolor='C0'  ,fmt = 'none')
 ax.errorbar(pcc_T,pcc_cfht,xerr=epcc_T,yerr=epcc_cfht,facecolor='none',ecolor='C1'  ,fmt = 'none')
 ax.errorbar(pcc_T,pcc_rcsl,xerr=epcc_T,yerr=epcc_rcsl,facecolor='none',ecolor='C2'  ,fmt = 'none')
 ax.errorbar(pcc_T,pcc_kids,xerr=epcc_T,yerr=epcc_kids,facecolor='none',ecolor='C3'  ,fmt = 'none')
