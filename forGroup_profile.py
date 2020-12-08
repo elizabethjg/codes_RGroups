@@ -374,7 +374,7 @@ if __name__ == '__main__':
         parser.add_argument('-lMH_min', action='store', dest='lMHmin', default=11.)
         parser.add_argument('-lMH_max', action='store', dest='lMHmax', default=15.5)        
         parser.add_argument('-ODDS_min', action='store', dest='ODDS_min', default=0.5)
-        parser.add_argument('-zcut', action='store', dest='zcut', default=0.5)
+        parser.add_argument('-zcut', action='store', dest='zcut', default=0.1)
         parser.add_argument('-RIN', action='store', dest='RIN', default=300.)
         parser.add_argument('-ROUT', action='store', dest='ROUT', default=5000.)
         parser.add_argument('-nbins', action='store', dest='nbins', default=15)
