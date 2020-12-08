@@ -18,6 +18,6 @@ export MKL_NUM_THREADS=10
 
 conda activate py2env
 
-srun -u python fit_profile_monopole_misscentred_pcc.py -file 'profile_'$SLURM_JOB_NAME'.fits' -corrboost 'False'
+srun -u python fit_profile_monopole_misscentred_pcc.py -file 'profile_'$SLURM_JOB_NAME'.fits' 
 ##srun -u python fit_profile_monopole_misscentred_pcc.py -folder '/mnt/clemente/lensing/RodriguezGroups/N_all/' \
 -file 'profile_'$SLURM_JOB_NAME'.fits' -Yanmiss 'True' -ncores 15                                    
