@@ -28,7 +28,7 @@ def ratio(x,ex,y,ey):
     er = np.sqrt((ex/y)**2 + ((x*ey)/(y**2))**2)
     return r, er
 
-path = '/home/elizabeth/Documentos/posdoc/'
+path = '../../'
 
 pcc_s   = (np.loadtxt(path+'Rgroups/results_simu/pcc.txt').T)
 masa_s   = (np.loadtxt(path+'Rgroups/results_simu/puntos-masamockmasaab_mass.txt').T)
@@ -294,8 +294,12 @@ lMdyn2  = np.log10(M200_SIS)
 # -----------------------
 # INDCATS
 
-f, ax = plt.subplots(2, 1, figsize=(6.2,10),sharex=True)
+# f, ax = plt.subplots(2, 1, figsize=(6.2,10),sharex=True)
+f, ax2 = plt.subplots(figsize=(6.2,5))
+ax = [ax2]
+
 f.subplots_adjust(hspace=0,wspace=0)
+
 
 ax[0].scatter(lM200_T[:-1],lM200_cs82,facecolor='none',edgecolors='C0'  ,label='CS82')
 ax[0].scatter(lM200_T,lM200_cfht,facecolor='none',edgecolors='C1'  ,label='CFHT')
@@ -313,21 +317,21 @@ ax[0].plot([12.0,16],[12.0,16],'C7--')
 ax[0].legend(frameon = False,fontsize = 13)
 
 ax[0].set_ylabel('$\log (M^{ind}_{WL})$')
-ax[0].axis([12.0,16,12.0,16])
+ax[0].axis([12.3,14.9,12.0,16])
 
-ax[1].scatter(lM200_T[:-1]  ,(M200_cs82 - M200_T[:-1])/np.mean(eM200_cs82,axis=0),facecolor='none',edgecolors='C0')
-ax[1].scatter(lM200_T  ,(M200_cfht - M200_T)/np.mean(eM200_cfht,axis=0),facecolor='none',edgecolors='C1')
-ax[1].scatter(lM200_T  ,(M200_rcsl - M200_T)/np.mean(eM200_rcsl,axis=0),facecolor='none',edgecolors='C2')
-ax[1].scatter(lM200_T  ,(M200_kids - M200_T)/np.mean(eM200_kids,axis=0),facecolor='none',edgecolors='C3')
-
-
+# ax[1].scatter(lM200_T[:-1]  ,(M200_cs82 - M200_T[:-1])/np.mean(eM200_cs82,axis=0),facecolor='none',edgecolors='C0')
+# ax[1].scatter(lM200_T  ,(M200_cfht - M200_T)/np.mean(eM200_cfht,axis=0),facecolor='none',edgecolors='C1')
+# ax[1].scatter(lM200_T  ,(M200_rcsl - M200_T)/np.mean(eM200_rcsl,axis=0),facecolor='none',edgecolors='C2')
+# ax[1].scatter(lM200_T  ,(M200_kids - M200_T)/np.mean(eM200_kids,axis=0),facecolor='none',edgecolors='C3')
 
 
-ax[1].plot([12.3,15],[0.,0.],'C7--')
-ax[1].axis([12.3,14.9,-2.5,2.5])
 
-ax[1].set_xlabel(r'$\log (\langle M_{WL} \rangle)$')
-ax[1].set_ylabel(r'$(M^{ind}_{WL} - M_{WL})/ \epsilon(M^{ind}_{WL})$')
+
+# ax[1].plot([12.3,15],[0.,0.],'C7--')
+# ax[1].axis([12.3,14.9,-2.5,2.5])
+
+ax[0].set_xlabel(r'$\log (\langle M_{WL} \rangle)$')
+# ax[1].set_ylabel(r'$(M^{ind}_{WL} - M_{WL})/ \epsilon(M^{ind}_{WL})$')
 
 plt.savefig(path+'Rgroups/plots_newanalysis/M200_indcomp.pdf',bbox_inches='tight')
 
@@ -363,7 +367,10 @@ plt.savefig(path+'Rgroups/plots_newanalysis/pcc_indcomp.pdf',bbox_inches='tight'
 # -----------------------
 # TESTCATS
 
-f, ax = plt.subplots(2, 1, figsize=(6.2,10),sharex=True)
+# f, ax = plt.subplots(2, 1, figsize=(6.2,10),sharex=True)
+f, ax2 = plt.subplots(figsize=(6.2,5))
+ax = [ax2]
+
 f.subplots_adjust(hspace=0,wspace=0)
 
 ax[0].scatter(lM200_T,lM200_o4,facecolor='none',edgecolors='C0'  ,label='ODDS $> 0.4$')
@@ -382,21 +389,21 @@ ax[0].plot([12.0,16],[12.0,16],'C7--')
 ax[0].legend(frameon = False,fontsize = 13)
 
 ax[0].set_ylabel('$\log (M^{ind}_{WL})$')
-ax[0].axis([12.0,16,12.0,16])
+ax[0].axis([12.3,14.9,12.0,16])
 
-ax[1].scatter(lM200_T  ,(M200_o4 - M200_T)/np.mean(eM200_o4,axis=0),facecolor='none',edgecolors='C0')
-ax[1].scatter(lM200_T  ,(M200_o6 - M200_T)/np.mean(eM200_o6,axis=0),facecolor='none',edgecolors='C1')
-ax[1].scatter(lM200_T  ,(M200_z2 - M200_T)/np.mean(eM200_z2,axis=0),facecolor='none',edgecolors='C2')
-ax[1].scatter(lM200_T  ,(M200_z3 - M200_T)/np.mean(eM200_z3,axis=0),facecolor='none',edgecolors='C3')
-
-
+# ax[1].scatter(lM200_T  ,(M200_o4 - M200_T)/np.mean(eM200_o4,axis=0),facecolor='none',edgecolors='C0')
+# ax[1].scatter(lM200_T  ,(M200_o6 - M200_T)/np.mean(eM200_o6,axis=0),facecolor='none',edgecolors='C1')
+# ax[1].scatter(lM200_T  ,(M200_z2 - M200_T)/np.mean(eM200_z2,axis=0),facecolor='none',edgecolors='C2')
+# ax[1].scatter(lM200_T  ,(M200_z3 - M200_T)/np.mean(eM200_z3,axis=0),facecolor='none',edgecolors='C3')
 
 
-ax[1].plot([12.3,15],[0.,0.],'C7--')
-ax[1].axis([12.3,14.9,-2.5,2.5])
 
-ax[1].set_xlabel(r'$\log (\langle M_{WL} \rangle)$')
-ax[1].set_ylabel(r'$(M^{ind}_{WL} - M_{WL})/ \epsilon(M^{ind}_{WL})$')
+
+# ax[1].plot([12.3,15],[0.,0.],'C7--')
+# ax[1].axis([12.3,14.9,-2.5,2.5])
+
+ax[0].set_xlabel(r'$\log (\langle M_{WL} \rangle)$')
+# ax[1].set_ylabel(r'$(M^{ind}_{WL} - M_{WL})/ \epsilon(M^{ind}_{WL})$')
 
 plt.savefig(path+'Rgroups/plots_newanalysis/M200_ztests.pdf',bbox_inches='tight')
 

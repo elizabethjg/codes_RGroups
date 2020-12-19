@@ -22,7 +22,7 @@ def make_plot_misscentred_monopole(file_name,folder,at,ax,lab):
      h       = profile[1].header
      p       = profile[1].data
      
-     file_mcmc = 'monopole_pcconly_'+file_name[:-4]+'out'
+     file_mcmc = 'monopole_pcconly_boost_'+file_name[:-4]+'out'
           
      Mhalo   = 10**h['lMASS_HALO_mean']
      Nmean   = h['N_GAL_mean']
@@ -38,6 +38,23 @@ def make_plot_misscentred_monopole(file_name,folder,at,ax,lab):
      mout    = np.percentile(mcmc[0][1000:], [16, 50, 84])
      pcc_out = np.percentile(mcmc[1][1000:], [16, 50, 84])
      
+     bines = np.logspace(np.log10(300.),np.log10(5000.),num=len(p)+1)
+     
+     area = np.pi*np.diff(bines**2)
+     ngal = p.NGAL_w
+     
+     d = ngal/area
+     
+     fcl = ((d - d[-1])*area)/ngal
+     
+     bcorr = 1./(1.-fcl)
+     
+     bcorr[bcorr < 1.] = 1.
+     
+     print 'Correcting for boost'
+     print bcorr
+
+
      
           
      # e_M200 = (M200*eM200)/np.log(10.)
@@ -84,11 +101,8 @@ def make_plot_misscentred_monopole(file_name,folder,at,ax,lab):
      at.plot(r,Gt,'C1--')
      at.plot(r,Gtcen,'C3')
      at.plot(r,Gtmiss,'C3--')
-     if lab < 8:
-          at.scatter(p.Rp,p.DSigma_T,facecolor='none',edgecolors='C7')
-     else:
-          at.plot(p.Rp,p.DSigma_T,'C7o')
-     at.errorbar(p.Rp,p.DSigma_T,yerr=p.error_DSigma_T,fmt = 'none',ecolor='0.4')
+     at.scatter(p.Rp,p.DSigma_T*bcorr,facecolor='none',edgecolors='C7')
+     at.errorbar(p.Rp,p.DSigma_T*bcorr,yerr=p.error_DSigma_T*bcorr,fmt = 'none',ecolor='0.4')
      at.plot([ROUT,ROUT],[0.1,80],'C7--')
      at.set_xscale('log')
      at.set_yscale('log')
@@ -106,7 +120,7 @@ def make_plot_misscentred_monopole(file_name,folder,at,ax,lab):
           ax.scatter(p.Rp,p.DSigma_X,facecolor='none',edgecolors='C7')
      else:
           ax.plot(p.Rp,p.DSigma_X,'C7o')
-     ax.errorbar(p.Rp,p.DSigma_X,yerr=p.error_DSigma_X,fmt = 'none',ecolor='0.4')
+     ax.errorbar(p.Rp,p.DSigma_X*bcorr,yerr=p.error_DSigma_X*bcorr,fmt = 'none',ecolor='0.4')
      ax.plot([0,5],[0,0],'C7--')
      ax.set_xscale('log')
      ax.set_xlabel('r [$h^{-1}$ Mpc]')
@@ -124,7 +138,7 @@ folder    = '../profiles_indcat/'
 
 # f = open(folder+'list_Mbinb','r')
 # lines = f.readlines()
-sample = 'Mbin'
+sample = 'Mbin_cM'
 f = open(folder+'list_'+sample,'r')
 lines = f.readlines()
 

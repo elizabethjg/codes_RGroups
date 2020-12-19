@@ -8,13 +8,13 @@ matplotlib.rcParams.update({'font.size': 16})
 plt.rc('font', family='serif', size='16.0')
 
 
-out_T  = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_newanalysis/Lens_Mbinb.out').T
-out_H  = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_newanalysis/Lens_zHb.out').T
-out_L  = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_newanalysis/Lens_zLb.out').T
+out_T  = np.loadtxt('../profiles_indcat/Lens_Mbin.out').T
+out_H  = np.loadtxt('../profiles_indcat/Lens_zH.out').T
+out_L  = np.loadtxt('../profiles_indcat/Lens_zL.out').T
 
-out_Tc  = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_newanalysis/Lens_Mbinb_cM.out').T
-out_Hc  = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_newanalysis/Lens_zHb_cM.out').T
-out_Lc  = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_newanalysis/Lens_zLb_cM.out').T
+out_Tc  = np.loadtxt('../profiles_indcat/Lens_Mbin_cM.out').T
+out_Hc  = np.loadtxt('../profiles_indcat/Lens_zH_cM.out').T
+out_Lc  = np.loadtxt('../profiles_indcat/Lens_zL_cM.out').T
 
 
 lMH_m  = np.log10(out_T[4]*1.e14)
@@ -60,7 +60,7 @@ epcc_Tc = np.array([out_Tc[15],out_Tc[16]])
 epcc_Hc = np.array([out_Hc[15],out_Hc[16]])
 epcc_Lc = np.array([out_Lc[15],out_Lc[16]])
 
-f=open('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_newanalysis/table_final.tex','w')
+f=open('../profiles_indcat/table_final.tex','w')
 
 for j in range(len(NL_T)):
     
@@ -140,8 +140,8 @@ for j in range(len(NL_T)):
 
 f.close()
 
-out    = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_newanalysis/Lens_Nbin.out').T
-outc    = np.loadtxt('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_newanalysis/Lens_Nbin_cM.out').T
+out    = np.loadtxt('../profiles_indcat/Lens_Nbin.out').T
+outc    = np.loadtxt('../profiles_indcat/Lens_Nbin_cM.out').T
 
 
 
@@ -163,7 +163,7 @@ pcc_c = outc[14]
 epcc   = np.array([outc[15],outc[16]])
 epcc_c = np.array([outc[15],outc[16]])
 
-f=open('/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_newanalysis/table_final_Nbin.tex','w')
+f=open('../profiles_indcat/table_final_Nbin.tex','w')
 
 for j in range(len(NL)):
   

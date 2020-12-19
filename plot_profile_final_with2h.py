@@ -35,6 +35,22 @@ def make_plot_misscentred_monopole(file_name,folder,at,lab):
      
      mcmc = (np.loadtxt(folder+file_mcmc)).T
      two_halo = (np.loadtxt(file_2h)).T
+
+     bines = np.logspace(np.log10(300.),np.log10(5000.),num=len(p)+1)
+     
+     area = np.pi*np.diff(bines**2)
+     ngal = p.NGAL_w
+     
+     d = ngal/area
+     
+     fcl = ((d - d[-1])*area)/ngal
+     
+     bcorr = 1./(1.-fcl)
+     
+     bcorr[bcorr < 1.] = 1.
+     
+     print 'Correcting for boost'
+     print bcorr
           
      
      mout    = np.percentile(mcmc[0][1000:], [16, 50, 84])
@@ -90,20 +106,20 @@ def make_plot_misscentred_monopole(file_name,folder,at,lab):
      at.plot(r,Gtmiss,'C3--')
      at.plot(r,two_halo[1],'C3:')
      if lab < 8:
-          at.scatter(p.Rp,p.DSigma_T,facecolor='none',edgecolors='C7')
+          at.scatter(p.Rp,p.DSigma_T*bcorr,facecolor='none',edgecolors='C7')
      else:
           at.plot(p.Rp,p.DSigma_T,'C7o')
-     at.errorbar(p.Rp,p.DSigma_T,yerr=p.error_DSigma_T,fmt = 'none',ecolor='0.4')
+     at.errorbar(p.Rp,p.DSigma_T*bcorr,yerr=p.error_DSigma_T*bcorr,fmt = 'none',ecolor='0.4')
      at.plot([ROUT,ROUT],[0.1,80],'C7--')
      at.set_xscale('log')
      at.set_yscale('log')
      at.set_xlabel('r [$h^{-1}$ Mpc]')
-     at.set_ylim(1,200)
+     at.set_ylim(0.1,200)
      at.set_xlim(0.3,5)
      at.xaxis.set_ticks([0.4,1,3])
      at.set_xticklabels([0.4,1,3])
-     at.yaxis.set_ticks([0.3,10,100])
-     at.set_yticklabels([0.3,10,100])
+     at.yaxis.set_ticks([0.1,1,10,100])
+     at.set_yticklabels([0.1,1,10,100])
 
 
           
