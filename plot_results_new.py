@@ -164,6 +164,54 @@ epcc_kids = np.array([out_kids[15],out_kids[16]])
 epcc_rcsl = np.array([out_rcsl[15],out_rcsl[16]])
 
 
+#------------ TEST CATS ------------
+
+out_o4    = np.loadtxt(path+'Rgroups/profiles_indcat/Lens_odds4.out').T
+out_o6    = np.loadtxt(path+'Rgroups/profiles_indcat/Lens_odds6.out').T
+out_z2    = np.loadtxt(path+'Rgroups/profiles_indcat/Lens_zcut2.out').T
+out_z3    = np.loadtxt(path+'Rgroups/profiles_indcat/Lens_zcut3.out').T
+
+
+lMH_o4  = np.log10(out_o4[6]*1.e14)
+lMH_o6  = np.log10(out_o6[6]*1.e14)
+lMH_z2  = np.log10(out_z2[6]*1.e14)
+lMH_z3  = np.log10(out_z3[6]*1.e14)
+
+
+MH_o4   = out_o4[6]
+MH_o6   = out_o6[6]
+MH_z2   = out_z2[6]
+MH_z3   = out_z3[6]
+
+M200_o4 = out_o4[11] 
+M200_o6 = out_o6[11] 
+M200_z2 = out_z2[11] 
+M200_z3 = out_z3[11] 
+
+eM200_o4 = np.array([out_o4[12],out_o4[13]])
+eM200_o6 = np.array([out_o6[12],out_o6[13]])
+eM200_z2 = np.array([out_z2[12],out_z2[13]])
+eM200_z3 = np.array([out_z3[12],out_z3[13]])
+
+lM200_o4 = np.log10(out_o4[11]*1.e14)
+lM200_o6 = np.log10(out_o6[11]*1.e14)
+lM200_z2 = np.log10(out_z2[11]*1.e14)
+lM200_z3 = np.log10(out_z3[11]*1.e14)
+
+elM200_o4 = np.array([out_o4[12]/(out_o4[11]*np.log(10.)),out_o4[13]/(out_o4[11]*np.log(10.))])
+elM200_o6 = np.array([out_o6[12]/(out_o6[11]*np.log(10.)),out_o6[13]/(out_o6[11]*np.log(10.))])
+elM200_z2 = np.array([out_z2[12]/(out_z2[11]*np.log(10.)),out_z2[13]/(out_z2[11]*np.log(10.))])
+elM200_z3 = np.array([out_z3[12]/(out_z3[11]*np.log(10.)),out_z3[13]/(out_z3[11]*np.log(10.))])
+
+pcc_o4 = out_o4[14]
+pcc_o6 = out_o6[14]
+pcc_z2 = out_z2[14]
+pcc_z3 = out_z3[14]
+
+epcc_o4 = np.array([out_o4[15],out_o4[16]])
+epcc_o6 = np.array([out_o6[15],out_o6[16]])
+epcc_z2 = np.array([out_z2[15],out_z2[16]])
+epcc_z3 = np.array([out_z3[15],out_z3[16]])
 
 ############ Z samples
 
@@ -312,6 +360,74 @@ plt.savefig(path+'Rgroups/plots_newanalysis/pcc_indcomp.pdf',bbox_inches='tight'
 
 # -----------------------
 
+# -----------------------
+# TESTCATS
+
+f, ax = plt.subplots(2, 1, figsize=(6.2,10),sharex=True)
+f.subplots_adjust(hspace=0,wspace=0)
+
+ax[0].scatter(lM200_T,lM200_o4,facecolor='none',edgecolors='C0'  ,label='ODDS $> 0.4$')
+ax[0].scatter(lM200_T,lM200_o6,facecolor='none',edgecolors='C1'  ,label='ODDS $> 0.6$')
+ax[0].scatter(lM200_T,lM200_z2,facecolor='none',edgecolors='C2'  ,label='$z_{cut} = 0.2$')
+ax[0].scatter(lM200_T,lM200_z3,facecolor='none',edgecolors='C3'  ,label='$z_{cut} = 0.3$')
+
+
+ax[0].errorbar(lM200_T,lM200_o4,xerr=elM200_T,yerr=elM200_o4,facecolor='none',ecolor='C0'  ,fmt = 'none')
+ax[0].errorbar(lM200_T,lM200_o6,xerr=elM200_T,yerr=elM200_o6,facecolor='none',ecolor='C1'  ,fmt = 'none')
+ax[0].errorbar(lM200_T,lM200_z2,xerr=elM200_T,yerr=elM200_z2,facecolor='none',ecolor='C2'  ,fmt = 'none')
+ax[0].errorbar(lM200_T,lM200_z3,xerr=elM200_T,yerr=elM200_z3,facecolor='none',ecolor='C3'  ,fmt = 'none')
+
+
+ax[0].plot([12.0,16],[12.0,16],'C7--')
+ax[0].legend(frameon = False,fontsize = 13)
+
+ax[0].set_ylabel('$\log (M^{ind}_{WL})$')
+ax[0].axis([12.0,16,12.0,16])
+
+ax[1].scatter(lM200_T  ,(M200_o4 - M200_T)/np.mean(eM200_o4,axis=0),facecolor='none',edgecolors='C0')
+ax[1].scatter(lM200_T  ,(M200_o6 - M200_T)/np.mean(eM200_o6,axis=0),facecolor='none',edgecolors='C1')
+ax[1].scatter(lM200_T  ,(M200_z2 - M200_T)/np.mean(eM200_z2,axis=0),facecolor='none',edgecolors='C2')
+ax[1].scatter(lM200_T  ,(M200_z3 - M200_T)/np.mean(eM200_z3,axis=0),facecolor='none',edgecolors='C3')
+
+
+
+
+ax[1].plot([12.3,15],[0.,0.],'C7--')
+ax[1].axis([12.3,14.9,-2.5,2.5])
+
+ax[1].set_xlabel(r'$\log (\langle M_{WL} \rangle)$')
+ax[1].set_ylabel(r'$(M^{ind}_{WL} - M_{WL})/ \epsilon(M^{ind}_{WL})$')
+
+plt.savefig(path+'Rgroups/plots_newanalysis/M200_ztests.pdf',bbox_inches='tight')
+
+# -----------------------
+# -----------------------
+# TESTCATS
+
+f, ax = plt.subplots(figsize=(6.2,5))
+
+
+ax.scatter(pcc_T,pcc_o4,facecolor='none',edgecolors='C0'  ,label='ODDS $> 0.4$')
+ax.scatter(pcc_T,pcc_o6,facecolor='none',edgecolors='C1'  ,label='ODDS $> 0.6$')
+ax.scatter(pcc_T,pcc_z2,facecolor='none',edgecolors='C2'  ,label='$z_{cut} = 0.2$')
+ax.scatter(pcc_T,pcc_z3,facecolor='none',edgecolors='C3'  ,label='$z_{cut} = 0.3$')
+
+
+ax.errorbar(pcc_T,pcc_o4,xerr=epcc_T,yerr=epcc_o4,facecolor='none',ecolor='C0'  ,fmt = 'none')
+ax.errorbar(pcc_T,pcc_o6,xerr=epcc_T,yerr=epcc_o6,facecolor='none',ecolor='C1'  ,fmt = 'none')
+ax.errorbar(pcc_T,pcc_z2,xerr=epcc_T,yerr=epcc_z2,facecolor='none',ecolor='C2'  ,fmt = 'none')
+ax.errorbar(pcc_T,pcc_z3,xerr=epcc_T,yerr=epcc_z3,facecolor='none',ecolor='C3'  ,fmt = 'none')
+
+
+ax.plot([0.2,1.0],[0.2,1.0],'C7--')
+ax.legend(frameon = False,fontsize = 13)
+
+ax.set_ylabel('$p^{ind}_{cc}$')
+ax.set_xlabel('$p_{cc}$')
+
+plt.savefig(path+'Rgroups/plots_newanalysis/pcc_ztests.pdf',bbox_inches='tight')
+
+# -----------------------
 
 # -----------------------
 f, ax = plt.subplots(2, 1, figsize=(6.2,10),sharex=True)

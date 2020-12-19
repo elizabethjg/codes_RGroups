@@ -113,7 +113,7 @@ def make_plot_centred_monopole(file_name,folder,samples,ncores):
      
      return [Mhalo/1.e14, M200/1.e14, e_M200/1.e14, Nmean, Nlens, SN, 
             1., np.array([0,0]), MDYN/1.e14, nmin, nmax, 
-            Mmin, Mmax, zmin, zmax, zmean, 1.0, Vdisp]
+            Mmin, Mmax, zmin, zmax, zmean, 1.0, Vdisp,0.,0.]
 
 
 
@@ -128,7 +128,7 @@ def make_plot_misscentred_monopole(file_name,folder,samples,plot = False,ymiss =
           file_mcmc = 'monopole_pcconly_ymiss_'+file_name[:-4]+'out'
           tau       = 0.3
      else:
-          file_mcmc = 'monopole_pcconly_'+file_name[:-4]+'out'
+          file_mcmc = 'monopole_pcconly_boost_'+file_name[:-4]+'out'
           tau       = 0.4
           
      Mhalo   = 10**h['lMASS_HALO_mean']
@@ -288,7 +288,7 @@ def make_plot_misscentred_monopole(file_name,folder,samples,plot = False,ymiss =
      
      return [Mhalo/1.e14, M200/1.e14, e_M200/1.e14, Nmean, Nlens, SN, 
             pcc_out[1], np.diff(pcc_out), MDYN/1.e14, nmin, nmax, 
-            Mmin, Mmax, zmin, zmax, zmean, chi_t, Vdisp]
+            Mmin, Mmax, zmin, zmax, zmean, chi_t, Vdisp,soff,ROUT]
 
 
 parser = argparse.ArgumentParser()
@@ -359,6 +359,10 @@ Nmean = np.array([])
 MDYN  = np.array([])
 Vdisp = np.array([])
 
+SOFF  = np.array([])
+ROUT = np.array([])
+
+
 CHI2  = np.array([])
 
 # lines = lines[:3]+lines[4:]
@@ -398,6 +402,9 @@ for line in lines:
      Zmean   = np.append(Zmean,out[15])
      CHI2    = np.append(CHI2,out[16])
      Vdisp   = np.append(Vdisp,out[17])
+     
+     SOFF   = np.append(SOFF,out[18])
+     ROUT   = np.append(ROUT,out[19])
 
 
 eMNFW = np.reshape(eMNFW,(nbins,2)).T
@@ -414,13 +421,14 @@ out = np.array([Nlenses[j], NMIN[j],NMAX[j],Nmean[j],
                 MMIN[j],MMAX[j],Mmean[j],
                 ZMIN[j],ZMAX[j],Zmean[j],
                 MDYN[j], MNFW[j], eMNFW[0][j],eMNFW[1][j],
-                pcc[j], e_pcc[0][j],e_pcc[1][j],CHI2[j],Vdisp[j]])
+                pcc[j], e_pcc[0][j],e_pcc[1][j],CHI2[j],
+                Vdisp[j],SOFF[j],ROUT[j]])
 
 if ymiss:
      f1=open(folder+'Lens_'+samples+'_ymiss.out','w')
 else:
      f1=open(folder+'Lens_'+samples+'.out','w')
      
-f1.write('# Nlenses    Nmin    Nmax   Nmean   Mmin        Mmax         Mmean       zmin         zmax         zmean         Mdyn         Mlens       eMlens                    pcc          e_pcc                        chi2       Vdisp\n')
-np.savetxt(f1,out.T,fmt = ['%4i']*3+['%12.4f']*16)
+f1.write('# Nlenses    Nmin    Nmax   Nmean   Mmin        Mmax         Mmean       zmin         zmax         zmean         Mdyn         Mlens       eMlens                    pcc          e_pcc                        chi2       Vdisp   s_off   ROUT\n')
+np.savetxt(f1,out.T,fmt = ['%4i']*3+['%12.4f']*18)
 f1.close()
