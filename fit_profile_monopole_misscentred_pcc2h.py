@@ -23,7 +23,7 @@ Msun = 1.989e30 # Solar mass (kg)
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-folder', action='store', dest='folder',default='../N_all/')
-parser.add_argument('-bin', action='store', dest='bin', default='1')
+parser.add_argument('-Mbin', action='store', dest='Mbin', default='1')
 parser.add_argument('-ncores', action='store', dest='ncores', default=15)
 parser.add_argument('-Yanmiss', action='store', dest='yan', default='False')
 parser.add_argument('-corrboost', action='store', dest='boost', default='True')
@@ -32,12 +32,12 @@ args = parser.parse_args()
 h_cosmo = 1.0
 
 folder    = args.folder
-binM      = int(args.bin)
+Mbin      = int(args.Mbin)
 ncores    = args.ncores
 ncores    = int(ncores)
 
-file_name   = 'profile_Mbin'+str(binM)+'.fits'
-two_halo    = np.loadtxt('../second_halo_RodriguezFOF/smooth_second_halo_'+str(lab)+'.dat').T[1]
+file_name   = 'profile_Mbin'+str(Mbin)+'.fits'
+two_halo    = np.loadtxt('../second_halo_RodriguezFOF/smooth_second_halo_'+str(Mbin-1)+'.dat').T[1]
 
 if 'True' in args.boost:
     boost = True
