@@ -37,7 +37,7 @@ ncores    = args.ncores
 ncores    = int(ncores)
 
 file_name   = 'profile_Mbin'+str(Mbin)+'.fits'
-two_halo    = np.loadtxt('../second_halo_RodriguezFOF/smooth_second_halo_'+str(Mbin-1)+'.dat').T[1]
+two_halo    = np.loadtxt('../second_halo_RodriguezFOF/second_halo_'+str(Mbin-1)+'.dat').T[1]
 
 if 'True' in args.boost:
     boost = True
