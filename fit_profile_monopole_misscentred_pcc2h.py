@@ -37,7 +37,7 @@ ncores    = args.ncores
 ncores    = int(ncores)
 
 file_name   = 'profile_Mbin'+str(Mbin)+'.fits'
-two_halo    = np.loadtxt('../second_halo_RodriguezFOF/second_halo_'+str(Mbin-1)+'.dat').T[1]
+
 
 if 'True' in args.boost:
     boost = True
@@ -66,6 +66,7 @@ print 'fitting monopole misscentred'
 print folder
 print file_name
 
+
 profile = fits.open(folder+file_name)
 h       = profile[1].header
 p       = profile[1].data
@@ -74,6 +75,9 @@ Mhalo   = 10**h['lMASS_HALO_mean']
 Rmean   = h['RADIUS_HALO_mean']
 ROUT = (2.5*(2.*(Mhalo/2.21e14)**0.75)**(1./3.))/h_cosmo
 soff = tau*Rmean
+
+maskr = (p.Rp < ROUT)
+two_halo    = np.loadtxt('../second_halo_RodriguezFOF/second_halo_'+str(Mbin-1)+'.dat').T[1][maskr]
 
 if boost:
 
@@ -129,8 +133,6 @@ nwalkers, ndim = pos.shape
 # running emcee
 
 #pool = Pool(processes=(ncores))
-
-maskr = (p.Rp < ROUT)
 
 t1 = time.time()
 sampler = emcee.EnsembleSampler(nwalkers, ndim, log_probability, 
