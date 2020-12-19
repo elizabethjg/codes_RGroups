@@ -15,7 +15,7 @@ import argparse
 
 
 
-def make_plot_misscentred_monopole(file_name,folder,at,ax,lab):
+def make_plot_misscentred_monopole(file_name,folder,at,lab):
           
      
      profile = fits.open(folder+file_name)
@@ -23,6 +23,7 @@ def make_plot_misscentred_monopole(file_name,folder,at,ax,lab):
      p       = profile[1].data
      
      file_mcmc = 'monopole_pcconly_'+file_name[:-4]+'out'
+     file_2h   = '../second_halo_RodriguezFOF/smooth_second_halo_'+str(lab)+'.dat'
           
      Mhalo   = 10**h['lMASS_HALO_mean']
      Nmean   = h['N_GAL_mean']
@@ -33,6 +34,7 @@ def make_plot_misscentred_monopole(file_name,folder,at,ax,lab):
      Vdisp   = h['VDISP_DYN_mean']
      
      mcmc = (np.loadtxt(folder+file_mcmc)).T
+     two_halo = (np.loadtxt(file_2h)).T
           
      
      mout    = np.percentile(mcmc[0][1000:], [16, 50, 84])
@@ -68,22 +70,25 @@ def make_plot_misscentred_monopole(file_name,folder,at,ax,lab):
      
      #--------------------
           
-     r  = np.logspace(np.log10(0.05),np.log10(5.5),30)
+     r  = two_halo[0]
           
      multipoles = multipole_shear_parallel(r,M200=10**mout[1],
                                    misscentred = True,s_off = soff,h=1,
                                    ellip=0,z=zmean,components = ['t'],
                                    verbose=False,ncores=30)
           
-     Gt    = model_Gamma(multipoles,'t',misscentred=True,pcc=pcc_out[1])     
+     Gt    = model_Gamma(multipoles,'t',misscentred=True,pcc=pcc_out[1])
+     Gt2h  = model_Gamma(multipoles,'t',misscentred=True,pcc=pcc_out[1]) + two_halo[1]   
           
      Gtcen = pcc_out[1]*multipoles['Gt0'] 
      Gtmiss = (1-pcc_out[1])*multipoles['Gt_off']
      plt.rc('font', family='serif', size='13.0')
      at.text(1,110,'['+str('%.1f' % Mmin)+','+str('%.1f' % Mmax)+')',fontsize = '12')
+     at.plot(r,Gt2h,'C1')
      at.plot(r,Gt,'C1--')
      at.plot(r,Gtcen,'C3')
      at.plot(r,Gtmiss,'C3--')
+     at.plot(r,two_halo[1],'C3:')
      if lab < 8:
           at.scatter(p.Rp,p.DSigma_T,facecolor='none',edgecolors='C7')
      else:
@@ -101,22 +106,6 @@ def make_plot_misscentred_monopole(file_name,folder,at,ax,lab):
      at.set_yticklabels([0.3,10,100])
 
 
-     ax.text(1,50,'['+str('%.1f' % Mmin)+','+str('%.1f' % Mmax)+')',fontsize = '12')
-     if lab < 8:
-          ax.scatter(p.Rp,p.DSigma_X,facecolor='none',edgecolors='C7')
-     else:
-          ax.plot(p.Rp,p.DSigma_X,'C7o')
-     ax.errorbar(p.Rp,p.DSigma_X,yerr=p.error_DSigma_X,fmt = 'none',ecolor='0.4')
-     ax.plot([0,5],[0,0],'C7--')
-     ax.set_xscale('log')
-     ax.set_xlabel('r [$h^{-1}$ Mpc]')
-     ax.set_ylim(-60,60)
-     ax.set_xlim(0.3,5)
-     ax.xaxis.set_ticks([0.4,1,3])
-     ax.set_xticklabels([0.4,1,3])
-     ax.yaxis.set_ticks([-50,0,50])
-     ax.set_yticklabels([-50,0,50])
-
           
 # folder    = '/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_newanalysis/'
 folder    = '../profiles_indcat/'
@@ -131,34 +120,22 @@ lines = f.readlines()
 ft, axt = plt.subplots(2,4, figsize=(12,6), sharey=True)
 ft.subplots_adjust(hspace=0,wspace=0)
 
-fx, axx = plt.subplots(2,4, figsize=(12,6), sharey=True)
-fx.subplots_adjust(hspace=0,wspace=0)
-
-
 axt[0,0].set_ylabel('$\Delta \Sigma$ [$h M_\odot$ /pc$^{2}$]')
 axt[1,0].set_ylabel('$\Delta \Sigma$ [$h M_\odot$ /pc$^{2}$]')
 
-axx[0,0].set_ylabel(r'$\Delta \Sigma_\times$ [$h M_\odot$ /pc$^{2}$]')
-axx[1,0].set_ylabel(r'$\Delta \Sigma_\times$ [$h M_\odot$ /pc$^{2}$]')
-
-
 at2 = np.reshape(np.array(axt),(8,1))
-ax2 = np.reshape(np.array(axx),(8,1))
 
 # lines = lines[:3]+lines[4:]
 
 for j in range(len(lines)):
      line = lines[j]
-     out = make_plot_misscentred_monopole(line[:-1],folder,at2[j][0],ax2[j][0],j+1)
+     out = make_plot_misscentred_monopole(line[:-1],folder,at2[j][0],j)
 
 axt[1,3].axis('off')
 axt[1,3].xaxis.set_ticks([0.4,1,3])
 axt[1,3].set_xticklabels([0.4,1,3])
 
-axx[1,3].axis('off')
-axx[1,3].xaxis.set_ticks([0.4,1,3])
-axx[1,3].set_xticklabels([0.4,1,3])
 
     
-ft.savefig(folder+'profiles_'+sample+'.pdf',bbox_inches='tight')
-fx.savefig(folder+'profiles_'+sample+'_cross.pdf',bbox_inches='tight')
+ft.savefig(folder+'profiles_'+sample+'_2h.pdf',bbox_inches='tight')
+
