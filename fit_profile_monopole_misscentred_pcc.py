@@ -127,7 +127,7 @@ nwalkers, ndim = pos.shape
 
 #pool = Pool(processes=(ncores))
 
-maskr = (p.Rp < ROUT)
+maskr = (p.Rp < ROUT)*(p.Rp < 2.5)
 
 t1 = time.time()
 sampler = emcee.EnsembleSampler(nwalkers, ndim, log_probability, 

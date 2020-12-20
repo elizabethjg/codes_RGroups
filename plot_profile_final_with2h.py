@@ -22,9 +22,11 @@ def make_plot_misscentred_monopole(file_name,folder,at,lab):
      h       = profile[1].header
      p       = profile[1].data
      
-     file_mcmc = 'monopole_pcconly_'+file_name[:-4]+'out'
+     file_mcmc    = 'monopole_pcconly_boost_'+file_name[:-4]+'out'
+     file_mcmc_2h = 'monopole_2h_boost_'+file_name[:-4]+'out'
      file_2h   = '../second_halo_RodriguezFOF/smooth_second_halo_'+str(lab)+'.dat'
-          
+     two_halo_X    = np.loadtxt('../second_halo_RodriguezFOF/second_halo_'+str(lab)+'.dat').T[1]
+     
      Mhalo   = 10**h['lMASS_HALO_mean']
      Nmean   = h['N_GAL_mean']
      Nlens   = h['N_LENSES']
@@ -34,6 +36,7 @@ def make_plot_misscentred_monopole(file_name,folder,at,lab):
      Vdisp   = h['VDISP_DYN_mean']
      
      mcmc = (np.loadtxt(folder+file_mcmc)).T
+     mcmc_2h = (np.loadtxt(folder+file_mcmc_2h)).T
      two_halo = (np.loadtxt(file_2h)).T
 
      bines = np.logspace(np.log10(300.),np.log10(5000.),num=len(p)+1)
@@ -55,6 +58,9 @@ def make_plot_misscentred_monopole(file_name,folder,at,lab):
      
      mout    = np.percentile(mcmc[0][1000:], [16, 50, 84])
      pcc_out = np.percentile(mcmc[1][1000:], [16, 50, 84])
+
+     mout_2h    = np.percentile(mcmc_2h[0][1000:], [16, 50, 84])
+     pcc_out_2h = np.percentile(mcmc_2h[1][1000:], [16, 50, 84])
      
      
           
@@ -83,6 +89,13 @@ def make_plot_misscentred_monopole(file_name,folder,at,lab):
      M200   = 10**(mout[1])
      e_M200 = (10**(mout[1])*np.log(10.)*np.diff(mout))
      
+     print 'original',M200/1.e14
+     
+     M200_2h   = 10**(mout_2h[1])
+     e_M200_2h = (10**(mout_2h[1])*np.log(10.)*np.diff(mout_2h))
+     
+     print '2h',M200_2h/1.e14
+     print 'ratio',M200/M200_2h
      
      #--------------------
           
@@ -92,34 +105,41 @@ def make_plot_misscentred_monopole(file_name,folder,at,lab):
                                    misscentred = True,s_off = soff,h=1,
                                    ellip=0,z=zmean,components = ['t'],
                                    verbose=False,ncores=30)
+
+     multipoles_2h = multipole_shear_parallel(r,M200=10**mout_2h[1],
+                                   misscentred = True,s_off = soff,h=1,
+                                   ellip=0,z=zmean,components = ['t'],
+                                   verbose=False,ncores=30)
           
      Gt    = model_Gamma(multipoles,'t',misscentred=True,pcc=pcc_out[1])
+     Gtf2h = model_Gamma(multipoles_2h,'t',misscentred=True,pcc=pcc_out_2h[1]) + two_halo[1]
      Gt2h  = model_Gamma(multipoles,'t',misscentred=True,pcc=pcc_out[1]) + two_halo[1]   
           
      Gtcen = pcc_out[1]*multipoles['Gt0'] 
      Gtmiss = (1-pcc_out[1])*multipoles['Gt_off']
      plt.rc('font', family='serif', size='13.0')
      at.text(1,110,'['+str('%.1f' % Mmin)+','+str('%.1f' % Mmax)+')',fontsize = '12')
-     at.plot(r,Gt2h,'C1')
-     at.plot(r,Gt,'C1--')
-     at.plot(r,Gtcen,'C3')
-     at.plot(r,Gtmiss,'C3--')
-     at.plot(r,two_halo[1],'C3:')
-     if lab < 8:
-          at.scatter(p.Rp,p.DSigma_T*bcorr,facecolor='none',edgecolors='C7')
-     else:
-          at.plot(p.Rp,p.DSigma_T,'C7o')
+     at.plot(r,Gt2h,'C2')
+     at.plot(r,Gtf2h,'C0')
+     at.plot(r,Gt,'C3')
+     at.plot(r,Gtcen,'C3--')
+     at.plot(r,Gtmiss,'C3:')
+     at.plot(r,two_halo[1],'C2--')
+     
+     at.scatter(p.Rp,p.DSigma_T*bcorr,facecolor='none',edgecolors='C7')
      at.errorbar(p.Rp,p.DSigma_T*bcorr,yerr=p.error_DSigma_T*bcorr,fmt = 'none',ecolor='0.4')
+
+     
      at.plot([ROUT,ROUT],[0.1,80],'C7--')
      at.set_xscale('log')
      at.set_yscale('log')
      at.set_xlabel('r [$h^{-1}$ Mpc]')
-     at.set_ylim(0.1,200)
+     at.set_ylim(1,200)
      at.set_xlim(0.3,5)
      at.xaxis.set_ticks([0.4,1,3])
      at.set_xticklabels([0.4,1,3])
-     at.yaxis.set_ticks([0.1,1,10,100])
-     at.set_yticklabels([0.1,1,10,100])
+     at.yaxis.set_ticks([1,10,100])
+     at.set_yticklabels([1,10,100])
 
 
           

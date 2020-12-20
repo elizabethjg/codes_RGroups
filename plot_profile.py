@@ -128,7 +128,7 @@ def make_plot_misscentred_monopole(file_name,folder,samples,plot = False,ymiss =
           file_mcmc = 'monopole_pcconly_ymiss_'+file_name[:-4]+'out'
           tau       = 0.3
      else:
-          file_mcmc = 'monopole_pcconly_boost_'+file_name[:-4]+'out'
+          file_mcmc = 'monopole_2h_boost_'+file_name[:-4]+'out'
           tau       = 0.4
           
      Mhalo   = 10**h['lMASS_HALO_mean']
@@ -215,7 +215,7 @@ def make_plot_misscentred_monopole(file_name,folder,samples,plot = False,ymiss =
           if ymiss:
                folder_plot = 'plots_ymiss_'+samples+'/'
           else:
-               folder_plot = 'plots_'+samples+'/'
+               folder_plot = 'plots2h_'+samples+'/'
 
           print folder+folder_plot
           print '------------'
@@ -300,7 +300,7 @@ parser.add_argument('-ncores', action='store', dest='ncores', default=3)
 args = parser.parse_args()
 
 # folder    = '/home/eli/Documentos/Astronomia/posdoc/Rgroups/profiles_newanalysis/'
-folder    = '/home/elizabeth/Documentos/posdoc/Rgroups/profiles_indcat/'
+folder    = '../profiles_indcat/'
 # folder    = '/mnt/clemente/lensing/RodriguezGroups/N_all/'
 samples   = args.sample
 ncores    = args.ncores
@@ -335,7 +335,7 @@ if ymiss:
      print 'Y miss!!!!!!!!!!!!!!!!!'
      os.system('mkdir '+folder+'plots_ymiss_'+samples)
 else:
-     os.system('mkdir '+folder+'plots_'+samples)
+     os.system('mkdir '+folder+'plots2h_'+samples)
 
 
 MNFW  = np.array([])
@@ -427,7 +427,7 @@ out = np.array([Nlenses[j], NMIN[j],NMAX[j],Nmean[j],
 if ymiss:
      f1=open(folder+'Lens_'+samples+'_ymiss.out','w')
 else:
-     f1=open(folder+'Lens_'+samples+'.out','w')
+     f1=open(folder+'Lens_'+samples+'_2h.out','w')
      
 f1.write('# Nlenses    Nmin    Nmax   Nmean   Mmin        Mmax         Mmean       zmin         zmax         zmean         Mdyn         Mlens       eMlens                    pcc          e_pcc                        chi2       Vdisp   s_off   ROUT\n')
 np.savetxt(f1,out.T,fmt = ['%4i']*3+['%12.4f']*18)

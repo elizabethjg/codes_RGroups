@@ -76,7 +76,7 @@ Rmean   = h['RADIUS_HALO_mean']
 ROUT = (2.5*(2.*(Mhalo/2.21e14)**0.75)**(1./3.))/h_cosmo
 soff = tau*Rmean
 
-maskr = (p.Rp < ROUT)
+maskr = (p.Rp < ROUT)*(p.Rp < 2.5)
 two_halo    = np.loadtxt('../second_halo_RodriguezFOF/second_halo_'+str(Mbin-1)+'.dat').T[1][maskr]
 
 if boost:
