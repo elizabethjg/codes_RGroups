@@ -232,7 +232,7 @@ def make_plot_misscentred_monopole(file_name,folder,samples,plot = False,ymiss =
           if ymiss:
                folder_plot = 'plots_ymiss_'+samples+'/'
           else:
-               folder_plot = 'plots2h_'+samples+'/'
+               folder_plot = 'plots_'+samples+'/'
 
           print folder+folder_plot
           print '------------'
@@ -352,7 +352,7 @@ if ymiss:
      print 'Y miss!!!!!!!!!!!!!!!!!'
      os.system('mkdir '+folder+'plots_ymiss_'+samples)
 else:
-     os.system('mkdir '+folder+'plots2h_'+samples)
+     os.system('mkdir '+folder+'plots_'+samples)
 
 
 MNFW  = np.array([])
@@ -444,7 +444,7 @@ out = np.array([Nlenses[j], NMIN[j],NMAX[j],Nmean[j],
 if ymiss:
      f1=open(folder+'Lens_'+samples+'_ymiss.out','w')
 else:
-     f1=open(folder+'Lens_'+samples+'_2h.out','w')
+     f1=open(folder+'Lens_'+samples+'.out','w')
      
 f1.write('# Nlenses    Nmin    Nmax   Nmean   Mmin        Mmax         Mmean       zmin         zmax         zmean         Mdyn         Mlens       eMlens                    pcc          e_pcc                        chi2       Vdisp   s_off   ROUT\n')
 np.savetxt(f1,out.T,fmt = ['%4i']*3+['%12.4f']*18)
