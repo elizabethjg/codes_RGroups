@@ -493,12 +493,13 @@ plt.legend(frameon = False,fontsize = 14)
 
 # plt.legend(frameon = False)
 plt.plot([12.5,14.8],[1.,1.],'C7--')
+plt.axis([12.5,14.8,0,3.],'C7--')
 plt.xlabel(r'$\log (\langle M_{AM} \rangle)$')
 plt.ylabel('$M^c_{WL}/M_{WL}$')
 plt.savefig(path+'Rgroups/plots_newanalysis/ratioc.pdf',bbox_inches='tight')
 
 
-# -----------------------
+# -----------------------hal
 f, ax = plt.subplots(2, 2, figsize=(10,8),sharex=True)
 f.subplots_adjust(hspace=0,wspace=0)
 

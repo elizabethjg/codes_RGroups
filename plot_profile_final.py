@@ -29,6 +29,11 @@ def make_plot_misscentred_monopole(file_name,folder,at,ax,lab):
      Nlens   = h['N_LENSES']
      Rmean   = h['RADIUS_HALO_mean']
      ROUT = (2.5*(2.*(Mhalo/2.21e14)**0.75)**(1./3.))
+     
+     ROUT = min(2.5,ROUT)
+     
+     print ROUT
+     
      soff = 0.4*Rmean
      Vdisp   = h['VDISP_DYN_mean']
      

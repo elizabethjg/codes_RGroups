@@ -32,6 +32,9 @@ def make_plot_misscentred_monopole(file_name,folder,at,lab):
      Nlens   = h['N_LENSES']
      Rmean   = h['RADIUS_HALO_mean']
      ROUT = (2.5*(2.*(Mhalo/2.21e14)**0.75)**(1./3.))
+     
+     ROUT = min(2.5,ROUT)
+     
      soff = 0.4*Rmean
      Vdisp   = h['VDISP_DYN_mean']
      
@@ -119,12 +122,12 @@ def make_plot_misscentred_monopole(file_name,folder,at,lab):
      Gtmiss = (1-pcc_out[1])*multipoles['Gt_off']
      plt.rc('font', family='serif', size='13.0')
      at.text(1,110,'['+str('%.1f' % Mmin)+','+str('%.1f' % Mmax)+')',fontsize = '12')
-     at.plot(r,Gt2h,'C2')
-     at.plot(r,Gtf2h,'C0')
-     at.plot(r,Gt,'C3')
-     at.plot(r,Gtcen,'C3--')
-     at.plot(r,Gtmiss,'C3:')
-     at.plot(r,two_halo[1],'C2--')
+     at.plot(r,Gt2h,'C1')
+     # at.plot(r,Gtf2h,'C0')
+     at.plot(r,Gt,'C1--')
+     at.plot(r,Gtcen,'C3')
+     at.plot(r,Gtmiss,'C3--')
+     at.plot(r,two_halo[1],'C3:')
      
      at.scatter(p.Rp,p.DSigma_T*bcorr,facecolor='none',edgecolors='C7')
      at.errorbar(p.Rp,p.DSigma_T*bcorr,yerr=p.error_DSigma_T*bcorr,fmt = 'none',ecolor='0.4')
