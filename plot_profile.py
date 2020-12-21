@@ -128,7 +128,7 @@ def make_plot_misscentred_monopole(file_name,folder,samples,plot = False,ymiss =
           file_mcmc = 'monopole_pcconly_ymiss_'+file_name[:-4]+'out'
           tau       = 0.3
      else:
-          file_mcmc = 'monopole_2h_boost_'+file_name[:-4]+'out'
+          file_mcmc = 'monopole_pcconly_boost_'+file_name[:-4]+'out'
           tau       = 0.4
           
      Mhalo   = 10**h['lMASS_HALO_mean']
@@ -205,6 +205,23 @@ def make_plot_misscentred_monopole(file_name,folder,samples,plot = False,ymiss =
      chi_t = chi_red(modelt_t,p.DSigma_T[mr],p.error_DSigma_T[mr],2)
 
      print chi_t
+     
+     ### bcorr
+     bines = np.logspace(np.log10(300.),np.log10(5000.),num=len(p)+1)
+     
+     area = np.pi*np.diff(bines**2)
+     ngal = p.NGAL_w
+     
+     d = ngal/area
+     
+     fcl = ((d - d[-1])*area)/ngal
+     
+     bcorr = 1./(1.-fcl)
+     
+     bcorr[bcorr < 1.] = 1.
+
+     
+     
      print '####################'
 	#--------------------
     
@@ -257,8 +274,8 @@ def make_plot_misscentred_monopole(file_name,folder,samples,plot = False,ymiss =
           ax[0].plot(r,Gt,'C1--')
           ax[0].plot(r,Gtcen,'C3')
           ax[0].plot(r,Gtmiss,'C3--')
-          ax[0].scatter(p.Rp,p.DSigma_T,facecolor='none',edgecolors='0.4')
-          ax[0].errorbar(p.Rp,p.DSigma_T,yerr=p.error_DSigma_T,fmt = 'none',ecolor='0.4')
+          ax[0].scatter(p.Rp,p.DSigma_T*bcorr,facecolor='none',edgecolors='0.4')
+          ax[0].errorbar(p.Rp,p.DSigma_T*bcorr,yerr=p.error_DSigma_T*bcorr,fmt = 'none',ecolor='0.4')
           ax[0].set_xscale('log')
           ax[0].set_yscale('log')
           ax[0].set_xlabel('R [Mpc]')
@@ -272,8 +289,8 @@ def make_plot_misscentred_monopole(file_name,folder,samples,plot = False,ymiss =
           ax[0].set_ylabel(r'$\Delta \Sigma_T [h_{70}M_\odot\,\rm{pc}^{-2}]$')
           
           ax[1].plot([0,5],[0,0],'k--')
-          ax[1].scatter(p.Rp,p.DSigma_X,facecolor='none',edgecolors='0.4')
-          ax[1].errorbar(p.Rp,p.DSigma_X,yerr=p.error_DSigma_X,fmt = 'none',ecolor='0.4')
+          ax[1].scatter(p.Rp,p.DSigma_X*bcorr,facecolor='none',edgecolors='0.4')
+          ax[1].errorbar(p.Rp,p.DSigma_X*bcorr,yerr=p.error_DSigma_X*bcorr,fmt = 'none',ecolor='0.4')
           ax[1].set_xscale('log')
           ax[1].set_xlabel('R [mpc]')
           ax[1].set_ylim(-50,50)
