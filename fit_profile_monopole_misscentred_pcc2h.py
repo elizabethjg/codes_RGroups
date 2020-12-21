@@ -79,6 +79,8 @@ soff = tau*Rmean
 maskr = (p.Rp < ROUT)*(p.Rp < 2.5)
 two_halo    = np.loadtxt('../second_halo_RodriguezFOF/second_halo_'+str(Mbin-1)+'.dat').T[1][maskr]
 
+print 'Fitting up to',max(p.Rp[maskr])
+
 if boost:
 
     bines = np.logspace(np.log10(300.),np.log10(5000.),num=len(p)+1)
