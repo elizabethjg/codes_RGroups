@@ -15,7 +15,7 @@ cosmo = LambdaCDM(H0=100, Om0=0.3, Ode0=0.7)
 test boost factor
 '''
 
-path = '/home/elizabeth/Documentos/posdoc/'
+path = '../../'
 
 #parameters
 cvel = 299792458;   # Speed of light (m.s-1)

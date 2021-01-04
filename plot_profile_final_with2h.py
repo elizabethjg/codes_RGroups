@@ -137,12 +137,12 @@ def make_plot_misscentred_monopole(file_name,folder,at,lab):
      at.set_xscale('log')
      at.set_yscale('log')
      at.set_xlabel('r [$h^{-1}$ Mpc]')
-     at.set_ylim(1,200)
+     at.set_ylim(0.1,200)
      at.set_xlim(0.3,5)
      at.xaxis.set_ticks([0.4,1,3])
      at.set_xticklabels([0.4,1,3])
-     at.yaxis.set_ticks([1,10,100])
-     at.set_yticklabels([1,10,100])
+     at.yaxis.set_ticks([0.1,1,10,100])
+     at.set_yticklabels([0.1,1,10,100])
 
 
           
